@@ -1,0 +1,4 @@
+oc_louvre_homepage:
+    path:     /louvre
+    defaults:
+        _controller: OCLouvreBundle:Booking:index
