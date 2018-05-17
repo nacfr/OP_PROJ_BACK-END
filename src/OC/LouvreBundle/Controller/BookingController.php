@@ -10,10 +10,12 @@ namespace OC\LouvreBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class BookingController extends Controller
 {
     public function indexAction(){
         return $this->render('@OCLouvre/Booking/index.html.twig');
+
     }
 }
