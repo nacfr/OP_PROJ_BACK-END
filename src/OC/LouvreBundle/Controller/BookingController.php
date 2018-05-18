@@ -10,12 +10,30 @@ namespace OC\LouvreBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\HttpFoundation\Response;
+use OC\LouvreBundle\Form\BookingType;
 
 class BookingController extends Controller
 {
     public function indexAction(){
-        return $this->render('@OCLouvre/Booking/accueil.html.twig');
+
+        //Création formulaire
+        /*
+        $form = $this->createFormBuilder()
+            ->add('date', DateType::class)
+            ->add('dayPost', RadioType::class)
+            ->add('halfdayPost', RadioType::class)
+            ->getForm();
+        */
+
+       $form = $this->createForm(BookingType::class);
+
+        return $this->render('@OCLouvre/Booking/accueil.html.twig', array('form' => $form->createView()
+        ));
 
     }
 

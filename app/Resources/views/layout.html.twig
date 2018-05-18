@@ -11,6 +11,7 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('lib/css/jquery-ui-1.10.4.datepicker.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
     {% endblock %}
 
@@ -128,9 +129,9 @@
 
 
 <!-- JavaScript -->
-
-<script src="{{ asset('lib/js/jquery.min.js') }}"></script>
-<script src="{{ asset('lib/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('lib/js/jquery.js') }}"></script>
+<script src="{{ asset('lib/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
+<script src="{{ asset('lib/js/louvre.js') }}"></script>
 
 </body>
 </html>
