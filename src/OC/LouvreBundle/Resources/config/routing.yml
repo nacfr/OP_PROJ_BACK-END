@@ -1,0 +1,9 @@
+oc_louvre_homepage:
+    path:     /
+    defaults:
+        _controller: OCLouvreBundle:Booking:index
+
+oc_test:
+    path:     /test
+    defaults:
+        _controller: OCLouvreBundle:Booking:widget
