@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Billeterie du Louvre" content="">
+    <meta name="Guillaume Pruvost" content="">
+
+    <title>{% block title %}Billeterie du Louvre{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('lib/css/jquery-ui-1.10.4.datepicker.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
+    {% endblock %}
+
+</head>
+
+<body>
+
+{# Header #}
+{{ include("header-layout.html.twig") }}
+
+<div class="container-billeterie">
+
+    {# Content #}
+    <div class="row row-form-posts">
+
+        <div class="col-md-12">
+            <h1 class="my-4 text-center">BILLETERIE</h1>
+        </div>
+        <div class="col-md-12 text-center bloc-boutons-widget">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseModal">
+                COMMANDE EN COURS
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#priceModal">
+                TARIFICATION
+            </button>
+        </div>
+
+        {# Modals #}
+        <!-- Commande -->
+        <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="purchaseModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="purchaseModalLabel">COMMANDE EN COURS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                                {{ render(controller("OCLouvreBundle:Booking:widget")) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Commande -->
+        <!-- Tarifs -->
+        <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="priceModalLabel">TARIFICATION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                                {{ include("@OCLouvre/Booking/widgetPrice.html.twig") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Tarifs -->
+        {# Fin Modals #}
+
+        {% block body %}
+        {% endblock %}
+
+        <!-- Widget -->
+        <div class="col-md-4 bloc-widget">
+            <!-- COMMANDE -->
+            <div class="card widget-order">
+                <h5 class="card-header text-center widget-order-title">COMMANDE EN COURS</h5>
+                <div class="card-body widget-order-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                                {{ render(controller("OCLouvreBundle:Booking:widget")) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FIN COMMANDE -->
+
+            <!-- TARIFS -->
+            <div class="card my-4 widget-prices">
+                <h5 class="card-header text-center widget-prices-title">TARIFICATION</h5>
+                <div class="card-body widget-prices-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                                {{ include("@OCLouvre/Booking/widgetPrice.html.twig") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FIN TARIFS -->
+
+        </div>
+        <!-- Fin Widget -->
+
+    </div>
+    {# Fin Content #}
+
+</div>
+
+
+{# Footer #}
+{{ include("footer-layout.html.twig") }}
+
+
+<!-- JavaScript -->
+<script src="{{ asset('lib/js/jquery.js') }}"></script>
+<script src="{{ asset('lib/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
+<script src="{{ asset('lib/js/louvre.js') }}"></script>
+
+</body>
+</html>

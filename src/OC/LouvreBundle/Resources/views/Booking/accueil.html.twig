@@ -1,0 +1,31 @@
+{%  extends "@OCLouvre/layout.html.twig" %}
+
+{% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block ocaccueil_body %}
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+        <!-- Blog Post -->
+        <div class="card ">
+            <div class="card-body">
+                <h2 class="card-title text-center">Réserver un billet</h2>
+                {{ form_start(form) }}
+
+                {{ form_errors(form) }}
+
+                {{ form_widget(form) }}
+
+                {{ form_end(form) }}
+
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var dates = ["2018-05-09","2018-05-10","2018-05-11","2018-05-12","2018-05-13"];
+    </script>
+
+
+
+{% endblock %}
+
