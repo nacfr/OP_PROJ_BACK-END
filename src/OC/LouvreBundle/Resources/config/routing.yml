@@ -3,7 +3,8 @@ oc_louvre_homepage:
     defaults:
         _controller: OCLouvreBundle:Booking:index
 
-oc_test:
-    path:     /test
+oc_sucess:
+    path:     /sucess
     defaults:
-        _controller: OCLouvreBundle:Booking:widget
+        _controller: OCLouvreBundle:Booking:sucess
+

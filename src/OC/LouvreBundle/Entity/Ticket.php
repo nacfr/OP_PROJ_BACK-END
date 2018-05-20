@@ -13,9 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Ticket
 {
 	/**
+	 * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Pricing", mappedBy="ticket")
+	 */
+	private $prices;
+	
+	/**
 	 * @var int
 	 *
-	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Booking")
+	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Booking", inversedBy="tickets")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $booking;
@@ -217,5 +222,46 @@ class Ticket
     public function getBooking()
     {
         return $this->booking;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add price
+     *
+     * @param \OC\LouvreBundle\Entity\Pricing $price
+     *
+     * @return Ticket
+     */
+    public function addPrice(\OC\LouvreBundle\Entity\Pricing $price)
+    {
+        $this->prices[] = $price;
+
+        return $this;
+    }
+
+    /**
+     * Remove price
+     *
+     * @param \OC\LouvreBundle\Entity\Pricing $price
+     */
+    public function removePrice(\OC\LouvreBundle\Entity\Pricing $price)
+    {
+        $this->prices->removeElement($price);
+    }
+
+    /**
+     * Get prices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPrices()
+    {
+        return $this->prices;
     }
 }

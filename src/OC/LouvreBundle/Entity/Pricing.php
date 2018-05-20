@@ -12,10 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pricing
 {
+	
+	
 	/**
 	 * @var int
 	 *
-	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Ticket")
+	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Ticket", inversedBy="prices")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $ticket;

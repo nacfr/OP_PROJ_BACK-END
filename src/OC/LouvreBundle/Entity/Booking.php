@@ -3,6 +3,7 @@
 namespace OC\LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Booking
@@ -12,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Booking
 {
-    /**
+	/**
+	 * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Ticket", mappedBy="booking")
+	 */
+	private $tickets;
+	
+	/**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -23,6 +29,8 @@ class Booking
 
     /**
      * @var \DateTime
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      *
      * @ORM\Column(name="bookingdate", type="date")
      */
@@ -30,6 +38,7 @@ class Booking
 
     /**
      * @var string
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="tickettype", type="string", length=255)
      */
@@ -37,6 +46,7 @@ class Booking
 
     /**
      * @var int
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="ticketnumber", type="integer")
      */
@@ -124,5 +134,45 @@ class Booking
     {
         return $this->ticketnumber;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add ticket
+     *
+     * @param \OC\LouvreBundle\Entity\Ticket $ticket
+     *
+     * @return Booking
+     */
+    public function addTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
+    {
+        $this->tickets[] = $ticket;
+
+        return $this;
+    }
+
+    /**
+     * Remove ticket
+     *
+     * @param \OC\LouvreBundle\Entity\Ticket $ticket
+     */
+    public function removeTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
+    {
+        $this->tickets->removeElement($ticket);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+}
