@@ -3,6 +3,7 @@
 namespace OC\LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
@@ -43,6 +44,7 @@ class Ticket
 
     /**
      * @var string
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="firstname", type="string", length=255)
      */
@@ -50,6 +52,8 @@ class Ticket
 
     /**
      * @var \DateTime
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      *
      * @ORM\Column(name="dateofbirth", type="date")
      */
@@ -57,6 +61,7 @@ class Ticket
 
     /**
      * @var string
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="country", type="string", length=255)
      */

@@ -2,7 +2,9 @@
 
 namespace OC\LouvreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use OC\LouvreBundle\Entity\Ticket;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -51,7 +53,6 @@ class Booking
      * @ORM\Column(name="ticketnumber", type="integer")
      */
     private $ticketnumber;
-
 
     /**
      * Get id
@@ -139,17 +140,17 @@ class Booking
      */
     public function __construct()
     {
-        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tickets = new ArrayCollection();
     }
 
     /**
      * Add ticket
      *
-     * @param \OC\LouvreBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      *
      * @return Booking
      */
-    public function addTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
+    public function addTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
 
@@ -159,9 +160,9 @@ class Booking
     /**
      * Remove ticket
      *
-     * @param \OC\LouvreBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      */
-    public function removeTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
+    public function removeTicket(Ticket $ticket)
     {
         $this->tickets->removeElement($ticket);
     }

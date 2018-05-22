@@ -10,6 +10,7 @@
 	
 	
 	use OC\LouvreBundle\Entity\Booking;
+	use OC\LouvreBundle\Entity\Ticket;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -54,13 +55,13 @@
 				->getForm();
 			*/
 			
-			$form = $this->createForm(BookingType::class);
+			$form = $this->createForm(BookingType::class, $booking);
 			
 			$form->handleRequest($request);
 			
 			if ($form->isSubmitted() && $form->isValid()) {
 				$booking = $form->getData();
-				
+
 				return $this->redirectToRoute('oc_sucess');
 			}
 			
