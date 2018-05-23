@@ -1,0 +1,29 @@
+<h2 class="card-title form-posts-title">Billet N°1</h2>
+<hr/>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.name) }}
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ form_label(form.firstname) }}
+        {{ form_errors(form.firstname) }}
+        {{ form_widget(form.firstname) }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.dateofbirth) }}
+        {{ form_errors(form.dateofbirth) }}
+        {{ form_widget(form.dateofbirth) }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.country) }}
+        {{ form_errors(form.country) }}
+        {{ form_widget(form.country) }}
+    </div>
+</div>
+

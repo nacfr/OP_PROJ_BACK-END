@@ -10,8 +10,6 @@
             <div class="card-body">
                 <h2 class="card-title text-center">Réserver un billet</h2>
                 {{ form_start(form) }}
-                {{ form_errors(form) }}
-
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         {{ form_label(form.bookingdate) }}
@@ -34,27 +32,16 @@
                     </div>
                 </div>
 
-
-                <div id="ticket-fields-list"
-                     data-prototype="{{ form_widget(form.tickets.vars.prototype)|e }}"
-                     data-widget-tags="{{ '<div class="form-posts"></div>'|e }}">
-
-                    {% for ticketField in form.tickets %}
-                        <div class="form-posts">
-                            <h2 class="card-title form-posts-title">Billet</h2>
-                            <hr/>
-                            {{ form_errors(ticketField) }}
-                            {{ form_widget(ticketField) }}
-                        </div>
-                    {% endfor %}
+                <div class="tags" id="toto"
+                     data-prototype="{% filter escape %}{% include '@OCLouvre/Booking/form.html.twig' with {'form': (form.tickets.vars.prototype)|e} %}{% endfilter %}">
                 </div>
 
-                <a href="#"
-                   class="add-another-collection-widget" data-list="#ticket-fields-list">Ajouter un billet</a>
-
+                <div class="form-posts-btn-valid text-center">
+                    {{ form_label(form.save) }}
+                    {{ form_widget(form.save) }}
+                </div>
+                {#{{ form_end(form, {'render_rest': false}) }}#}
                 {{ form_end(form) }}
-
-
             </div>
         </div>
     </div>

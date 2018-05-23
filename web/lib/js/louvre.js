@@ -29,33 +29,108 @@ $(document).ready(function () {
         }
     });
 
+    /* -----------------------------------------
+    Add / delete formulaire
+    ----------------------------------------- */
+    // setup an "add a tag" link
+    var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un billet</a>');
+    var $newLinkLi = $('<div></div>').append($addTagLink);
 
 
-    // add-collection-widget.js
-    jQuery(document).ready(function () {
-        jQuery('.add-another-collection-widget').click(function (e) {
-            e.preventDefault();
-            var list = jQuery(jQuery(this).attr('data-list'));
-            // Essayez de trouver le compteur de la liste.
-            var counter = list.data('widget-counter') | list.children().length;
-            // Si le compteur n'existe pas, utiliser la longueur de la liste.
-            if (!counter) { counter = list.children().length; }
+    // Get the ul that holds the collection of tags
+    var $collectionHolder = $('div.tags');
+    var indexform = $collectionHolder.find(':input').length;
 
-            // Récupère le gabarit du prototype
-            var newWidget = list.attr('data-prototype');
-            // remplacer le "__name__" utilisé dans l'identifiant et le nom du prototype
-            // avec un numéro unique au bloc billet.
-            // l'attribut de fin de nom ressemble à name="contact[tickets][2]
-            newWidget = newWidget.replace(/__name__/g, counter);
-            // Augmenter le compteur
-            counter++;
-            // Et stockez-le, la longueur ne peut pas être utilisée si la suppression de widgets est autorisée.
-            list.data(' widget-counter', counter);
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolder.append($newLinkLi);
 
-            // créer un nouvel élément de liste et l'ajouter à la liste
-            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-            newElem.appendTo(list);
-        });
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+    if (indexform === 0) {
+        addTagForm($collectionHolder, $newLinkLi);
+
+        //console.log(document.getElementById('booking_ticketnumber').value);
+    }
+
+    $('.add-ticketnumber-form-widget').change(function () {
+
+        removeTagForm()
+
+        var numberTicket = document.getElementById('booking_ticketnumber').value;
+
+        for (var i = 1; i <= numberTicket; i++) {
+
+            //console.log(i);
+
+            addTagForm($collectionHolder, $newLinkLi);
+        }
     });
+
+    $addTagLink.on('click', function (e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see code block below)
+        addTagForm($collectionHolder, $newLinkLi);
+    });
+
+
+    function addTagForm($collectionHolder, $newLinkLi) {
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        // Replace '$$name$$' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormLi = $('<div class="form-posts" id="tata"></div>').append(newForm);
+
+        // also add a remove button, just for this example
+        // $newFormLi.append('<a href="#" class="remove-tag">x</a>');
+
+        $newLinkLi.before($newFormLi);
+
+        // handle the removal, just for this example
+        /*$('.remove-tag').click(function (e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
+
+            return false;
+        });*/
+    }
+
+
+    function removeTagForm() {
+
+        var parentNode = document.getElementById("toto");
+        var childs = document.getElementById("tata");
+
+        var $collectionHolder = $('div.tags');
+        var indexform = $collectionHolder.find(':input').length;
+
+        console.log(indexform);
+
+        /*
+        for (var i = 1; i <= indexform; i++) {
+
+            //console.log(i);
+
+            indexform.removeChild();
+        }
+        */
+
+    }
+
+
 });
 

@@ -41,25 +41,18 @@
 						'3 billets' => '3'
 					),
 					'preferred_choices' => array('1 billet'),
+					'attr' => ['class' => 'add-ticketnumber-form-widget']
 				))
 				->add('tickets', CollectionType::class, array(
 					'entry_type' => TicketType::class,
 					'allow_add' => true,
 					'allow_delete' => true,
+					'by_reference' => false,
 					'entry_options' => array('label' => false)
+
 				))
 				->add('save', SubmitType::class, array('label' => 'Valider'));
 			
-			/*
-			$builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event){
-				$booking = $event->getData();
-				$form = $event->getForm();
-				
-				if (!$booking || $booking->getTickettype() === null){
-					$form->add('tickets', TicketType::class);
-				}
-			});
-			*/
 		}
 		
 		public function configureOptions(OptionsResolver $resolver)
