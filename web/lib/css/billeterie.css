@@ -86,9 +86,22 @@ body {
     text-align: right;
 }
 
+.tab-order-total, .tab-order{
+    margin-bottom: 0 !important;
+}
+
 .tab-order-total td {
-    font-size: 16px;
+    font-size: 14px;
+    border: 0;
+    line-height: 0.3;
+    text-align: right;
+}
+.tab-order-total-ht td {
     border-top: 2px solid white;
+}
+
+.tab-order-total-ttc td {
+    margin-bottom: 0 !important;
 }
 
 .widget-prices {

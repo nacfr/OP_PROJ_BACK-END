@@ -1,4 +1,4 @@
-<table class="table tab-order">
+{#<table class="table tab-order">
     {% for purchase in listPurchase %}
         <tr>
             <td class="tab-order-left">
@@ -9,8 +9,46 @@
             </td>
         </tr>
     {% endfor %}
+</table>#}
+<table class="table tab-order">
+    <tr>
+        <td id="tab-order-qt-free" class="tab-order-left">0</td>
+        <td id="tab-order-title-free" class="tab-order-left"> x Gratuit</td>
+        <td id="tab-order-price-free" class="tab-order-right">0 €</td>
+    </tr>
+    <tr>
+        <td id="tab-order-qt-child" class="tab-order-left">0</td>
+        <td id="tab-order-title-child" class="tab-order-left"> x Enfant</td>
+        <td id="tab-order-price-child" class="tab-order-right">0 €</td>
+    </tr>
+    <tr>
+        <td id="tab-order-qt-normal" class="tab-order-left">0</td>
+        <td id="tab-order-title-normal" class="tab-order-left"> x Normal</td>
+        <td id="tab-order-price-normal" class="tab-order-right">0 €</td>
+    </tr>
+    <tr>
+        <td id="tab-order-qt-senior" class="tab-order-left">0</td>
+        <td id="tab-order-title-senior" class="tab-order-left"> x Sénior</td>
+        <td id="tab-order-price-senior" class="tab-order-right">0 €</td>
+    </tr>
+    <tr>
+        <td id="tab-order-qt-reduced" class="tab-order-left">0</td>
+        <td id="tab-order-title-reduced" class="tab-order-left"> x Réduit</td>
+        <td id="tab-order-price-reduced" class="tab-order-right">0 €</td>
+    </tr>
+
 </table>
-
-
-
-
+<table class="table tab-order-total">
+    <tr class="tab-order-total-ht">
+        <td id="tab-order-total-title-ht" class="tab-order-left">TOTAL HT</td>
+        <td id="tab-order-total-price-ht" class="tab-order-right">0 €</td>
+    </tr>
+    <tr class="tab-order-tva">
+        <td id="tab-order-total-title-tva" class="tab-order-left">TVA</td>
+        <td id="tab-order-total-price-tva" class="tab-order-right">0 €</td>
+    </tr>
+    <tr class="tab-order-total-ttc">
+        <td id="tab-order-total-title-ttc" class="tab-order-left">TOTAL TTC</td>
+        <td id="tab-order-total-price-ttc" class="tab-order-right">0 €</td>
+    </tr>
+</table>

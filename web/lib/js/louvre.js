@@ -29,124 +29,31 @@ $(document).ready(function () {
         }
     });
 
+
     /* -----------------------------------------
     Add / delete formulaire
     ----------------------------------------- */
-    // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un billet</a>');
-    var $newLinkLi = $('<div></div>').append($addTagLink);
-
-
-    // Get the ul that holds the collection of tags
-    var $collectionHolder = $('div.tags');
+    $collectionHolder = $('div.tags');
     var indexform = $collectionHolder.find(':input').length;
+    if (indexform === 0) {
+        addTagForm($collectionHolder);
+    }
 
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-    $('.add-ticketnumber-form-widget').change(function(){
-
-        removeTagForm();
-
-        //console.log(document.getElementById('booking_ticketnumber').value);
+    $('.add-ticketnumber-form-widget').change(function () {
+        $collectionHolder.html("");
         var numberTicket = document.getElementById('booking_ticketnumber').value;
-
-        for (var i = 1; i <= numberTicket; i++){
-
-            //console.log(i);
-
-            addTagForm($collectionHolder, $newLinkLi);
+        for (var i = 1; i <= numberTicket; i++) {
+            addTagForm($collectionHolder);
         }
     });
 
-    if (indexform === 0){
-        addTagForm($collectionHolder, $newLinkLi);
-
-        //console.log(document.getElementById('booking_ticketnumber').value);
-    }
-
-    $addTagLink.on('click', function (e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see code block below)
-        addTagForm($collectionHolder, $newLinkLi);
-    });
-
-
-    function addTagForm($collectionHolder, $newLinkLi) {
-        // Get the data-prototype explained earlier
+    function addTagForm($collectionHolder) {
         var prototype = $collectionHolder.data('prototype');
-
-        // get the new index
         var index = $collectionHolder.data('index');
-
-        // Replace '$$name$$' in the prototype's HTML to
-        // instead be a number based on how many items we have
         var newForm = prototype.replace(/__name__/g, index);
-
-        // increase the index with one for the next item
         $collectionHolder.data('index', index + 1);
-
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<div class="form-posts" id="tata"></div>').append(newForm);
-
-        // also add a remove button, just for this example
-       // $newFormLi.append('<a href="#" class="remove-tag">x</a>');
-
-        $newLinkLi.before($newFormLi);
-
-        // handle the removal, just for this example
-        /*$('.remove-tag').click(function (e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-
-            return false;
-        });*/
+        var $newFormLi = $('<div class="form-posts"></div>').append(newForm);
+        $collectionHolder.append($newFormLi);
     }
-
-    function removeTagForm() {
-        /*var top = document.getElementById("toto");
-        var nested = document.getElementById("tata");
-
-        var childNode = top.childNodes;
-
-
-        console.log(childNode);
-
-
-        for (var i = 1; nested[i]; i++){
-
-        //for (var i = childNode.length; i >= 0; i--){
-
-            console.log(i);
-            top.removeChild(nested);
-
-        }*/
-
-        var toto = document.getElementById("toto");
-        var tata = document.getElementById("tata");
-        var titi = document.getElementsByTagName("div");
-
-        var tab = [];
-
-        for(var i = 0; i <= titi.length; i++ )
-        {
-            if( titi[i].className === "form-posts" )
-            {
-                tab.push(i);
-            }
-        }
-
-        console.log(tab);
-
-    }
-
-
 });
 

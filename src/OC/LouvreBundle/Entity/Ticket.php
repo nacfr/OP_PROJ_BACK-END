@@ -3,30 +3,16 @@
 namespace OC\LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
  *
- * @ORM\Table(name="oc_ticket")
+ * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TicketRepository")
  */
 class Ticket
 {
-	/**
-	 * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Pricing", mappedBy="ticket")
-	 */
-	private $prices;
-	
-	/**
-	 * @var int
-	 *
-	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Booking", inversedBy="tickets")
-	 * @ORM\JoinColumn(nullable=false)
-	 */
-	private $booking;
-	
-	/**
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -34,6 +20,16 @@ class Ticket
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Booking", inversedBy="tickets")
+     */
+    private $booking;
+
+    /**
+     * @ORM\OneToOne(targetEntity="OC\LouvreBundle\Entity\Pricing")
+     */
+    private $pricing;
 
     /**
      * @var string
@@ -44,7 +40,6 @@ class Ticket
 
     /**
      * @var string
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="firstname", type="string", length=255)
      */
@@ -52,8 +47,6 @@ class Ticket
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank()
-     * @Assert\Type("\DateTime")
      *
      * @ORM\Column(name="dateofbirth", type="date")
      */
@@ -61,18 +54,38 @@ class Ticket
 
     /**
      * @var string
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="country", type="string", length=255)
      */
     private $country;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="ticketinfo", type="string", length=255)
+     * @ORM\Column(name="reducedprice", type="boolean")
      */
-    private $ticketinfo;
+    private $reducedprice;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="handicap", type="boolean")
+     */
+    private $handicap;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="priceht", type="float")
+     */
+    private $priceht;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="registrationticket", type="datetime")
+     */
+    private $registrationticket;
 
 
     /**
@@ -182,27 +195,99 @@ class Ticket
     }
 
     /**
-     * Set ticketinfo
+     * Set reducedprice
      *
-     * @param string $ticketinfo
+     * @param boolean $reducedprice
      *
      * @return Ticket
      */
-    public function setTicketinfo($ticketinfo)
+    public function setReducedprice($reducedprice)
     {
-        $this->ticketinfo = $ticketinfo;
+        $this->reducedprice = $reducedprice;
 
         return $this;
     }
 
     /**
-     * Get ticketinfo
+     * Get reducedprice
      *
-     * @return string
+     * @return bool
      */
-    public function getTicketinfo()
+    public function getReducedprice()
     {
-        return $this->ticketinfo;
+        return $this->reducedprice;
+    }
+
+    /**
+     * Set handicap
+     *
+     * @param boolean $handicap
+     *
+     * @return Ticket
+     */
+    public function setHandicap($handicap)
+    {
+        $this->handicap = $handicap;
+
+        return $this;
+    }
+
+    /**
+     * Get handicap
+     *
+     * @return bool
+     */
+    public function getHandicap()
+    {
+        return $this->handicap;
+    }
+
+    /**
+     * Set priceht
+     *
+     * @param float $priceht
+     *
+     * @return Ticket
+     */
+    public function setPriceht($priceht)
+    {
+        $this->priceht = $priceht;
+
+        return $this;
+    }
+
+    /**
+     * Get priceht
+     *
+     * @return float
+     */
+    public function getPriceht()
+    {
+        return $this->priceht;
+    }
+
+    /**
+     * Set registrationticket
+     *
+     * @param \DateTime $registrationticket
+     *
+     * @return Ticket
+     */
+    public function setRegistrationticket($registrationticket)
+    {
+        $this->registrationticket = $registrationticket;
+
+        return $this;
+    }
+
+    /**
+     * Get registrationticket
+     *
+     * @return \DateTime
+     */
+    public function getRegistrationticket()
+    {
+        return $this->registrationticket;
     }
 
     /**
@@ -212,7 +297,7 @@ class Ticket
      *
      * @return Ticket
      */
-    public function setBooking(\OC\LouvreBundle\Entity\Booking $booking)
+    public function setBooking(\OC\LouvreBundle\Entity\Booking $booking = null)
     {
         $this->booking = $booking;
 
@@ -228,45 +313,28 @@ class Ticket
     {
         return $this->booking;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add price
+     * Set pricing
      *
-     * @param \OC\LouvreBundle\Entity\Pricing $price
+     * @param \OC\LouvreBundle\Entity\Princing $pricing
      *
      * @return Ticket
      */
-    public function addPrice(\OC\LouvreBundle\Entity\Pricing $price)
+    public function setPricing(\OC\LouvreBundle\Entity\Princing $pricing = null)
     {
-        $this->prices[] = $price;
+        $this->pricing = $pricing;
 
         return $this;
     }
 
     /**
-     * Remove price
+     * Get pricing
      *
-     * @param \OC\LouvreBundle\Entity\Pricing $price
+     * @return \OC\LouvreBundle\Entity\Princing
      */
-    public function removePrice(\OC\LouvreBundle\Entity\Pricing $price)
+    public function getPricing()
     {
-        $this->prices->removeElement($price);
-    }
-
-    /**
-     * Get prices
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPrices()
-    {
-        return $this->prices;
+        return $this->pricing;
     }
 }

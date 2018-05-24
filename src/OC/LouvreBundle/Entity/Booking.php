@@ -4,23 +4,16 @@ namespace OC\LouvreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use OC\LouvreBundle\Entity\Ticket;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Booking
  *
- * @ORM\Table(name="oc_booking")
+ * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\BookingRepository")
  */
 class Booking
 {
-	/**
-	 * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Ticket", mappedBy="booking")
-	 */
-	private $tickets;
-	
-	/**
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -30,9 +23,12 @@ class Booking
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Ticket", mappedBy="booking")
+     */
+    private $tickets;
+
+    /**
      * @var \DateTime
-     * @Assert\NotBlank()
-     * @Assert\Type("\DateTime")
      *
      * @ORM\Column(name="bookingdate", type="date")
      */
@@ -40,7 +36,6 @@ class Booking
 
     /**
      * @var string
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="tickettype", type="string", length=255)
      */
@@ -48,11 +43,24 @@ class Booking
 
     /**
      * @var int
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="ticketnumber", type="integer")
      */
     private $ticketnumber;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="registrationbooking", type="datetime")
+     */
+    private $registrationbooking;
+
+    public function __construct()
+    {
+        $this->registrationbooking = new \DateTime();
+        $this->tickets = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -135,22 +143,39 @@ class Booking
     {
         return $this->ticketnumber;
     }
+
     /**
-     * Constructor
+     * Set registrationbooking
+     *
+     * @param \DateTime $registrationbooking
+     *
+     * @return Booking
      */
-    public function __construct()
+    public function setRegistrationbooking($registrationbooking)
     {
-        $this->tickets = new ArrayCollection();
+        $this->registrationbooking = $registrationbooking;
+
+        return $this;
+    }
+
+    /**
+     * Get registrationbooking
+     *
+     * @return \DateTime
+     */
+    public function getRegistrationbooking()
+    {
+        return $this->registrationbooking;
     }
 
     /**
      * Add ticket
      *
-     * @param Ticket $ticket
+     * @param \OC\LouvreBundle\Entity\Ticket $ticket
      *
      * @return Booking
      */
-    public function addTicket(Ticket $ticket)
+    public function addTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
     {
         $this->tickets[] = $ticket;
 
@@ -160,9 +185,9 @@ class Booking
     /**
      * Remove ticket
      *
-     * @param Ticket $ticket
+     * @param \OC\LouvreBundle\Entity\Ticket $ticket
      */
-    public function removeTicket(Ticket $ticket)
+    public function removeTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
     {
         $this->tickets->removeElement($ticket);
     }

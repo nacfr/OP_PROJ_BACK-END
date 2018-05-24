@@ -4,26 +4,15 @@ namespace OC\LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Pricing
  *
- * @ORM\Table(name="oc_pricing")
+ * @ORM\Table(name="pricing")
  * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\PricingRepository")
  */
 class Pricing
 {
-	
-	
-	/**
-	 * @var int
-	 *
-	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Ticket", inversedBy="prices")
-	 * @ORM\JoinColumn(nullable=false)
-	 */
-	private $ticket;
-	
-	/**
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -42,16 +31,28 @@ class Pricing
     /**
      * @var float
      *
-     * @ORM\Column(name="htprice", type="float")
+     * @ORM\Column(name="priceht", type="float")
      */
-    private $htprice;
-	
-	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="tva", type="float")
-	 */
-    private $tva;
+    private $priceht;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="registrationpricing", type="datetime")
+     */
+    private $registrationpricing;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modificationpricing", type="datetime")
+     */
+    private $modificationpricing;
+
+    public function __construct()
+    {
+        $this->modificationpricing = new \DateTime();
+    }
 
 
     /**
@@ -89,74 +90,74 @@ class Pricing
     }
 
     /**
-     * Set htprice
+     * Set priceht
      *
-     * @param float $htprice
+     * @param float $priceht
      *
      * @return Pricing
      */
-    public function setHtprice($htprice)
+    public function setPriceht($priceht)
     {
-        $this->htprice = $htprice;
+        $this->priceht = $priceht;
 
         return $this;
     }
 
     /**
-     * Get htprice
+     * Get priceht
      *
      * @return float
      */
-    public function getHtprice()
+    public function getPriceht()
     {
-        return $this->htprice;
+        return $this->priceht;
     }
 
     /**
-     * Set tva
+     * Set registrationpricing
      *
-     * @param float $tva
+     * @param \DateTime $registrationpricing
      *
      * @return Pricing
      */
-    public function setTva($tva)
+    public function setRegistrationpricing($registrationpricing)
     {
-        $this->tva = $tva;
+        $this->registrationpricing = $registrationpricing;
 
         return $this;
     }
 
     /**
-     * Get tva
+     * Get registrationpricing
      *
-     * @return float
+     * @return \DateTime
      */
-    public function getTva()
+    public function getRegistrationpricing()
     {
-        return $this->tva;
+        return $this->registrationpricing;
     }
 
     /**
-     * Set ticket
+     * Set modificationpricing
      *
-     * @param \OC\LouvreBundle\Entity\Ticket $ticket
+     * @param \DateTime $modificationpricing
      *
      * @return Pricing
      */
-    public function setTicket(\OC\LouvreBundle\Entity\Ticket $ticket)
+    public function setModificationpricing($modificationpricing)
     {
-        $this->ticket = $ticket;
+        $this->modificationpricing = $modificationpricing;
 
         return $this;
     }
 
     /**
-     * Get ticket
+     * Get modificationpricing
      *
-     * @return \OC\LouvreBundle\Entity\Ticket
+     * @return \DateTime
      */
-    public function getTicket()
+    public function getModificationpricing()
     {
-        return $this->ticket;
+        return $this->modificationpricing;
     }
 }
