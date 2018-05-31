@@ -9,10 +9,9 @@
 
     <title>{% block title %}Billeterie du Louvre{% endblock %}</title>
 
+    <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('lib/css/jquery-ui-1.10.4.datepicker.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
     {% endblock %}
 
 </head>
@@ -129,10 +128,9 @@
 
 
 <!-- JavaScript -->
-<script src="{{ asset('lib/js/jquery.js') }}"></script>
-<script src="{{ asset('lib/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
-<script src="{{ asset('lib/js/louvre.js') }}"></script>
 
+{% block scripts %}
+{% endblock %}
 
 </body>
 </html>

@@ -5,27 +5,14 @@ namespace OC\LouvreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ticket
+ * Tticket
  *
- * @ORM\Table(name="oc_ticket")
- * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TicketRepository")
+ * @ORM\Table(name="tticket")
+ * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TticketRepository")
  */
-class Ticket
+class Tticket
 {
-	/**
-	 * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Pricing", mappedBy="ticket")
-	 */
-	private $prices;
-	
-	/**
-	 * @var int
-	 *
-	 * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Booking", inversedBy="tickets")
-	 * @ORM\JoinColumn(nullable=false)
-	 */
-	private $booking;
-	
-	/**
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -33,6 +20,11 @@ class Ticket
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Tbooking", inversedBy="ttickets")
+     */
+    private $tbooking;
 
     /**
      * @var string
@@ -63,17 +55,25 @@ class Ticket
     private $country;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="ticketinfo", type="string", length=255)
+     * @ORM\Column(name="handicap", type="boolean")
      */
-    private $ticketinfo;
+    private $handicap;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="reduceprice", type="boolean")
+     */
+    private $reduceprice;
+
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +85,7 @@ class Ticket
      *
      * @param string $name
      *
-     * @return Ticket
+     * @return Tticket
      */
     public function setName($name)
     {
@@ -109,7 +109,7 @@ class Ticket
      *
      * @param string $firstname
      *
-     * @return Ticket
+     * @return Tticket
      */
     public function setFirstname($firstname)
     {
@@ -133,7 +133,7 @@ class Ticket
      *
      * @param \DateTime $dateofbirth
      *
-     * @return Ticket
+     * @return Tticket
      */
     public function setDateofbirth($dateofbirth)
     {
@@ -157,7 +157,7 @@ class Ticket
      *
      * @param string $country
      *
-     * @return Ticket
+     * @return Tticket
      */
     public function setCountry($country)
     {
@@ -177,91 +177,74 @@ class Ticket
     }
 
     /**
-     * Set ticketinfo
+     * Set handicap
      *
-     * @param string $ticketinfo
+     * @param boolean $handicap
      *
-     * @return Ticket
+     * @return Tticket
      */
-    public function setTicketinfo($ticketinfo)
+    public function setHandicap($handicap)
     {
-        $this->ticketinfo = $ticketinfo;
+        $this->handicap = $handicap;
 
         return $this;
     }
 
     /**
-     * Get ticketinfo
+     * Get handicap
      *
-     * @return string
+     * @return boolean
      */
-    public function getTicketinfo()
+    public function getHandicap()
     {
-        return $this->ticketinfo;
+        return $this->handicap;
     }
 
     /**
-     * Set booking
+     * Set reduceprice
      *
-     * @param \OC\LouvreBundle\Entity\Booking $booking
+     * @param boolean $reduceprice
      *
-     * @return Ticket
+     * @return Tticket
      */
-    public function setBooking(\OC\LouvreBundle\Entity\Booking $booking)
+    public function setReduceprice($reduceprice)
     {
-        $this->booking = $booking;
+        $this->reduceprice = $reduceprice;
 
         return $this;
     }
 
     /**
-     * Get booking
+     * Get reduceprice
      *
-     * @return \OC\LouvreBundle\Entity\Booking
+     * @return boolean
      */
-    public function getBooking()
+    public function getReduceprice()
     {
-        return $this->booking;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->reduceprice;
     }
 
     /**
-     * Add price
+     * Set tbooking
      *
-     * @param \OC\LouvreBundle\Entity\Pricing $price
+     * @param \OC\LouvreBundle\Entity\Tbooking $tbooking
      *
-     * @return Ticket
+     * @return Tticket
      */
-    public function addPrice(\OC\LouvreBundle\Entity\Pricing $price)
+    public function setTbooking(\OC\LouvreBundle\Entity\Tbooking $tbooking = null)
     {
-        $this->prices[] = $price;
+        $this->tbooking = $tbooking;
 
         return $this;
     }
 
     /**
-     * Remove price
+     * Get tbooking
      *
-     * @param \OC\LouvreBundle\Entity\Pricing $price
+     * @return \OC\LouvreBundle\Entity\Tbooking
      */
-    public function removePrice(\OC\LouvreBundle\Entity\Pricing $price)
+    public function getTbooking()
     {
-        $this->prices->removeElement($price);
-    }
-
-    /**
-     * Get prices
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPrices()
-    {
-        return $this->prices;
+        return $this->tbooking;
     }
 }

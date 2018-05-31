@@ -1,4 +1,4 @@
-<h2 class="card-title form-posts-title">Billet N°1</h2>
+<h2 class="card-title form-posts-title">Billet N°</h2>
 <hr/>
 <div class="form-row">
     <div class="form-group col-md-6">
@@ -25,5 +25,17 @@
         {{ form_errors(form.country) }}
         {{ form_widget(form.country) }}
     </div>
+    <div class="form-group col-md-6">
+        <p>Informations complémentaires</p>
+        <div class="form-group col-md-12">
+            {{ form_label(form.reduceprice) }}
+            {{ form_errors(form.reduceprice) }}
+            {{ form_widget(form.reduceprice) }}
+            {{ form_label(form.handicap) }}
+            {{ form_errors(form.handicap) }}
+            {{ form_widget(form.handicap) }}
+        </div>
+    </div>
 </div>
+
 

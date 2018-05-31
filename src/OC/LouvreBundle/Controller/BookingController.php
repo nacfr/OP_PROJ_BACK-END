@@ -8,71 +8,63 @@
 	
 	namespace OC\LouvreBundle\Controller;
 	
-	
-	use OC\LouvreBundle\Entity\Booking;
-	use OC\LouvreBundle\Entity\Ticket;
-	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+	use OC\LouvreBundle\Entity\Tbooking;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
-	use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-	use Symfony\Component\Form\Extension\Core\Type\DateType;
-	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-	use Symfony\Component\HttpFoundation\Response;
-	use OC\LouvreBundle\Form\BookingType;
+    use Symfony\Component\HttpFoundation\Response;
+    use OC\LouvreBundle\Form\BookingType;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 	
 	class BookingController extends Controller
 	{
-		public function indexAction(Request $request)
+		public function bookingAction(Request $request)
 		{
 			
-			$booking = new Booking();
-			
-			//Création formulaire
-			/*
-			$form = $this->createFormBuilder()
-				->add('bookingdate', DateType::class, array(
-					'label' => 'Choisissez une date',
-					'input' => 'datetime',
-					'format' => 'dd/MM/yyyy',
-					'attr' => ['class' => 'datepicker'],
-				))
-				->add('tickettype', ChoiceType::class, array(
-					'label' => 'Type de ticket',
-					'choices' => array(
-						'journée' => 'day',
-						'demi-jounrée' => 'halfday'),
-					'expanded' => true
-				))
-				->add('ticketnumber', ChoiceType::class, array(
-					'label' => 'Nombre de billet',
-					'choices' => array(
-						'1 billet' => '1',
-						'2 billets' => '2',
-						'3 billets' => '3'
-					),
-					'preferred_choices' => array('1 billet'),
-				))
-				->add('save', SubmitType::class, array('label' => 'Create Task'))
-				->getForm();
-			*/
+			$booking = new Tbooking();
 			
 			$form = $this->createForm(BookingType::class, $booking);
 			
 			$form->handleRequest($request);
 			
 			if ($form->isSubmitted() && $form->isValid()) {
-				$booking = $form->getData();
 
-				return $this->redirectToRoute('oc_sucess');
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($booking);
+				$em->flush();
+
+                //return $this->forward('OCLouvreBundle:Booking:summary', array('btoken' => $booking->getBtoken()));
+                return $this->redirectToRoute('oc_louvre_summary', array('btoken' => $booking->getBtoken()));
 			}
-			
-			
+
+
 			
 			return $this->render('@OCLouvre/Booking/accueil.html.twig', array('form' => $form->createView()));
 			
-			
+
 		}
-		
-		
+
+
+        /**
+         * @ParamConverter("booking", class="OCLouvreBundle:Tbooking" , options={"repository_method" = "findBookingByToken"}))
+         */
+        public function summaryAction(Tbooking $booking)
+        {
+            //$token = $booking->getBtoken();
+            //$date = $booking->getBookingdate();
+            $token = $booking->getBtoken();
+
+            $list = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('OCLouvreBundle:Tbooking')
+                ->getTest($token);
+
+            var_dump($list);
+
+            return new Response('ok');
+        }
+
 		public function widgetAction()
 		{
 			$listPurchase = array(
@@ -93,5 +85,12 @@
 		public function sucessAction()
 		{
 			return $this->render('@OCLouvre/Booking/sucess.html');
+		}
+		
+		public function pricingAction()
+		{
+		
+		
+		
 		}
 	}

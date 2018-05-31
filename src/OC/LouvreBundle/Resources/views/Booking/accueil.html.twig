@@ -1,8 +1,13 @@
-{% extends "@OCLouvre/layout.html.twig" %}
+{% extends "/layout.html.twig" %}
+{% block stylesheets %}
+    {#<link rel="stylesheet" href="{{ asset('lib/css/jquery-ui-1.10.4.datepicker.min.css') }}"/>#}
+    <link rel="stylesheet" href="{{ asset('lib/datepicker/css/bootstrap-datepicker3.min.css') }}"/>
+{% endblock %}
+
 
 {% block title %}Accueil - {{ parent() }}{% endblock %}
 
-{% block ocaccueil_body %}
+{% block body %}
     <!-- Blog Entries Column -->
     <div class="col-md-8">
         <!-- Blog Post -->
@@ -32,24 +37,37 @@
                     </div>
                 </div>
 
-                <div class="tags" id="toto"
-                     data-prototype="{% filter escape %}{% include '@OCLouvre/Booking/form.html.twig' with {'form': (form.tickets.vars.prototype)|e} %}{% endfilter %}">
+                <div class="tags"
+                     data-prototype="{% filter escape %}{% include '@OCLouvre/Booking/form/form.html.twig' with {'form': (form.ttickets.vars.prototype)|e} %}{% endfilter %}">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        {{ form_widget(form.btoken) }}
+                    </div>
                 </div>
 
                 <div class="form-posts-btn-valid text-center">
                     {{ form_label(form.save) }}
                     {{ form_widget(form.save) }}
                 </div>
-                {#{{ form_end(form, {'render_rest': false}) }}#}
-                {{ form_end(form) }}
+
+                {{ form_widget(form._token) }}
+
+                {{ form_end(form, {'render_rest': false}) }}
             </div>
         </div>
     </div>
     <script type="text/javascript">
         var dates = ["2018-05-09", "2018-05-10", "2018-05-11", "2018-05-12", "2018-05-13"];
     </script>
+{% endblock %}
 
-
-
+{% block scripts %}
+    <script src="{{ asset('lib/js/jquery.js') }}"></script>
+    <script src="{{ asset('lib/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
+    <script src="{{ asset('lib/js/louvre.js') }}"></script>
+    <script src="{{ asset('lib/datepicker/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('lib/datepicker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
 {% endblock %}
 

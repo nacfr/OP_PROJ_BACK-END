@@ -1,10 +1,16 @@
 oc_louvre_homepage:
     path:     /
     defaults:
-        _controller: OCLouvreBundle:Booking:index
+        _controller: OCLouvreBundle:Booking:booking
 
-oc_sucess:
-    path:     /sucess
+oc_louvre_summary:
+    path:     /summary/{btoken}
     defaults:
-        _controller: OCLouvreBundle:Booking:sucess
+        _controller: OCLouvreBundle:Booking:summary
+
+
+oc_pricing:
+    path:    /pricing
+    defaults:
+        _controller: OCLouvreBundle:Booking;pricing
 

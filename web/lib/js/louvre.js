@@ -3,8 +3,7 @@ $(document).ready(function () {
     Datepickers
     ----------------------------------------- */
 
-
-    $(".datepicker[id='booking_bookingdate']").datepicker({
+  /*  $(".datepicker[name='booking[bookingdate]']").datepicker({
         closeText: 'Fermer',
         prevText: 'Précédent',
         nextText: 'Suivant',
@@ -25,112 +24,49 @@ $(document).ready(function () {
         onSelect: function (dateText, dateObj) {
             var minDate = new Date(dateObj.selectedYear, dateObj.selectedMonth, dateObj.selectedDay);
             minDate.setDate(minDate.getDate() + 1);
-            $(".datepicker[name='depart']").datepicker('option', 'minDate', minDate);
+            $(".datepicker[name='booking[bookingdate]']").datepicker('option', 'minDate', minDate);
         }
-    });
+    });*/
+
+
+
+
 
     /* -----------------------------------------
     Add / delete formulaire
     ----------------------------------------- */
-    // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un billet</a>');
-    var $newLinkLi = $('<div></div>').append($addTagLink);
 
-
-    // Get the ul that holds the collection of tags
-    var $collectionHolder = $('div.tags');
+    $collectionHolder = $('div.tags');
+    $collectionHolder.data('index', $collectionHolder.find(':input').length + 1);
     var indexform = $collectionHolder.find(':input').length;
 
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
     if (indexform === 0) {
-        addTagForm($collectionHolder, $newLinkLi);
-
-        //console.log(document.getElementById('booking_ticketnumber').value);
+        comboAdd();
     }
 
     $('.add-ticketnumber-form-widget').change(function () {
-
-        removeTagForm()
-
-        var numberTicket = document.getElementById('booking_ticketnumber').value;
-
-        for (var i = 1; i <= numberTicket; i++) {
-
-            //console.log(i);
-
-            addTagForm($collectionHolder, $newLinkLi);
+        var nbBlocTicket = $collectionHolder.find('div.form-posts').length;
+        for (var d = 1; d <= nbBlocTicket; d++) {
+            $collectionHolder.data('index', ($collectionHolder.data('index') - 1));
         }
+        $collectionHolder.html("");
+        comboAdd();
     });
 
-    $addTagLink.on('click', function (e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
+    function comboAdd() {
+        var valTicket = document.getElementById('booking_ticketnumber').value;
+        for (var iadd = 1; iadd <= valTicket; iadd++) {
+            addTagForm($collectionHolder);
+        }
+    }
 
-        // add a new tag form (see code block below)
-        addTagForm($collectionHolder, $newLinkLi);
-    });
-
-
-    function addTagForm($collectionHolder, $newLinkLi) {
-        // Get the data-prototype explained earlier
+    function addTagForm($collectionHolder) {
         var prototype = $collectionHolder.data('prototype');
-
-        // get the new index
         var index = $collectionHolder.data('index');
-
-        // Replace '$$name$$' in the prototype's HTML to
-        // instead be a number based on how many items we have
         var newForm = prototype.replace(/__name__/g, index);
-
-        // increase the index with one for the next item
         $collectionHolder.data('index', index + 1);
-
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<div class="form-posts" id="tata"></div>').append(newForm);
-
-        // also add a remove button, just for this example
-        // $newFormLi.append('<a href="#" class="remove-tag">x</a>');
-
-        $newLinkLi.before($newFormLi);
-
-        // handle the removal, just for this example
-        /*$('.remove-tag').click(function (e) {
-            e.preventDefault();
-
-            $(this).parent().remove();
-
-            return false;
-        });*/
+        var $newFormLi = $('<div id="" class="form-posts"></div>').append(newForm);
+        $collectionHolder.append($newFormLi);
     }
-
-
-    function removeTagForm() {
-
-        var parentNode = document.getElementById("toto");
-        var childs = document.getElementById("tata");
-
-        var $collectionHolder = $('div.tags');
-        var indexform = $collectionHolder.find(':input').length;
-
-        console.log(indexform);
-
-        /*
-        for (var i = 1; i <= indexform; i++) {
-
-            //console.log(i);
-
-            indexform.removeChild();
-        }
-        */
-
-    }
-
 
 });
-

@@ -2,29 +2,44 @@
 	
 	namespace OC\LouvreBundle\Form;
 	
-	use Symfony\Component\Form\AbstractType;
+	use OC\LouvreBundle\Entity\Tbooking;
+    use Symfony\Component\Form\AbstractType;
 	use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+	use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 	use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 	use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 	use Symfony\Component\Form\Extension\Core\Type\DateType;
-	use Symfony\Component\Form\Extension\Core\Type\TextType;
 	use Symfony\Component\Form\FormBuilderInterface;
-	use Symfony\Component\Form\FormEvent;
 	use Symfony\Component\OptionsResolver\OptionsResolver;
-	use OC\LouvreBundle\Entity\Booking;
-	use Symfony\Component\Form\FormEvents;
 	
 	class BookingType extends AbstractType
 	{
-		public function buildForm(FormBuilderInterface $builder, array $options)
+
+        private function genToken()
+        {
+            $bytes = openssl_random_pseudo_bytes(12);
+            $hex   = bin2hex($bytes);
+            return $hex;
+        }
+
+	    public function buildForm(FormBuilderInterface $builder, array $options)
 		{
 			$builder
 				->add('bookingdate', DateType::class, array(
-					'label' => 'Choisissez une date',
-					'widget' => 'single_text',
-					'input' => 'datetime',
-					'format' => 'dd/MM/yyyy',
-					'attr' => ['class' => 'datepicker'],
+                    'label' => 'Choisissez une date',
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
+                    'attr' => [
+                        'data-date-language' => 'fr',
+                        'data-date-format' => 'dd-mm-yyyy',
+                        'data-date-days-of-week-disabled' => '02',
+                        'data-date-start-date' => "0d",
+                        'data-date-end-date' => '+364d',
+                        'data-date-today-highlight' => 'true',
+                        'data-date-orientation' => 'bottom',
+                        'data-provide' => 'datepicker',
+                        'class' => 'datepicker-bookingdate'
+                    ]
 				))
 				->add('tickettype', ChoiceType::class, array(
 					'label' => 'Type de ticket',
@@ -43,14 +58,18 @@
 					'preferred_choices' => array('1 billet'),
 					'attr' => ['class' => 'add-ticketnumber-form-widget']
 				))
-				->add('tickets', CollectionType::class, array(
+				->add('ttickets', CollectionType::class, array(
 					'entry_type' => TicketType::class,
 					'allow_add' => true,
 					'allow_delete' => true,
-					'by_reference' => false,
-					'entry_options' => array('label' => false)
-
+                    'by_reference' => false,
+                    'entry_options' => array(
+                        'attr' => array('class' => 'ticket-box'),
+                    ),
 				))
+                ->add('btoken', HiddenType::class, array(
+                        'data' => $this->genToken()
+                    ))
 				->add('save', SubmitType::class, array('label' => 'Valider'));
 			
 		}
@@ -59,7 +78,8 @@
 		{
 			$resolver->setDefaults(
 				[
-					'data_class' => Booking::class,
+					'data_class' => Tbooking::class,
+                    'validation_groups' => array('registration')
 				]
 			);
 		}
