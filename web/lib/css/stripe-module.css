@@ -1,0 +1,134 @@
+.louvre.payment * {
+  font-family: Quicksand, Open Sans, Segoe UI, sans-serif;
+  font-size: 16px;
+
+}
+
+.louvre.payment .fieldset {
+  margin: 0 15px 30px;
+  padding: 0;
+  border-style: none;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.louvre.payment .field {
+  padding: 10px 20px 11px;
+  background-color: #e6e6e6;
+  border-radius: 20px;
+  width: 100%;
+}
+
+.louvre.payment .field.third-width {
+  width: calc(50% - (5px / 2));
+}
+
+.louvre.payment .field + .field {
+  margin-top: 6px;
+}
+
+.louvre.payment .field.focus,
+.louvre.payment .field:focus {
+  color: #424770;
+  background-color: #f6f9fc;
+}
+
+.louvre.payment .field.invalid {
+  background-color: #fa755a;
+}
+
+.louvre.payment .field.invalid.focus {
+  background-color: #f6f9fc;
+}
+
+.louvre.payment .field.focus::-webkit-input-placeholder,
+.louvre.payment .field:focus::-webkit-input-placeholder {
+  color: #cfd7df;
+}
+
+.louvre.payment .field.focus::-moz-placeholder,
+.louvre.payment .field:focus::-moz-placeholder {
+  color: #cfd7df;
+}
+
+.louvre.payment .field.focus:-ms-input-placeholder,
+.louvre.payment .field:focus:-ms-input-placeholder {
+  color: #cfd7df;
+}
+
+.louvre.payment input, .louvre.payment button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+}
+
+.louvre.payment input {
+  color: #fff;
+}
+
+.louvre.payment input::-webkit-input-placeholder {
+  color: #9bacc8;
+}
+
+.louvre.payment input::-moz-placeholder {
+  color: #9bacc8;
+}
+
+.louvre.payment input:-ms-input-placeholder {
+  color: #9bacc8;
+}
+
+.louvre.payment button {
+  display: block;
+  width: calc(100% - 30px);
+  height: 40px;
+  margin: 0 15px;
+  background-color: #fcd669;
+  border-radius: 20px;
+  color: #525f7f;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.louvre.payment button:active {
+  background-color: #f5be58;
+}
+
+.louvre.payment .error svg .base {
+  fill: #fa755a;
+}
+
+.louvre.payment .error svg .glyph {
+  fill: #fff;
+}
+
+.louvre.payment .error .message {
+  color: #484848;
+}
+
+.louvre.payment .success .icon .border {
+  stroke: #fcd669;
+}
+
+.louvre.payment .success .icon .checkmark {
+  stroke: #484848;
+}
+
+.louvre.payment .success .title {
+  color: #484848;
+}
+
+.louvre.payment .success .message {
+  color: #484848;
+}
+
+.louvre.payment .success .reset path {
+  fill: #484848;
+}

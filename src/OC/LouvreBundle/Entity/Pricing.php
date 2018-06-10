@@ -27,6 +27,20 @@ class Pricing
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
+	
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="minage", type="integer")
+	 */
+    private $minage;
+	
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="maxage", type="integer")
+	 */
+    private $maxage;
 
     /**
      * @var float
@@ -34,6 +48,14 @@ class Pricing
      * @ORM\Column(name="priceht", type="float")
      */
     private $priceht;
+	
+	
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="tva", type="float")
+	 */
+    private $tva;
 
     /**
      * @var \DateTime
@@ -159,5 +181,77 @@ class Pricing
     public function getModificationpricing()
     {
         return $this->modificationpricing;
+    }
+
+    /**
+     * Set minage
+     *
+     * @param integer $minage
+     *
+     * @return Pricing
+     */
+    public function setMinage($minage)
+    {
+        $this->minage = $minage;
+
+        return $this;
+    }
+
+    /**
+     * Get minage
+     *
+     * @return integer
+     */
+    public function getMinage()
+    {
+        return $this->minage;
+    }
+
+    /**
+     * Set maxage
+     *
+     * @param integer $maxage
+     *
+     * @return Pricing
+     */
+    public function setMaxage($maxage)
+    {
+        $this->maxage = $maxage;
+
+        return $this;
+    }
+
+    /**
+     * Get maxage
+     *
+     * @return integer
+     */
+    public function getMaxage()
+    {
+        return $this->maxage;
+    }
+
+    /**
+     * Set tva
+     *
+     * @param float $tva
+     *
+     * @return Pricing
+     */
+    public function setTva($tva)
+    {
+        $this->tva = $tva;
+
+        return $this;
+    }
+
+    /**
+     * Get tva
+     *
+     * @return float
+     */
+    public function getTva()
+    {
+        return $this->tva;
     }
 }

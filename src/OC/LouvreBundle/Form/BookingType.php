@@ -11,6 +11,7 @@
 	use Symfony\Component\Form\Extension\Core\Type\DateType;
 	use Symfony\Component\Form\FormBuilderInterface;
 	use Symfony\Component\OptionsResolver\OptionsResolver;
+	use Symfony\Component\Validator\Constraints\NotBlank;
 	
 	class BookingType extends AbstractType
 	{
@@ -34,11 +35,12 @@
                         'data-date-format' => 'dd-mm-yyyy',
                         'data-date-days-of-week-disabled' => '02',
                         'data-date-start-date' => "0d",
-                        'data-date-end-date' => '+364d',
+                        'data-date-end-date' => 'Infinity',
                         'data-date-today-highlight' => 'true',
                         'data-date-orientation' => 'bottom',
                         'data-provide' => 'datepicker',
-                        'class' => 'datepicker-bookingdate'
+                        'class' => 'datepicker-bookingdate',
+                        'autocomplete' => 'off'
                     ]
 				))
 				->add('tickettype', ChoiceType::class, array(

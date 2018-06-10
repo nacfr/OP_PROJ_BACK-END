@@ -6,8 +6,12 @@ oc_louvre_homepage:
 oc_louvre_summary:
     path:     /summary/{btoken}
     defaults:
-        _controller: OCLouvreBundle:Booking:summary
+        _controller: OCLouvreBundle:Summary:summary
 
+oc_louvre_payment:
+    path:     /payment/{btoken}
+    defaults:
+        _controller: OCLouvreBundle:Payment:payment
 
 oc_pricing:
     path:    /pricing

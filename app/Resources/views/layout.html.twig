@@ -9,8 +9,23 @@
 
     <title>{% block title %}Billeterie du Louvre{% endblock %}</title>
 
-    <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
+    <!-- JS Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    {% javascripts
+        'lib/js/stripe-base.js' %}
+        <script type="text/javascript" src="{{ asset_url }}" data-rel-js></script>
+    {% endjavascripts %}
+
+    <!-- CSS -->
+
+    {% stylesheets 'lib/css/bootstrap.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    {% stylesheets 'lib/css/billeterie.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+
     {% block stylesheets %}
     {% endblock %}
 
@@ -52,7 +67,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12">
-                                {{ render(controller("OCLouvreBundle:Booking:widget")) }}
+                            {{ render(controller("OCLouvreBundle:Booking:widget")) }}
                         </div>
                     </div>
                 </div>
@@ -72,7 +87,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12">
-                                {{ include("@OCLouvre/Booking/widgetPrice.html.twig") }}
+                            {{ include("@OCLouvre/Louvre/widgetPrice.html.twig") }}
                         </div>
                     </div>
                 </div>
@@ -81,7 +96,7 @@
         <!-- Fin Tarifs -->
         {# Fin Modals #}
 
-        {% block body %}
+        {% block body %}w
         {% endblock %}
 
         <!-- Widget -->
@@ -92,7 +107,7 @@
                 <div class="card-body widget-order-content">
                     <div class="row">
                         <div class="col-lg-12">
-                                {{ render(controller("OCLouvreBundle:Booking:widget")) }}
+                            {{ render(controller("OCLouvreBundle:Booking:widget")) }}
                         </div>
                     </div>
                 </div>
@@ -106,7 +121,7 @@
                 <div class="card-body widget-prices-content">
                     <div class="row">
                         <div class="col-lg-12">
-                                {{ include("@OCLouvre/Booking/widgetPrice.html.twig") }}
+                            {{ include("@OCLouvre/Louvre/widgetPrice.html.twig") }}
                         </div>
                     </div>
                 </div>
@@ -126,9 +141,7 @@
 {# Footer #}
 {{ include("footer-layout.html.twig") }}
 
-
 <!-- JavaScript -->
-
 {% block scripts %}
 {% endblock %}
 

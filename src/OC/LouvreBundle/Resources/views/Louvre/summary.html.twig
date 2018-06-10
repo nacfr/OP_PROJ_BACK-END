@@ -1,0 +1,51 @@
+{% extends "/layout.html.twig" %}
+
+
+{% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+        <!-- RECAPITULATIF -->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center">Détail de la commande</h2>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table tab-summary-ticket">
+                            {% for summary in summaries.details %}
+                                {% if summary.quantity > 0 %}
+                                    <tr>
+                                        <td class="tab-summary-ticket">{{ summary.quantity }} ticket
+                                            tarif {{ summary.id }} {{ bookingtype }} - Musée du Louvre Paris
+                                        </td>
+                                        <td class="tab-summary-ticket">{{ summary.price }} ttc</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                        <table class="table tab-summary-total">
+                            {% for summary in summaries.total %}
+                                <tr>
+                                    <td>TOTAL T.T.C. {{ summary.price }} €</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    <a class="btn btn-success" href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}">Payer</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FIN RECAPITULATIF -->
+
+    </div>
+{% endblock %}
+
+

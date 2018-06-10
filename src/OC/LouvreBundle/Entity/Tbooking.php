@@ -4,12 +4,15 @@ namespace OC\LouvreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use OC\LouvreBundle\Entity\Tticket;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tbooking
  *
  * @ORM\Table(name="tbooking")
  * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TbookingRepository")
+ *
  */
 class Tbooking
 {
@@ -24,6 +27,7 @@ class Tbooking
 
     /**
      * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Tticket", mappedBy="tbooking", cascade={"persist"})
+     *
      */
     private $ttickets;
 
@@ -31,6 +35,7 @@ class Tbooking
      * @var \DateTime
      *
      * @ORM\Column(name="bookingdate", type="date")
+     *
      */
     private $bookingdate;
 
@@ -45,13 +50,14 @@ class Tbooking
      * @var int
      *
      * @ORM\Column(name="ticketnumber", type="integer")
+     *
      */
     private $ticketnumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="btoken", type="string", length=255)
+     * @ORM\Column(name="btoken", type="string", length=24, unique=true)
      */
     private $btoken;
 
@@ -61,15 +67,15 @@ class Tbooking
      * @ORM\Column(name="registrationbooking", type="datetime")
      */
     private $registrationbooking;
-
-
+    
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->registrationbooking = new \DateTime();
-        $this->ttickets = new ArrayCollection();
+	    $this->registrationbooking = new \DateTime();
+    	$this->ttickets = new ArrayCollection();
     }
-
-
 
     /**
      * Get id
@@ -147,10 +153,14 @@ class Tbooking
      * Get ticketnumber
      *
      * @return integer
+     *
+     * @Assert\IsTrue(message="La valeur du nombre de ticket ne correspond pas au nombre de tickets envoyés")
+     *
      */
     public function getTicketnumber()
     {
-        return $this->ticketnumber;
+        $nbtickets = $this->ttickets->count();
+        return $this->ticketnumber == $nbtickets;
     }
 
     /**
@@ -204,16 +214,15 @@ class Tbooking
     /**
      * Add tticket
      *
-     * @param \OC\LouvreBundle\Entity\Tticket $tticket
+     * @param Tticket $tticket
      *
      * @return Tbooking
      */
-    public function addTticket(\OC\LouvreBundle\Entity\Tticket $tticket)
+    public function addTticket(Tticket $tticket)
     {
         $this->ttickets[] = $tticket;
-
-        //Liaison des billets
-        $tticket->setTbooking($this);
+	    //Liaison des billets
+	    $tticket->setTbooking($this);
 
         return $this;
     }
@@ -221,9 +230,9 @@ class Tbooking
     /**
      * Remove tticket
      *
-     * @param \OC\LouvreBundle\Entity\Tticket $tticket
+     * @param Tticket $tticket
      */
-    public function removeTticket(\OC\LouvreBundle\Entity\Tticket $tticket)
+    public function removeTticket(Tticket $tticket)
     {
         $this->ttickets->removeElement($tticket);
     }

@@ -1,7 +1,8 @@
 {% extends "/layout.html.twig" %}
 {% block stylesheets %}
-    {#<link rel="stylesheet" href="{{ asset('lib/css/jquery-ui-1.10.4.datepicker.min.css') }}"/>#}
-    <link rel="stylesheet" href="{{ asset('lib/datepicker/css/bootstrap-datepicker3.min.css') }}"/>
+    {% stylesheets 'lib/datepicker/css/bootstrap-datepicker3.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
 {% endblock %}
 
 
@@ -11,9 +12,15 @@
     <!-- Blog Entries Column -->
     <div class="col-md-8">
         <!-- Blog Post -->
-        <div class="card ">
+        <div class="card">
             <div class="card-body">
                 <h2 class="card-title text-center">Réserver un billet</h2>
+                {% for error in errors %}
+                <div class="alert alert-danger text-center" role="alert">
+                        {{ error.message }}
+                </div>
+                {% endfor %}
+
                 {{ form_start(form) }}
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -38,7 +45,7 @@
                 </div>
 
                 <div class="tags"
-                     data-prototype="{% filter escape %}{% include '@OCLouvre/Booking/form/form.html.twig' with {'form': (form.ttickets.vars.prototype)|e} %}{% endfilter %}">
+                     data-prototype="{% filter escape %}{% include '@OCLouvre/Louvre/form/bookingForm.html.twig' with {'form': (form.ttickets.vars.prototype)|e} %}{% endfilter %}">
                 </div>
 
                 <div class="form-row">
@@ -64,10 +71,13 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ asset('lib/js/jquery.js') }}"></script>
-    <script src="{{ asset('lib/js/jquery-ui-1.10.4.custom.min.js') }}"></script>
-    <script src="{{ asset('lib/js/louvre.js') }}"></script>
-    <script src="{{ asset('lib/datepicker/js/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('lib/datepicker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+    {% javascripts
+        '@js'
+        'lib/js/louvre.js'
+        'lib/datepicker/js/bootstrap-datepicker.js'
+        'lib/datepicker/locales/bootstrap-datepicker.fr.min.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 

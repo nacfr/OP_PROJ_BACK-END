@@ -21,11 +21,11 @@ class LoadPricing implements FixtureInterface
         $date = new \DateTime();
 
         $listtab = [
-            ['title' => 'Gratuit', 'priceht' => '0', 'registrationprincing' => $date],
-            ['title' => 'Enfant', 'priceht' => '6.67', 'registrationprincing' => $date],
-            ['title' => 'Normal', 'priceht' => '13.33', 'registrationprincing' => $date],
-            ['title' => 'Sénior', 'priceht' => '10.00', 'registrationprincing' => $date],
-            ['title' => 'Réduit', 'priceht' => '8.33', 'registrationprincing' => $date],
+            ['title' => 'Gratuit', 'minage' => '0', 'maxage' => '3', 'priceht' => '0', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'Enfant', 'minage' => '4', 'maxage' => '11', 'priceht' => '6.67', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'Normal', 'minage' => '12', 'maxage' => '59', 'priceht' => '13.33', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'Sénior', 'minage' => '60', 'maxage' => '150', 'priceht' => '10.00', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'Réduit', 'minage' => 'null', 'maxage' => 'null', 'priceht' => '8.33', 'tva' => '0.2', 'registrationprincing' => $date],
 
         ];
 
@@ -33,7 +33,11 @@ class LoadPricing implements FixtureInterface
             //Création des tarifs
             $pricing = new Pricing();
             $pricing->setTitle($tab['title']);
-            $pricing->setPriceht($tab['priceht']);
+            $pricing->setMinage($tab['minage']);
+            $pricing->setMaxage($tab['maxage']);
+            $pricing->setMaxage($tab['maxage']);
+	        $pricing->setPriceht($tab['priceht']);
+	        $pricing->setTva($tab['tva']);
             $pricing->setRegistrationpricing($tab['registrationprincing']);
 
             $manager->persist($pricing);

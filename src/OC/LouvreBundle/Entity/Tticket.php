@@ -3,12 +3,15 @@
 namespace OC\LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OC\LouvreBundle\Entity\Tbooking;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tticket
  *
  * @ORM\Table(name="tticket")
  * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TticketRepository")
+ *
  */
 class Tticket
 {
@@ -23,6 +26,7 @@ class Tticket
 
     /**
      * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Tbooking", inversedBy="ttickets")
+     *
      */
     private $tbooking;
 
@@ -30,6 +34,7 @@ class Tticket
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\EqualTo("Mary")
      */
     private $name;
 
@@ -68,8 +73,14 @@ class Tticket
      */
     private $reduceprice;
 
-
-
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float", nullable=true)
+     *
+     */
+    private $price;
+    
     /**
      * Get id
      *
@@ -227,11 +238,11 @@ class Tticket
     /**
      * Set tbooking
      *
-     * @param \OC\LouvreBundle\Entity\Tbooking $tbooking
+     * @param Tbooking $tbooking
      *
      * @return Tticket
      */
-    public function setTbooking(\OC\LouvreBundle\Entity\Tbooking $tbooking = null)
+    public function setTbooking(Tbooking $tbooking)
     {
         $this->tbooking = $tbooking;
 
@@ -241,10 +252,58 @@ class Tticket
     /**
      * Get tbooking
      *
-     * @return \OC\LouvreBundle\Entity\Tbooking
+     * @return Tbooking
      */
     public function getTbooking()
     {
         return $this->tbooking;
+    }
+    
+    public function getAge()
+    {
+        if(!is_null($this->calcAge()))
+        {
+        	$this->calcAge();
+        }
+        
+        return $this->calcAge();
+    }
+	
+	private function calcAge()
+	{
+		$dateofbirth = date_format($this->getDateofbirth(), 'Y-m-d');
+		$am = explode('-', $dateofbirth);
+		$an = explode('-', date('Y-m-d'));
+		
+		if(($am[1] < $an[1]) || (($am[1] == $an[1]) && ($am[2] <= $an[2])))
+			return $an[0] - $am[0];
+		
+		return $an[0] - $am[0] - 1;
+	}
+
+
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     *
+     * @return Tticket
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

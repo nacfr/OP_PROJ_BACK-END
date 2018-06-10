@@ -18,6 +18,8 @@ framework:
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
+    templating:
+            engines: ['twig']
     #serializer: { enable_annotations: true }
     default_locale: '%locale%'
     trusted_hosts: ~
@@ -67,3 +69,15 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+# app/config/config.yml
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+    assets:
+        js:
+            inputs:
+                - 'lib/js/jquery.js'
+                - 'lib/js/jquery-ui-1.10.4.custom.min.js'
