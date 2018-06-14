@@ -1,6 +1,6 @@
 'use strict';
 
-var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+var stripe = Stripe('pk_test_o9NQCp1QxAhsdNArydCoeKMZ');
 
 function registerElements(elements, exampleName) {
   var formClass = '.' + exampleName;
@@ -118,7 +118,7 @@ function registerElements(elements, exampleName) {
     // in the additional customer data we collected in our form.
     stripe.createToken(elements[0], additionalData).then(function(result) {
       // Stop loading!
-      example.classList.remove('submitting');
+      /*example.classList.remove('submitting');
 
       if (result.token) {
         // If we received a token, show the token ID.
@@ -127,7 +127,16 @@ function registerElements(elements, exampleName) {
       } else {
         // Otherwise, un-disable inputs.
         enableInputs();
-      }
+      }*/
+        if (result.error) {
+            // Inform the customer that there was an error.
+            var errorElement = document.getElementById('card-errors');
+            errorElement.textContent = result.error.message;
+        } else {
+            // Send the token to your server.
+            stripeTokenHandler(result.token);
+        }
+
     });
   });
 

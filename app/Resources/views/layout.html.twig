@@ -12,20 +12,9 @@
     <!-- JS Stripe -->
     <script src="https://js.stripe.com/v3/"></script>
 
-    {% javascripts
-        'lib/js/stripe-base.js' %}
-        <script type="text/javascript" src="{{ asset_url }}" data-rel-js></script>
-    {% endjavascripts %}
-
     <!-- CSS -->
-
-    {% stylesheets 'lib/css/bootstrap.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-    {% stylesheets 'lib/css/billeterie.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-
+    <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
     {% block stylesheets %}
     {% endblock %}
 
@@ -142,6 +131,7 @@
 {{ include("footer-layout.html.twig") }}
 
 <!-- JavaScript -->
+<script src="{{ asset('lib/js/jquery.js') }}"></script>
 {% block scripts %}
 {% endblock %}
 

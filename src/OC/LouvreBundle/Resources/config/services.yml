@@ -1,9 +1,9 @@
 services:
-    oc_louvre.bookingcalcul:
-        class: OC\LouvreBundle\Service\BookingCalcul
+    oc_louvre.bookingprovider:
+        class: OC\LouvreBundle\Service\BookingProvider
         arguments: ["@doctrine.orm.entity_manager"]
         public: true
 
     oc_louvre.stripe:
-            class: OC\LouvreBundle\Service\Stripe
-            public: true
+        class: OC\LouvreBundle\Service\Stripe
+        public: true

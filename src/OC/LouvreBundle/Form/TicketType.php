@@ -9,7 +9,7 @@
 namespace OC\LouvreBundle\Form;
 
 
-use OC\LouvreBundle\Entity\Tticket;
+use OC\LouvreBundle\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -36,7 +36,7 @@ class TicketType extends AbstractType
                     'autocomplete' => 'off'
                 ]
             ))
-            ->add('dateofbirth', DateType::class, array(
+            ->add('dateofbirth', BirthdayType::class, array(
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
@@ -73,7 +73,7 @@ class TicketType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Tticket::class,
+                'data_class' => Ticket::class,
             ]
         );
     }

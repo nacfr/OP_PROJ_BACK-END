@@ -3,17 +3,17 @@
 namespace OC\LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use OC\LouvreBundle\Entity\Tbooking;
+use OC\LouvreBundle\Entity\Booking;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Tticket
+ * Ticket
  *
- * @ORM\Table(name="tticket")
- * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TticketRepository")
+ * @ORM\Table(name="ticket")
+ * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TicketRepository")
  *
  */
-class Tticket
+class Ticket
 {
     /**
      * @var int
@@ -25,16 +25,16 @@ class Tticket
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Tbooking", inversedBy="ttickets")
+     * @ORM\ManyToOne(targetEntity="OC\LouvreBundle\Entity\Booking", inversedBy="tickets")
      *
      */
-    private $tbooking;
+    private $booking;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\EqualTo("Mary")
+     *
      */
     private $name;
 
@@ -96,7 +96,7 @@ class Tticket
      *
      * @param string $name
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setName($name)
     {
@@ -120,7 +120,7 @@ class Tticket
      *
      * @param string $firstname
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setFirstname($firstname)
     {
@@ -144,7 +144,7 @@ class Tticket
      *
      * @param \DateTime $dateofbirth
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setDateofbirth($dateofbirth)
     {
@@ -168,7 +168,7 @@ class Tticket
      *
      * @param string $country
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setCountry($country)
     {
@@ -192,7 +192,7 @@ class Tticket
      *
      * @param boolean $handicap
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setHandicap($handicap)
     {
@@ -216,7 +216,7 @@ class Tticket
      *
      * @param boolean $reduceprice
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setReduceprice($reduceprice)
     {
@@ -236,27 +236,27 @@ class Tticket
     }
 
     /**
-     * Set tbooking
+     * Set booking
      *
-     * @param Tbooking $tbooking
+     * @param Booking $booking
      *
-     * @return Tticket
+     * @return Ticket
      */
-    public function setTbooking(Tbooking $tbooking)
+    public function setBooking(Booking $booking)
     {
-        $this->tbooking = $tbooking;
+        $this->booking = $booking;
 
         return $this;
     }
 
     /**
-     * Get tbooking
+     * Get booking
      *
-     * @return Tbooking
+     * @return Booking
      */
-    public function getTbooking()
+    public function getBooking()
     {
-        return $this->tbooking;
+        return $this->booking;
     }
     
     public function getAge()
@@ -268,27 +268,13 @@ class Tticket
         
         return $this->calcAge();
     }
-	
-	private function calcAge()
-	{
-		$dateofbirth = date_format($this->getDateofbirth(), 'Y-m-d');
-		$am = explode('-', $dateofbirth);
-		$an = explode('-', date('Y-m-d'));
-		
-		if(($am[1] < $an[1]) || (($am[1] == $an[1]) && ($am[2] <= $an[2])))
-			return $an[0] - $am[0];
-		
-		return $an[0] - $am[0] - 1;
-	}
-
-
-
+    
     /**
      * Set price
      *
      * @param float $price
      *
-     * @return Tticket
+     * @return Ticket
      */
     public function setPrice($price)
     {

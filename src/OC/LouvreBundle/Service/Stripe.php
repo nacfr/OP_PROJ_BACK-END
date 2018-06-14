@@ -1,43 +1,61 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: cecile
-	 * Date: 07/06/2018
-	 * Time: 23:11
-	 */
-	
-	namespace OC\LouvreBundle\Service;
-	
-	use OC\LouvreBundle\Entity\Tbooking;
-	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-	use Symfony\Component\HttpFoundation\Response;
-	
-	class Stripe extends Controller
-	{
-		public function getchecking(Tbooking $booking, BookingCalcul $bookingcalcul)
-		{
-			
-			\Stripe\Stripe::setApiKey("sk_test_k9lZ0W70Zjtt9loUGdVbhlTr");
-			
-			// Get the credit card details submitted by the form
-			$token = $_POST['stripeToken'];
-			$bookingprice = $bookingcalcul->GetPrice($booking);
-			
-			// Create a charge: this will charge the user's card
-			try {
-				$charge = \Stripe\Charge::create(array(
-					"amount" => 1000, // Amount in cents
-					"currency" => "eur",
-					"source" => $token,
-					"description" => "Paiement Stripe - OpenClassrooms Exemple"
-				));
-				$result = true;
-				return $result;
-			} catch(\Stripe\Error\Card $e) {
-				$result = false;
-				return $result;
-				// The card has been declined
-			}
-		}
-		
-	}
+/**
+ * Created by PhpStorm.
+ * User: cecile
+ * Date: 07/06/2018
+ * Time: 23:11
+ */
+
+namespace OC\LouvreBundle\Service;
+
+use OC\LouvreBundle\Entity\Booking;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+
+class Stripe extends Controller
+{
+    public function getChecking(Booking $booking, BookingProvider $bookingprovider)
+    {
+        try {
+            \Stripe\Stripe::setApiKey("sk_test_k9lZ0W70Zjtt9loUGdVbhlTr");
+
+            $totalprice = $bookingprovider->getTabPrice($booking)['total'];
+            $source = $_POST['stripeSource'];
+            $clientname = $_POST['name'];
+            $clientmail = $_POST['email'];
+
+            $customer = \Stripe\Customer::create(array(
+                "description" => $clientname,
+                "email" => $clientmail,
+                "source" => $source
+            ));
+
+
+            $charge = \Stripe\Charge::create(array(
+                "amount" => ($totalprice) * 100,
+                "currency" => "eur",
+                "customer" => $customer['id'],
+                "source" => $source,
+                "description" => "Paiement Stripe - OpenClassrooms Exemple"
+            ));
+            
+            return true;
+
+        } catch(\Stripe\Error\Card $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+            return $this->getErrorMessage($err['code']);
+        }
+    }
+
+    /**
+     * @param $code_error
+     */
+    public function getErrorMessage($code_error)
+    {
+        switch ($code_error){
+
+        }
+    }
+
+}

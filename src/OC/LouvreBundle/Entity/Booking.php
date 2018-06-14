@@ -4,17 +4,18 @@ namespace OC\LouvreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use OC\LouvreBundle\Entity\Tticket;
+use OC\LouvreBundle\Entity\Ticket;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
- * Tbooking
+ * Booking
  *
- * @ORM\Table(name="tbooking")
- * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\TbookingRepository")
+ * @ORM\Table(name="booking")
+ * @ORM\Entity(repositoryClass="OC\LouvreBundle\Repository\BookingRepository")
  *
  */
-class Tbooking
+class Booking
 {
     /**
      * @var int
@@ -26,10 +27,17 @@ class Tbooking
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Tticket", mappedBy="tbooking", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Ticket", mappedBy="booking", cascade={"persist"})
      *
      */
-    private $ttickets;
+    private $tickets;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="btoken", type="string", length=24, unique=true)
+	 */
+	private $btoken;
 
     /**
      * @var \DateTime
@@ -53,20 +61,43 @@ class Tbooking
      *
      */
     private $ticketnumber;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="btoken", type="string", length=24, unique=true)
-     */
-    private $btoken;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="registrationbooking", type="datetime")
-     */
-    private $registrationbooking;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="clientname", type="string", length=255, nullable=true)
+	 */
+	private $clientname;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="clientmail", type="string", length=255, nullable=true)
+	 */
+	private $clientmail;
+ 
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="totalprice", type="float", nullable=true)
+	 *
+	 */
+    private $totalprice;
+	
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="etat", type="boolean")
+	 *
+	 */
+    private $etat = 0;
+	
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="registrationbooking", type="datetime")
+	 */
+	private $registrationbooking;
     
     /**
      * Constructor
@@ -74,7 +105,7 @@ class Tbooking
     public function __construct()
     {
 	    $this->registrationbooking = new \DateTime();
-    	$this->ttickets = new ArrayCollection();
+    	$this->tickets = new ArrayCollection();
     }
 
     /**
@@ -92,7 +123,7 @@ class Tbooking
      *
      * @param \DateTime $bookingdate
      *
-     * @return Tbooking
+     * @return Booking
      */
     public function setBookingdate($bookingdate)
     {
@@ -116,7 +147,7 @@ class Tbooking
      *
      * @param string $tickettype
      *
-     * @return Tbooking
+     * @return Booking
      */
     public function setTickettype($tickettype)
     {
@@ -140,7 +171,7 @@ class Tbooking
      *
      * @param integer $ticketnumber
      *
-     * @return Tbooking
+     * @return Booking
      */
     public function setTicketnumber($ticketnumber)
     {
@@ -159,7 +190,7 @@ class Tbooking
      */
     public function getTicketnumber()
     {
-        $nbtickets = $this->ttickets->count();
+        $nbtickets = $this->tickets->count();
         return $this->ticketnumber == $nbtickets;
     }
 
@@ -168,7 +199,7 @@ class Tbooking
      *
      * @param string $btoken
      *
-     * @return Tbooking
+     * @return Booking
      */
     public function setBtoken($btoken)
     {
@@ -192,7 +223,7 @@ class Tbooking
      *
      * @param \DateTime $registrationbooking
      *
-     * @return Tbooking
+     * @return Booking
      */
     public function setRegistrationbooking($registrationbooking)
     {
@@ -212,38 +243,134 @@ class Tbooking
     }
 
     /**
-     * Add tticket
+     * Add ticket
      *
-     * @param Tticket $tticket
+     * @param Ticket $ticket
      *
-     * @return Tbooking
+     * @return Booking
      */
-    public function addTticket(Tticket $tticket)
+    public function addTicket(Ticket $ticket)
     {
-        $this->ttickets[] = $tticket;
+        $this->tickets[] = $ticket;
 	    //Liaison des billets
-	    $tticket->setTbooking($this);
+	    $ticket->setBooking($this);
 
         return $this;
     }
 
     /**
-     * Remove tticket
+     * Remove ticket
      *
-     * @param Tticket $tticket
+     * @param Ticket $ticket
      */
-    public function removeTticket(Tticket $tticket)
+    public function removeTicket(Ticket $ticket)
     {
-        $this->ttickets->removeElement($tticket);
+        $this->tickets->removeElement($ticket);
     }
 
     /**
-     * Get ttickets
+     * Get tickets
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTtickets()
+    public function getTickets()
     {
-        return $this->ttickets;
+        return $this->tickets;
+    }
+
+    /**
+     * Set clientname
+     *
+     * @param string $clientname
+     *
+     * @return Booking
+     */
+    public function setClientname($clientname)
+    {
+        $this->clientname = $clientname;
+
+        return $this;
+    }
+
+    /**
+     * Get clientname
+     *
+     * @return string
+     */
+    public function getClientname()
+    {
+        return $this->clientname;
+    }
+
+    /**
+     * Set clientmail
+     *
+     * @param string $clientmail
+     *
+     * @return Booking
+     */
+    public function setClientmail($clientmail)
+    {
+        $this->clientmail = $clientmail;
+
+        return $this;
+    }
+
+    /**
+     * Get clientmail
+     *
+     * @return string
+     */
+    public function getClientmail()
+    {
+        return $this->clientmail;
+    }
+
+    /**
+     * Set totalprice
+     *
+     * @param float $totalprice
+     *
+     * @return Booking
+     */
+    public function setTotalprice($totalprice)
+    {
+        $this->totalprice = $totalprice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalprice
+     *
+     * @return float
+     */
+    public function getTotalprice()
+    {
+        return $this->totalprice;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param boolean $etat
+     *
+     * @return Booking
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return boolean
+     */
+    public function getEtat()
+    {
+        return $this->etat;
     }
 }

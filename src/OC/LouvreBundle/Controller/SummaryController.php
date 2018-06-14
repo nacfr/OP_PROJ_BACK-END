@@ -8,24 +8,21 @@
 	
 	namespace OC\LouvreBundle\Controller;
 	
-	use OC\LouvreBundle\Service\BookingCalcul;
+	use OC\LouvreBundle\Service\BookingProvider;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Form\Extension\Core\Type\FormType;
     use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\Response;
-	use OC\LouvreBundle\Entity\Tbooking;
+	use OC\LouvreBundle\Entity\Booking;
 	
 	class SummaryController extends Controller
 	{
 		
-		public function summaryAction(Tbooking $booking)
+		public function summaryAction(Booking $booking)
 		{
-			$pricing = $this->get('oc_louvre.bookingcalcul');
-			$bookingprice = $pricing->GetPrice($booking);
+			$pricing = $this->get('oc_louvre.bookingprovider');
+			$bookingprice = $pricing->getTabPrice($booking);
 			$bookingtype = $pricing->getBookingType($booking);
-
-
-
 			
 			//return new Response('');
 			return $this->render('@OCLouvre/Louvre/summary.html.twig', array(

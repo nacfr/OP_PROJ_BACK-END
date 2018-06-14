@@ -26,11 +26,9 @@
                             {% endfor %}
                         </table>
                         <table class="table tab-summary-total">
-                            {% for summary in summaries.total %}
                                 <tr>
-                                    <td>TOTAL T.T.C. {{ summary.price }} €</td>
+                                    <td>TOTAL T.T.C. {{ summaries.total }} €</td>
                                 </tr>
-                            {% endfor %}
                             <tr>
                                 <td>
                                     <a class="btn btn-success" href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}">Payer</a>

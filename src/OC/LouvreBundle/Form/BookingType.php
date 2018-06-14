@@ -2,7 +2,7 @@
 	
 	namespace OC\LouvreBundle\Form;
 	
-	use OC\LouvreBundle\Entity\Tbooking;
+	use OC\LouvreBundle\Entity\Booking;
     use Symfony\Component\Form\AbstractType;
 	use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 	use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -15,8 +15,8 @@
 	
 	class BookingType extends AbstractType
 	{
-
-        private function genToken()
+		
+		private function genToken()
         {
             $bytes = openssl_random_pseudo_bytes(12);
             $hex   = bin2hex($bytes);
@@ -60,7 +60,7 @@
 					'preferred_choices' => array('1 billet'),
 					'attr' => ['class' => 'add-ticketnumber-form-widget']
 				))
-				->add('ttickets', CollectionType::class, array(
+				->add('tickets', CollectionType::class, array(
 					'entry_type' => TicketType::class,
 					'allow_add' => true,
 					'allow_delete' => true,
@@ -80,7 +80,7 @@
 		{
 			$resolver->setDefaults(
 				[
-					'data_class' => Tbooking::class,
+					'data_class' => Booking::class,
                     'validation_groups' => array('registration')
 				]
 			);
