@@ -125,7 +125,7 @@
 			$holidays =
 				// Dates fixes
 				date('d-m-Y', mktime(0, 0, 0, 1, 1, $year)).', '.  // 1er janvier
-				date('d-m-Y', mktime(0, 0, 0, 1, 2, $year)).', '.  // Paque
+				date('d-m-Y', mktime(0, 0, 0, 4, 2, $year)).', '.  // Paque
 				date('d-m-Y', mktime(0, 0, 0, 5, 1, $year)).', '.  // Fête du travail
 				date('d-m-Y', mktime(0, 0, 0, 5, 8, $year)).', '.  // Victoire des alliés
 				date('d-m-Y', mktime(0, 0, 0, 5, 10, $year)).', '.  // Jeudi Assomption

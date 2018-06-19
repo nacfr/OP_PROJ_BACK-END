@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use OC\LouvreBundle\Entity\Ticket;
 use Symfony\Component\Validator\Constraints as Assert;
+use OC\LouvreBundle\Validator as AcmeAssert;
 
 
 /**
@@ -43,6 +44,8 @@ class Booking
      * @var \DateTime
      *
      * @ORM\Column(name="bookingdate", type="date")
+     *
+     * @AcmeAssert\Holiday
      *
      */
     private $bookingdate;
