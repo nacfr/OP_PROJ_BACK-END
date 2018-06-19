@@ -1,72 +1,79 @@
-(function() {
-  'use strict';
+// Stripe API Key
+var stripe = Stripe('pk_test_o9NQCp1QxAhsdNArydCoeKMZ');
+// Create an instance of Elements.
+var elements = stripe.elements();
 
-  var elements = stripe.elements({
-    fonts: [
-      {
-        cssSrc: 'https://fonts.googleapis.com/css?family=Quicksand',
-      },
-    ],
-    // Stripe's examples are localized to specific languages, but if
-    // you wish to have Elements automatically detect your user's locale,
-    // use `locale: 'auto'` instead.
-    locale: 'auto',
-  });
-
-  var elementStyles = {
+// Custom styling can be passed to options when creating an Element.
+// (Note that this demo uses a wider set of styles than the guide below.)
+var style = {
     base: {
-      color: '#fff',
-      fontWeight: 600,
-      fontFamily: 'Quicksand, Open Sans, Segoe UI, sans-serif',
-      fontSize: '16px',
-      fontSmoothing: 'antialiased',
-
-      ':focus': {
-        color: '#424770',
-      },
-
-      '::placeholder': {
-        color: '#9BACC8',
-      },
-
-      ':focus::placeholder': {
-        color: '#CFD7DF',
-      },
+        color: '#32325d',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+            color: '#aab7c4'
+        },
+        ':-webkit-autofill': {
+            color: '#32325d',
+        },
     },
     invalid: {
-      color: '#fff',
-      ':focus': {
-        color: '#FA755A',
-      },
-      '::placeholder': {
-        color: '#FFCCA5',
-      },
-    },
-  };
+        color: '#fa755a',
+        iconColor: '#fa755a',
+        ':-webkit-autofill': {
+            color: '#fa755a',
+        },
+    }
+};
 
-  var elementClasses = {
-    focus: 'focus',
-    empty: 'empty',
-    invalid: 'invalid',
-  };
+// Create an instance of the iban Element.
+var card = elements.create('card', {style: style});
 
-  var cardNumber = elements.create('cardNumber', {
-    style: elementStyles,
-    classes: elementClasses,
-  });
-  cardNumber.mount('#payment-card-number');
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
 
-  var cardExpiry = elements.create('cardExpiry', {
-    style: elementStyles,
-    classes: elementClasses,
-  });
-  cardExpiry.mount('#payment-card-expiry');
+// Handle real-time validation errors from the card Element.
+card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    //error message
+    if (event.error) {
+        displayError.textContent = event.error.message;
+    }
+    else {
+        displayError.textContent = '';
+    }
+});
 
-  var cardCvc = elements.create('cardCvc', {
-    style: elementStyles,
-    classes: elementClasses,
-  });
-  cardCvc.mount('#payment-card-cvc');
+// Handle form submission.
+var form = document.getElementById('payment-form');
 
-  registerElements([cardNumber, cardExpiry, cardCvc], 'payment');
-})();
+
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    stripe.createSource(card).then(function(result) {
+        if (result.error) {
+            // Inform the customer that there was an error.
+            var errorElement = document.getElementById('card-errors');
+            errorElement.textContent = result.error.message;
+        } else {
+            stripeSourceHandler(result.source);
+        }
+    });
+
+    function stripeSourceHandler(source) {
+        // Insert the source ID into the form so it gets submitted to the server
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeSource');
+        hiddenInput.setAttribute('value', source.id);
+        form.appendChild(hiddenInput);
+
+        // Submit the form
+        form.submit();
+    }
+
+});

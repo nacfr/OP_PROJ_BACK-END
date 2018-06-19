@@ -27,6 +27,7 @@ class TicketType extends AbstractType
             ->add('name', TextType::class, array(
                 'label' => 'Nom',
                 'attr' => [
+                    'empty_value' => 'Votre nom',
                     'autocomplete' => 'off'
                 ]
             ))

@@ -17,12 +17,12 @@ class Stripe extends Controller
     public function getChecking(Booking $booking, BookingProvider $bookingprovider)
     {
         try {
-            \Stripe\Stripe::setApiKey("sk_test_k9lZ0W70Zjtt9loUGdVbhlTr");
+            \Stripe\Stripe::setApiKey("clé");
 
             $totalprice = $bookingprovider->getTabPrice($booking)['total'];
             $source = $_POST['stripeSource'];
-            $clientname = $_POST['name'];
-            $clientmail = $_POST['email'];
+            $clientname = strip_tags($_POST['name']);
+            $clientmail = strip_tags($_POST['email']);
 
             $customer = \Stripe\Customer::create(array(
                 "description" => $clientname,
@@ -38,7 +38,7 @@ class Stripe extends Controller
                 "source" => $source,
                 "description" => "Paiement Stripe - OpenClassrooms Exemple"
             ));
-            
+
             return true;
 
         } catch(\Stripe\Error\Card $e) {

@@ -10,6 +10,7 @@ namespace OC\LouvreBundle\Service;
 
 
 use Doctrine\ORM\EntityManager;
+use Endroid\QrCode\QrCode;
 use OC\LouvreBundle\Controller\BookingController;
 use OC\LouvreBundle\Entity\Booking;
 
@@ -52,7 +53,7 @@ class BookingProvider
 	 *
 	 * @param $dateofbirth
 	 * @param $reduceprice
-	 * @return float|int
+	 * @return array
 	 */
 	public function getTicketPrice($dateofbirth, $reduceprice)
     {
@@ -60,20 +61,27 @@ class BookingProvider
         $ages = $this->calcAge($dateofbirth);
         
         if ($reduce == true) {
-            return round($this->pricingReduce->getPriceht() + ($this->pricingReduce->getPriceht() * $this->pricingReduce->getTva()));
+            $type = $this->pricingReduce->getTitle();
+            $price = round($this->pricingReduce->getPriceht() + ($this->pricingReduce->getPriceht() * $this->pricingReduce->getTva()));
         }
-        if ($ages >= $this->pricingGratuit->getMinage() && $ages <= $this->pricingGratuit->getMaxage()) {
-            return 0;
+        elseif ($ages >= $this->pricingGratuit->getMinage() && $ages <= $this->pricingGratuit->getMaxage()) {
+            $type = $this->pricingGratuit->getTitle();
+            $price = 0;
         }
-        if ($ages >= $this->pricingEnfant->getMinage() && $ages <= $this->pricingEnfant->getMaxage()) {
-            return round($this->pricingEnfant->getPriceht() + ($this->pricingEnfant->getPriceht() * $this->pricingEnfant->getTva()));
+        elseif ($ages >= $this->pricingEnfant->getMinage() && $ages <= $this->pricingEnfant->getMaxage()) {
+            $type = $this->pricingEnfant->getTitle();
+            $price = round($this->pricingEnfant->getPriceht() + ($this->pricingEnfant->getPriceht() * $this->pricingEnfant->getTva()));
         }
-        if ($ages >= $this->pricingNormal->getMinage() && $ages <= $this->pricingNormal->getMaxage()) {
-            return round($this->pricingNormal->getPriceht() + ($this->pricingNormal->getPriceht() * $this->pricingNormal->getTva()));
+        elseif ($ages >= $this->pricingNormal->getMinage() && $ages <= $this->pricingNormal->getMaxage()) {
+            $type = $this->pricingNormal->getTitle();
+            $price = round($this->pricingNormal->getPriceht() + ($this->pricingNormal->getPriceht() * $this->pricingNormal->getTva()));
         }
-        if ($ages >= $this->pricingSenior->getMinage() && $ages <= $this->pricingSenior->getMaxage()) {
-            return round($this->pricingSenior->getPriceht() + ($this->pricingSenior->getPriceht() * $this->pricingSenior->getTva()));
+        elseif ($ages >= $this->pricingSenior->getMinage() && $ages <= $this->pricingSenior->getMaxage()) {
+            $type = $this->pricingNormal->getTitle();
+            $price = round($this->pricingSenior->getPriceht() + ($this->pricingSenior->getPriceht() * $this->pricingSenior->getTva()));
         }
+
+        return ['type' => $type, 'price' => $price];
     }
 	
 	/**
@@ -103,7 +111,7 @@ class BookingProvider
 	 */
 	public function getTabPrice($booking)
      {
-	     $this->getNbCatPricing($booking);
+         $this->getNbCatPricing($booking);
 	     
      	//Caculation tickets price
          $priceGratuit = 0;
@@ -146,6 +154,18 @@ class BookingProvider
              ],
              'total' => $this->getTotalTicket($booking)
          ];
+     }
+
+     public function getQrCode($token){
+	    $qrCode = new QrCode($token);
+
+	    return $qrCode->writeDataUri();
+     }
+
+     public function getOrderSummary($idclient)
+     {
+         $order = $this->entityManager->getRepository('OCLouvreBundle:Booking')->find($idclient);
+         return $order;
      }
 	
 	/**

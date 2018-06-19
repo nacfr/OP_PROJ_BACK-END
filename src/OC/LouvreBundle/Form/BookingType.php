@@ -48,7 +48,8 @@
 					'choices' => array(
 						'journée' => 'day',
 						'demi-jounrée' => 'halfday'),
-					'expanded' => true
+					'expanded' => true,
+                    'attr' => ['class' => 'booking_tickettype']
 				))
 				->add('ticketnumber', ChoiceType::class, array(
 					'label' => 'Nombre de billet',

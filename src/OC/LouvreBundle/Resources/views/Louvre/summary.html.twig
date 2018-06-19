@@ -17,21 +17,28 @@
                             {% for summary in summaries.details %}
                                 {% if summary.quantity > 0 %}
                                     <tr>
-                                        <td class="tab-summary-ticket">{{ summary.quantity }} ticket
-                                            tarif {{ summary.id }} {{ bookingtype }} - Musée du Louvre Paris
-                                        </td>
+                                        {% if summary.quantity == 1 %}
+                                            <td class="tab-summary-ticket">{{ summary.quantity }} ticket
+                                                tarif {{ summary.id }} {{ bookingtype }} - Musée du Louvre Paris
+                                            </td>
+                                        {% else %}
+                                            <td class="tab-summary-ticket">{{ summary.quantity }} tickets
+                                                tarif {{ summary.id }} {{ bookingtype }} - Musée du Louvre Paris
+                                            </td>
+                                        {% endif %}
                                         <td class="tab-summary-ticket">{{ summary.price }} ttc</td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
                         </table>
                         <table class="table tab-summary-total">
-                                <tr>
-                                    <td>TOTAL T.T.C. {{ summaries.total }} €</td>
-                                </tr>
+                            <tr>
+                                <td>TOTAL T.T.C. {{ summaries.total }} €</td>
+                            </tr>
                             <tr>
                                 <td>
-                                    <a class="btn btn-success" href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}">Payer</a>
+                                    <a class="btn btn-success"
+                                       href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}">Payer</a>
                                 </td>
                             </tr>
                         </table>

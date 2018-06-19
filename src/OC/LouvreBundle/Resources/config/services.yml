@@ -4,6 +4,10 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         public: true
 
+    oc_louvre.bookingmailer:
+            class: OC\LouvreBundle\Service\BookingMail
+            public: true
+
     oc_louvre.stripe:
         class: OC\LouvreBundle\Service\Stripe
         public: true

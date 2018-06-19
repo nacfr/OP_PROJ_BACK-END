@@ -65,19 +65,9 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
-    host: '%mailer_host%'
+    port: '%mailer_port%'
+    encryption: '%mailer_encryption%'
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
 
-# app/config/config.yml
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
-    assets:
-        js:
-            inputs:
-                - 'lib/js/jquery.js'
-                - 'lib/js/jquery-ui-1.10.4.custom.min.js'

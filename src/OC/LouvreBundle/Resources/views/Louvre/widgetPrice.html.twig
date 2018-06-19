@@ -1,25 +1,15 @@
 <table class="table tab-prices">
-    <tr>
-        <td class="tab-prices-left">De 0 à 3 ans :</td>
-        <td class="tab-prices-right">gratuit</td>
-    </tr>
-    <tr>
-        <td class="tab-prices-left">Enfant (de 4 à 11 ans):</td>
-        <td class="tab-prices-right">8 €</td>
-    </tr>
-    <tr>
-        <td class="tab-prices-left">Normal (à partir de 12 ans):</td>
-        <td class="tab-prices-right">16 €</td>
-    </tr>
-    <tr>
-        <td class="tab-prices-left">Sénior (à partir de 60 ans):</td>
-        <td class="tab-prices-right">0 €</td>
-    </tr>
-    <tr>
-        <td class="tab-prices-left">Réduit*</td>
-        <td class="tab-prices-right">10 €</td>
-    </tr>
+
+    {% for listPrice in listPrices %}
+
+        <tr>
+            <td class="tab-prices-left">{{ listPrice.title }} (de {{ listPrice.minage }} à {{ listPrice.maxage }} ans) :</td>
+            <td class="tab-prices-right">{{ (listPrice.priceht + (listPrice.priceht * listPrice.tva))|round }} €</td>
+        </tr>
+
+    {% endfor %}
+
 </table>
-<em class="tab-prices-mention">* Sous présentation d'un justificatif</em>
+<em class="tab-prices-mention">* Les tarifs réduits sont valable uniquement sous présentation d'un justificatif</em>
 
 

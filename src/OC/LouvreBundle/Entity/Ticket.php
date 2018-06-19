@@ -74,6 +74,13 @@ class Ticket
     private $reduceprice;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="typeticket", type="string", length=255)
+     */
+    private $typeticket;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", nullable=true)
@@ -291,5 +298,29 @@ class Ticket
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set typeticket
+     *
+     * @param string $typeticket
+     *
+     * @return Ticket
+     */
+    public function setTypeticket($typeticket)
+    {
+        $this->typeticket = $typeticket;
+
+        return $this;
+    }
+
+    /**
+     * Get typeticket
+     *
+     * @return string
+     */
+    public function getTypeticket()
+    {
+        return $this->typeticket;
     }
 }

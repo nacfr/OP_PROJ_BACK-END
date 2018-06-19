@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Billeterie du Louvre" content="">
+    <meta name="Guillaume Pruvost" content="">
+
+    <title>MUSÉE DU LOUVRE PARIS - CONFIRMATION COMMANDE</title>
+</head>
+
+<body>
+
+<div class="container-billeterie">
+    <h1 class="my-4 text-center">CONFIRMATION DE VOTRE COMMANDE</h1>
+    <p>Merci pour votre commande</p>
+    <p>Numéro de commande : {{ booking.btoken }}</p>
+    <p>Date de réservation : {{ booking.bookingdate|date('d-m-Y') }}</p>
+    <p>Nombre de tickets : {{ booking.ticketnumber }}</p>
+    <p>Prix total : {{ booking.totalprice }}</p>
+    <p {{ qr }}></p>
+    <img style="width:150px;" src="{{ qr }}"/>
+    <div>
+        <h3>Détail de la commande :</h3>
+        <table>
+            {% for ticket in booking.tickets %}
+
+            <tr>
+                <td class="">{{ ticket.name }} {{ ticket.firstname }},</td>
+                <td>date de naissance : {{ ticket.dateofbirth|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td>1 billet {{ ticket.typeticket }} - {{ ticket.price }} € TTC</td>
+            </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+</body>
+</html>
