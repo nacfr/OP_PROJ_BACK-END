@@ -17,7 +17,7 @@ class Stripe extends Controller
     public function getChecking(Booking $booking, BookingProvider $bookingprovider)
     {
         try {
-            \Stripe\Stripe::setApiKey("clé");
+            \Stripe\Stripe::setApiKey("");
 
             $totalprice = $bookingprovider->getTabPrice($booking)['total'];
             $source = $_POST['stripeSource'];
