@@ -54,6 +54,8 @@ class Booking
      * @var string
      *
      * @ORM\Column(name="tickettype", type="string", length=255)
+     *
+     * @AcmeAssert\TicketType
      */
     private $tickettype;
 

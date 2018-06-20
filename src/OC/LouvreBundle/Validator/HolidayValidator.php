@@ -30,7 +30,7 @@
 		{
 			
 			{
-				if ($date === null) {
+				if (is_null($date)) {
 					$date = new \DateTime();
 				}
 				
