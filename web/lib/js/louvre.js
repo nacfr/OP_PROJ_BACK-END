@@ -42,6 +42,7 @@ $(document).ready(function () {
     }
 
     $('.add-ticketnumber-form-widget').change(function () {
+
         var nbBlocTicket = $collectionHolder.find('div.form-posts').length;
         for (var d = 1; d <= nbBlocTicket; d++) {
             $collectionHolder.data('index', ($collectionHolder.data('index') - 1));
@@ -52,8 +53,14 @@ $(document).ready(function () {
 
     function comboAdd() {
         var valTicket = document.getElementById('booking_ticketnumber').value;
-        for (var iadd = 1; iadd <= valTicket; iadd++) {
-            addTagForm($collectionHolder);
+
+        if (valTicket === 'plus10') {
+            console.log('futur message : veuillez contacter le musée');
+            addMessage($collectionHolder);
+        }else{
+            for (var iadd = 1; iadd <= valTicket; iadd++) {
+                addTagForm($collectionHolder);
+            }
         }
     }
 
@@ -66,8 +73,15 @@ $(document).ready(function () {
         $collectionHolder.append($newFormLi);
     }
 
+    function addMessage($collectionHolder) {
+        var $content = '<h2 class="card-title form-posts-title text-center">Pour les réservations supérieures à 10 visiteurs :</h2>' +
+            '<div class="form-row">Merci de contacter directement le Musée au 00 00 00 00 00</div>';
+        var $newFormLi = $('<div class="form-posts"></div>').append($content);
+        $collectionHolder.append($newFormLi);
+    }
+
     /* -----------------------------------------
-    Disable ticket type if time of day and above 14h
+    Disable ticket type if time of day is above 14h
     ----------------------------------------- */
 
     var $bookingDate = $('#booking_bookingdate');
@@ -80,7 +94,6 @@ $(document).ready(function () {
         var $selectBookingDate = $bookingDate.val();
 
         if (($selectBookingDate == $dateOfDay) && ($timeOfDay >= 14)){
-            console.log($radioDay);
             $radioDay.attr('disabled', true).prop('checked', false);
         }else{
             $radioDay.attr('disabled', false);
