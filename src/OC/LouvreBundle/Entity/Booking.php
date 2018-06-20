@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use OC\LouvreBundle\Entity\Ticket;
 use Symfony\Component\Validator\Constraints as Assert;
 use OC\LouvreBundle\Validator as AcmeAssert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
@@ -54,8 +55,6 @@ class Booking
      * @var string
      *
      * @ORM\Column(name="tickettype", type="string", length=255)
-     *
-     * @AcmeAssert\TicketType
      */
     private $tickettype;
 
@@ -112,6 +111,26 @@ class Booking
 	    $this->registrationbooking = new \DateTime();
     	$this->tickets = new ArrayCollection();
     }
+	
+	/**
+	 * @Assert\Callback
+	 */
+	public function getTimeOfDay(ExecutionContextInterface $context){
+		
+		$newdate = new \DateTime( 'now',  new \DateTimeZone( 'Europe/Paris' ) );
+		$date = date_format($newdate, 'Y-m-d');
+		$time = date_format($newdate, 'H');
+		$selectDate = ($this->getBookingdate() !== null) ? date_format($this->getBookingdate(), 'Y-m-d') : '';
+		$typeticket = $this->getTickettype();
+		
+		if($typeticket === 'day' & $time >= 14 & $selectDate === $date){
+			$context
+				->buildViolation('Impossible de réserver un billet journée pour cette date')
+				->atPath('tickettype')
+				->addViolation()
+			;
+		}
+	}
 
     /**
      * Get id

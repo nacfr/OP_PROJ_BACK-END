@@ -35,7 +35,7 @@
 						'data-date-orientation' => 'bottom',
 						'data-provide' => 'datepicker',
 						'class' => 'datepicker-bookingdate',
-						'autocomplete' => 'off'
+						'autocomplete' => 'off',
 						
 					]
 				))

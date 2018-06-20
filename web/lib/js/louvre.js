@@ -66,6 +66,32 @@ $(document).ready(function () {
         $collectionHolder.append($newFormLi);
     }
 
+    /* -----------------------------------------
+    Disable ticket type if time of day and above 14h
+    ----------------------------------------- */
+
+    var $bookingDate = $('#booking_bookingdate');
+    var $radioDay = $('#'+$('.booking_tickettype').find('input[type=radio]')[0].id);
+    var $date= new Date();
+    var $dateOfDay = ('0' + $date.getDate()).slice(-2) + '-' + ('0' + ($date.getMonth()+1)).slice(-2) + '-' + $date.getFullYear();
+    var $timeOfDay = $date.getHours();
+
+    $bookingDate.change(function () {
+        var $selectBookingDate = $bookingDate.val();
+
+        if (($selectBookingDate == $dateOfDay) && ($timeOfDay >= 14)){
+            console.log($radioDay);
+            $radioDay.attr('disabled', true).prop('checked', false);
+        }else{
+            $radioDay.attr('disabled', false);
+        }
+            });
+
+
+
+
+
+
 });
 
 
