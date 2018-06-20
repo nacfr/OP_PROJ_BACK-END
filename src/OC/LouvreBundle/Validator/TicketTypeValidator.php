@@ -16,7 +16,6 @@ class TicketTypeValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        dump($this->getTimeOfDay($value));
         if($this->getTimeOfDay($value)){
             $this->context->addViolation($constraint->message);
         }

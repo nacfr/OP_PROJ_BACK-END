@@ -52,7 +52,15 @@
 					'choices' => array(
 						'1 billet' => '1',
 						'2 billets' => '2',
-						'3 billets' => '3'
+						'3 billets' => '3',
+						'4 billets' => '4',
+						'5 billets' => '5',
+						'6 billets' => '6',
+						'7 billets' => '7',
+						'8 billets' => '8',
+						'9 billets' => '9',
+						'10 billets' => '10',
+						'Plus de 10 billets' => 'plus10'
 					),
 					'preferred_choices' => array('1 billet'),
 					'attr' => ['class' => 'add-ticketnumber-form-widget']
