@@ -7,7 +7,7 @@
     <meta name="Billeterie du Louvre" content="">
     <meta name="Guillaume Pruvost" content="">
 
-    <title>{% block title %}Billeterie du Louvre{% endblock %}</title>
+    <title>{% block title %}{{ "Billetterie Louvre Paris"|trans }}{% endblock %}</title>
 
     <!-- JS Stripe -->
     <script src="https://js.stripe.com/v3/"></script>
@@ -31,68 +31,26 @@
     <div class="row row-form-posts">
 
         <div class="col-md-12">
-            <h1 class="my-4 text-center">BILLETERIE</h1>
+            <h1 class="my-4 text-center">{{ "BILLETERIE"|trans }}</h1>
         </div>
         <div class="col-md-12 text-center bloc-boutons-widget">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseModal">
-                COMMANDE EN COURS
+                {{ "COMMANDE EN COURS"|trans }}
             </button>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#priceModal">
-                TARIFICATION
+                {{ "TARIFICATION"|trans }}
             </button>
         </div>
 
-        {# Modals #}
-        <!-- Commande -->
-        <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="purchaseModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="purchaseModalLabel">COMMANDE EN COURS</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                            {{ render(controller("OCLouvreBundle:Widget:widgetPurchase")) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fin Commande -->
-        <!-- Tarifs -->
-        <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="priceModalLabel">TARIFICATION</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                            {{ render(controller("OCLouvreBundle:Widget:widgetPrice")) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fin Tarifs -->
-        {# Fin Modals #}
 
         {% block body %}
         {% endblock %}
 
         <!-- Widget -->
-        <div class="col-md-4 bloc-widget">
+        {#<div class="col-md-4 bloc-widget">
             <!-- COMMANDE -->
             <div class="card widget-order">
-                <h5 class="card-header text-center widget-order-title">COMMANDE EN COURS</h5>
+                <h5 class="card-header text-center widget-order-title">{{ "COMMANDE EN COURS"|trans }}</h5>
                 <div class="card-body widget-order-content">
                     <div class="row">
                         <div class="col-lg-12">
@@ -100,13 +58,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>#}
 
-            <!-- FIN COMMANDE -->
+        <div class="col-md-4 bloc-widget">
+            {% block widgetpurchase %}
+            {% endblock %}
 
             <!-- TARIFS -->
             <div class="card my-4 widget-prices">
-                <h5 class="card-header text-center widget-prices-title">TARIFICATION</h5>
+                <h5 class="card-header text-center widget-prices-title">{{ "TARIFICATION"|trans }}</h5>
                 <div class="card-body widget-prices-content">
                     <div class="row">
                         <div class="col-lg-12">
@@ -115,9 +75,7 @@
                     </div>
                 </div>
             </div>
-
             <!-- FIN TARIFS -->
-
         </div>
         <!-- Fin Widget -->
 

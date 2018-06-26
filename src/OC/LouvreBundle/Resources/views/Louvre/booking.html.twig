@@ -12,19 +12,26 @@
         <!-- Blog Post -->
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title text-center">Réserver un billet</h2>
-                {% if error is defined %}
+                <h2 class="card-title text-center">{{ "Réserver un billet"|trans }}</h2>
+                {% if errorcontroller is defined %}
                     <div class="alert alert-danger text-center" role="alert">
-                        {{ errorvalidation }}
+                        {{ errorvalidation|trans }}
                     </div>
                 {% endif %}
                 {% if errors is defined %}
                     {% for error in errors %}
                         <div class="alert alert-danger text-center" role="alert">
-                            {{ error.message }}
+                            {{ error.message|trans }}
                         </div>
                     {% endfor %}
                 {% endif %}
+
+                {% for message in app.flashes('info') %}
+                    <div class="alert alert-secondary text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
 
                 {{ form_start(form) }}
                 <div class="form-row">
@@ -74,6 +81,24 @@
         var dates = ["2018-05-09", "2018-05-10", "2018-05-11", "2018-05-12", "2018-05-13"];
     </script>
 {% endblock %}
+
+{% block widgetpurchase %}
+    <!-- COMMANDE -->
+    <div class="card widget-order">
+        <h5 class="card-header text-center widget-order-title">{{ "COMMANDE EN COURS"|trans }}</h5>
+        <div class="card-body widget-order-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="booking-current-order" class="col-sm-12"
+                         data-create-url="{{ path('oc_louvre_currentorder') }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN COMMANDE -->
+{% endblock %}
+
 
 {% block scripts %}
     <script src="{{ asset('lib/js/louvre.js') }}"></script>

@@ -3,13 +3,13 @@
     {% for listPrice in listPrices %}
 
         <tr>
-            <td class="tab-prices-left">{{ listPrice.title }} (de {{ listPrice.minage }} à {{ listPrice.maxage }} ans) :</td>
+            <td class="tab-prices-left">{{ listPrice.title|trans }} (de {{ listPrice.minage }} à {{ listPrice.maxage }} ans) :</td>
             <td class="tab-prices-right">{{ (listPrice.priceht + (listPrice.priceht * listPrice.tva))|round }} €</td>
         </tr>
 
     {% endfor %}
 
 </table>
-<em class="tab-prices-mention">* Les tarifs réduits sont valable uniquement sous présentation d'un justificatif</em>
+<em class="tab-prices-mention">{{ "Les tarifs réduits sont valable uniquement sous présentation de justificatif"|trans }}</em>
 
 

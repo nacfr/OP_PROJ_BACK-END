@@ -10,13 +10,14 @@
 	
 	use OC\LouvreBundle\Entity\Booking;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+	use Symfony\Component\HttpFoundation\JsonResponse;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\Response;
 	use OC\LouvreBundle\Form\BookingType;
     use Symfony\Component\HttpFoundation\Session\Session;
-
-
-    class BookingController extends Controller
+    
+	
+	class BookingController extends Controller
 	{
 	    public function bookingAction(Request $request)
 		{
@@ -69,10 +70,10 @@
 					return $this->redirectToRoute('oc_louvre_summary', array('btoken' => $booking->getBtoken()));
 				}
 				else{
-					$error = 'Le plafond du nombre de tickets disponible a été atteind. Veuillez choisir une autre journée.';
+					$errorcontroller = 'Le plafond du nombre de tickets disponible a été atteind. Veuillez choisir une autre journée.';
 					return $this->render('@OCLouvre/Louvre/booking.html.twig', array(
 							'form' => $form->createView(),
-							'error' => $error
+							'errorcontroller' => $errorcontroller
 						));
 				}
 			}

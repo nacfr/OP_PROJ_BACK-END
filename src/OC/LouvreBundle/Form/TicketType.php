@@ -53,6 +53,7 @@ class TicketType extends AbstractType
                 ],
             ))
             ->add('country', CountryType::class, array(
+                'label' => 'Pays',
                 'attr' => [
                     'autocomplete' => 'off'
                 ],

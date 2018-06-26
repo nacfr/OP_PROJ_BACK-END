@@ -13,8 +13,9 @@ oc_louvre_payment:
     defaults:
         _controller: OCLouvreBundle:Payment:payment
 
-oc_pricing:
-    path:    /pricing
+oc_louvre_currentorder:
+    path:     /ajax
     defaults:
-        _controller: OCLouvreBundle:Booking;pricing
+        _controller: OCLouvreBundle:CurrentOrder:getorder
+    methods: [post]
 

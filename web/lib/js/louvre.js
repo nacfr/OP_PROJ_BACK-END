@@ -28,6 +28,26 @@ $(document).ready(function () {
           }
       });*/
 
+    /* -----------------------------------------
+    Disable ticket type if time of day is above 14h
+    ----------------------------------------- */
+
+    var $bookingDate = $('#booking_bookingdate');
+    var $radioDay = $('#' + $('.booking_tickettype').find('input[type=radio]')[0].id);
+    var $date = new Date();
+    var $dateOfDay = ('0' + $date.getDate()).slice(-2) + '-' + ('0' + ($date.getMonth() + 1)).slice(-2) + '-' + $date.getFullYear();
+    var $timeOfDay = $date.getHours();
+
+    $bookingDate.change(function () {
+        var $selectBookingDate = $bookingDate.val();
+
+        if (($selectBookingDate == $dateOfDay) && ($timeOfDay >= 15)) {
+            $radioDay.attr('disabled', true).prop('checked', false);
+        } else {
+            $radioDay.attr('disabled', false);
+        }
+    });
+
 
     /* -----------------------------------------
     Add / delete formulaire
@@ -54,10 +74,10 @@ $(document).ready(function () {
     function comboAdd() {
         var valTicket = document.getElementById('booking_ticketnumber').value;
 
-        if (valTicket === 'plus10') {
+        if (valTicket >= '11') {
             console.log('futur message : veuillez contacter le musée');
             addMessage($collectionHolder);
-        }else{
+        } else {
             for (var iadd = 1; iadd <= valTicket; iadd++) {
                 addTagForm($collectionHolder);
             }
@@ -71,40 +91,89 @@ $(document).ready(function () {
         $collectionHolder.data('index', index + 1);
         var $newFormLi = $('<div class="form-posts"></div>').append(newForm);
         $collectionHolder.append($newFormLi);
+
+        //Ecoute tous les champs date de naissance et au changement execute la function exec
+        $newFormLi.find('.datepicker-dateofbirth').bind('change', function () {
+            exec();
+        });
     }
 
     function addMessage($collectionHolder) {
         var $content = '<h2 class="card-title form-posts-title text-center">Pour les réservations supérieures à 10 visiteurs :</h2>' +
             '<div class="form-row">Merci de contacter directement le Musée au 00 00 00 00 00</div>';
-        var $newFormLi = $('<div class="form-posts"></div>').append($content);
-        $collectionHolder.append($newFormLi);
+        var $newAlerte = $('<div class="form-posts"></div>').append($content);
+        $collectionHolder.append($newAlerte);
     }
 
     /* -----------------------------------------
-    Disable ticket type if time of day is above 14h
+    MAJ ORDER
     ----------------------------------------- */
 
-    var $bookingDate = $('#booking_bookingdate');
-    var $radioDay = $('#'+$('.booking_tickettype').find('input[type=radio]')[0].id);
-    var $date= new Date();
-    var $dateOfDay = ('0' + $date.getDate()).slice(-2) + '-' + ('0' + ($date.getMonth()+1)).slice(-2) + '-' + $date.getFullYear();
-    var $timeOfDay = $date.getHours();
+    //var $dayOfBirth = $('.datepicker-dateofbirth');
+    var $tickets = $('.add-ticketnumber-form-widget');
 
-    $bookingDate.change(function () {
-        var $selectBookingDate = $bookingDate.val();
+    /*$dayOfBirth.blur(function () {
+        console.log($dayOfBirth.val());
+    });*/
 
-        if (($selectBookingDate == $dateOfDay) && ($timeOfDay >= 14)){
-            $radioDay.attr('disabled', true).prop('checked', false);
-        }else{
-            $radioDay.attr('disabled', false);
-        }
-            });
+    $tickets.change(function () {
+        exec();
 
-
-
-
-
+    });
 
 });
+
+
+function exec() {
+    var $bookingCurrentOrder = $('#booking-current-order').data('create-url');
+
+    var $titi = $('.datepicker-dateofbirth');
+    var p = {};
+    p.tab = [];
+
+    $titi.each(function () {
+        p.tab.push(this.value);
+
+    });
+
+    $.ajax({
+            type : "POST",
+            url : $bookingCurrentOrder,
+            data : p,
+            dataType : 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        }
+    )
+}
+
+/*function exec() {
+    var $bookingCurrentOrder = $('#booking-current-order').data('create-url');
+
+    var $titi = $('.datepicker-dateofbirth');
+    var p = {};
+    p.tab = [];
+
+    $titi.each(function () {
+        p.tab.push(this.value);
+
+    });
+
+    $.ajax({
+            type: "POST",
+            url: $bookingCurrentOrder,
+            data: p,
+            success: function (data) {
+                var doc = eval('(' + data + ')');
+                if (doc) {
+                    alert(doc.toto); //affiche 345
+                    alert(doc.titi); //affiche khgv
+
+                }
+            }
+        }
+    )
+}*/
 
 

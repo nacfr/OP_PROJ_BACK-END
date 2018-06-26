@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/css/stripe-module.css') }}"/>
 {% endblock %}
 
-{% block title %}Accueil - {{ parent() }}{% endblock %}
+{% block title %}Paiement - {{ parent() }}{% endblock %}
 
 {% block body %}
     <!-- Blog Entries Column -->
@@ -68,10 +68,14 @@
             </div>
         </div>
     </div>
-
-    <!-- Scripts for each example: -->
-
 {% endblock %}
+
+{% block widgetpurchase %}
+    <!-- COMMANDE EN COURS -->
+{#    {{ include("OCLouvreBundle:Louvre:widgetPurchase.html.twig") }}#}
+{% endblock %}
+
+
 {% block scripts %}
     <script src="{{ asset('lib/js/stripe-module.js') }}" data-rel-js></script>
 {% endblock %}

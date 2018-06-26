@@ -43,7 +43,7 @@
 					'label' => 'Type de ticket',
 					'choices' => array(
 						'journée' => 'day',
-						'demi-jounrée' => 'halfday'),
+						'demi-journée' => 'halfday'),
 					'expanded' => true,
 					'attr' => ['class' => 'booking_tickettype']
 				))
@@ -60,7 +60,7 @@
 						'8 billets' => '8',
 						'9 billets' => '9',
 						'10 billets' => '10',
-						'Plus de 10 billets' => 'plus10'
+						'Plus de 10 billets' => '11'
 					),
 					'preferred_choices' => array('1 billet'),
 					'attr' => ['class' => 'add-ticketnumber-form-widget']

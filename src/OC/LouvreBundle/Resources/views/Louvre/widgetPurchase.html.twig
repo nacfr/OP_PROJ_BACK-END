@@ -1,47 +1,30 @@
+<div class="card widget-order">
+    <h5 class="card-header text-center widget-order-title">{{ "COMMANDE EN COURS"|trans }}</h5>
+    <div class="card-body widget-order-content">
+        <div class="row">
+            <div class="col-lg-12">
 
-{#<table class="table tab-order">
-    {% for purchase in listPurchase %}
-        <tr>
-            <td class="tab-order-left">
-                {{ purchase.qt }} {{ purchase.title }}
-            </td>
-            <td class="tab-order-right">
-                {{ purchase.price }}
-            </td>
-        </tr>
-    {% endfor %}
-</table>#}
-<table class="table tab-order">
-    <tr>
-        <td id="tab-order-qt-free" class="tab-order-left">0</td>
-        <td id="tab-order-title-free" class="tab-order-left"> x Gratuit</td>
-        <td id="tab-order-price-free" class="tab-order-right">0 €</td>
-    </tr>
-    <tr>
-        <td id="tab-order-qt-child" class="tab-order-left">0</td>
-        <td id="tab-order-title-child" class="tab-order-left"> x Enfant</td>
-        <td id="tab-order-price-child" class="tab-order-right">0 €</td>
-    </tr>
-    <tr>
-        <td id="tab-order-qt-normal" class="tab-order-left">0</td>
-        <td id="tab-order-title-normal" class="tab-order-left"> x Normal</td>
-        <td id="tab-order-price-normal" class="tab-order-right">0 €</td>
-    </tr>
-    <tr>
-        <td id="tab-order-qt-senior" class="tab-order-left">0</td>
-        <td id="tab-order-title-senior" class="tab-order-left"> x Sénior</td>
-        <td id="tab-order-price-senior" class="tab-order-right">0 €</td>
-    </tr>
-    <tr>
-        <td id="tab-order-qt-reduced" class="tab-order-left">0</td>
-        <td id="tab-order-title-reduced" class="tab-order-left"> x Réduit</td>
-        <td id="tab-order-price-reduced" class="tab-order-right">0 €</td>
-    </tr>
+                <table class="table tab-order">
+                    {% for summary in summaries.details %}
 
-</table>
-<table class="table tab-order-total">
-    <tr class="tab-order-total-ttc">
-        <td id="tab-order-total-title-ttc" class="tab-order-left">TOTAL TTC</td>
-        <td id="tab-order-total-price-ttc" class="tab-order-right">0 €</td>
-    </tr>
-</table>
+                            <tr>
+                                    <td id="tab-order-qt-free" class="tab-order-left">{{ summary.quantity }}</td>
+                                    <td id="tab-order-multiplicator" class="tab-order-left">x</td>
+                                    <td id="tab-order-title-free" class="tab-order-left">  tarif {{ summary.id }}</td>
+                                    <td id="tab-order-price-free" class="tab-order-right">{{ summary.price }} €</td>
+                            </tr>
+
+                    {% endfor %}
+                </table>
+
+                <table class="table tab-order-total">
+                    <tr class="tab-order-total-ttc">
+                        <td id="tab-order-total-title-ttc" class="tab-order-left">TOTAL TTC</td>
+                        <td id="tab-order-total-price-ttc" class="tab-order-right">{{ summaries.total }} €</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

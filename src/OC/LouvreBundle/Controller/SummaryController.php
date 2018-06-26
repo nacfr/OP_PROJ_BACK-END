@@ -17,14 +17,18 @@
 
     class SummaryController extends Controller
 	{
-
         public function summaryAction(Booking $booking)
 		{
-		    $pricing = $this->get('oc_louvre.bookingprovider');
-			$bookingprice = $pricing->getTabPrice($booking);
-			$bookingtype = $pricing->getBookingType($booking);
+            $em = $this->getDoctrine()->getManager()->getRepository('OCLouvreBundle:Booking')->find($booking->getId());
+            if($em->getEtat()){
+                $this->addFlash('info', "Cette commande est clôturée.");
+                return $this->redirectToRoute("oc_louvre_homepage");
+            }
 
-			//return new Response('');
+		    $bookingprovider = $this->get('oc_louvre.bookingprovider');
+			$bookingprice = $bookingprovider->getTabPrice($booking);
+			$bookingtype = $bookingprovider->getBookingType($booking);
+
 			return $this->render('@OCLouvre/Louvre/summary.html.twig', array(
 				'booking' => $booking,
 				'bookingtype' => $bookingtype,

@@ -1,7 +1,9 @@
 {% extends "/layout.html.twig" %}
 
+{% block stylesheets %}
+{% endblock %}
 
-{% block title %}Accueil - {{ parent() }}{% endblock %}
+{% block title %}Commande - {{ parent() }}{% endblock %}
 
 {% block body %}
     <!-- Blog Entries Column -->
@@ -10,6 +12,8 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title text-center">Détail de la commande</h2>
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -51,6 +55,15 @@
         <!-- FIN RECAPITULATIF -->
 
     </div>
+{% endblock %}
+
+{% block widgetpurchase %}
+    <!-- COMMANDE EN COURS -->
+    {#{{ include("OCLouvreBundle:Louvre:widgetPurchase.html.twig") }}#}
+{% endblock %}
+
+
+{% block scripts %}
 {% endblock %}
 
 

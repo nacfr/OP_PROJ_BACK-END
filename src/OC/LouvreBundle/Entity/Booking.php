@@ -62,6 +62,7 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="ticketnumber", type="integer")
+     * @Assert\LessThan(value = 11)
      *
      */
     private $ticketnumber;
@@ -209,7 +210,7 @@ class Booking
      *
      * @return integer
      *
-     * @Assert\IsTrue(message="La valeur du nombre de ticket ne correspond pas au nombre de tickets envoyés")
+     * @Assert\IsTrue()
      *
      */
     public function getTicketnumber()
