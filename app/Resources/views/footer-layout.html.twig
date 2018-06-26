@@ -1,7 +1,7 @@
 
 <footer>
     <div class="footer-pay">
-        <p class="footer-pay-title">Nos moyens de paiements</p>
+        <p class="footer-pay-title">{{ "Nos moyens de paiements"|trans }}</p>
         <div class="footer-pay-picto">
             <img src="{{ asset('lib/img/american.svg') }}" />
             <img src="{{ asset('lib/img/mastercard.svg') }}" />
@@ -13,7 +13,7 @@
         <div class="col-md-12 footer-infos-bloc">
             <div class="col-md-6">
                 <div class="footer-infos-bloc-social">
-                    <h5>Suivez-nous</h5>
+                    <h5>{{ "Suivez-nous"|trans }}</h5>
                     <div class="footer-pay-picto">
                         <img src="{{ asset('lib/img/american.svg') }}" />
                         <img src="{{ asset('lib/img/mastercard.svg') }}" />
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="footer-infos-bloc-newsletter">
-                    <h5>Abonnez-vous à notre Newsletter</h5>
+                    <h5>{{ "Abonnez-vous à notre Newsletter"|trans }}</h5>
                     <form class="form">
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -30,7 +30,7 @@
 
                             </div>
                             <div class="form-group col-md-4">
-                                <button type="submit" class="btn btn-success">Valider</button>
+                                <button type="submit" class="btn btn-success">{{ "Valider"|trans }}</button>
                             </div>
 
                         </div>
@@ -43,15 +43,15 @@
 
                 <div class="col-md-6 footer-infos-bloc-adresse-texte">
                     <div>
-                        <h5>Musée du Louvre</h5>
+                        <h5>{{ "Musée du Louvre"|trans }}</h5>
                         <p>Rue de Rivoli<br>75001 Paris<br>Tél. : 01 40 20 50 50</p>
-                        <p>Ouverture:
-                            <br>Lundi : 9 h - 18 h
-                            <br>Mardi : Fermé
-                            <br>Mercredi : 9 h - 21h45
-                            <br>Jeudi : 9 h - 18 h
-                            <br>Vendredi : 9 h - 21h45
-                            <br>Samedi et Dimanche : 9 h - 18 h</p>
+                        <p>{{ "Ouverture"|trans }}:
+                            <br>{{ "Lundi"|trans }} : 9 h - 18 h
+                            <br>{{ "Mardi"|trans }} : {{ "Fermé"|trans }}
+                            <br>{{ "Mercredi"|trans }} : 9 h - 21h45
+                            <br>{{ "Jeudi"|trans }} : 9 h - 18 h
+                            <br>{{ "Vendredi"|trans }} : 9 h - 21h45
+                            <br>{{ "Samedi et Dimanche"|trans }} : 9 h - 18 h</p>
                     </div>
 
 

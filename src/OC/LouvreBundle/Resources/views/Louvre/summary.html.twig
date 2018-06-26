@@ -11,7 +11,7 @@
         <!-- RECAPITULATIF -->
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title text-center">Détail de la commande</h2>
+                <h2 class="card-title text-center">{{ "Détail de la commande"|trans }}</h2>
 
 
 
@@ -22,12 +22,11 @@
                                 {% if summary.quantity > 0 %}
                                     <tr>
                                         {% if summary.quantity == 1 %}
-                                            <td class="tab-summary-ticket">{{ summary.quantity }} ticket
-                                                tarif {{ summary.id }} {{ bookingtype }} - Musée du Louvre Paris
+                                            <td class="tab-summary-ticket">{{ summary.quantity }} {{ "ticket tarif"|trans }}
+                                                {{ summary.id|trans }} {{ bookingtype|trans }} - {{ "Musée du Louvre Paris"|trans }}
                                             </td>
                                         {% else %}
-                                            <td class="tab-summary-ticket">{{ summary.quantity }} tickets
-                                                tarif {{ summary.id }} {{ bookingtype }} - Musée du Louvre Paris
+                                            <td class="tab-summary-ticket">{{ summary.quantity }} {{ "tickets tarif"|trans }} {{ summary.id|trans }} {{ bookingtype|trans }} - {{ "Musée du Louvre Paris"|trans }}
                                             </td>
                                         {% endif %}
                                         <td class="tab-summary-ticket">{{ summary.price }} ttc</td>
@@ -37,7 +36,7 @@
                         </table>
                         <table class="table tab-summary-total">
                             <tr>
-                                <td>TOTAL T.T.C. {{ summaries.total }} €</td>
+                                <td>{{ "TOTAL"|trans }} T.T.C. {{ summaries.total }} €</td>
                             </tr>
                             <tr>
                                 <td>
@@ -59,7 +58,7 @@
 
 {% block widgetpurchase %}
     <!-- COMMANDE EN COURS -->
-    {#{{ include("OCLouvreBundle:Louvre:widgetPurchase.html.twig") }}#}
+    {{ include("@OCLouvre/Louvre/widgetPurchase.html.twig") }}
 {% endblock %}
 
 

@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/css/stripe-module.css') }}"/>
 {% endblock %}
 
-{% block title %}Paiement - {{ parent() }}{% endblock %}
+{% block title %}{{ "Paiement"|trans }} - {{ parent() }}{% endblock %}
 
 {% block body %}
     <!-- Blog Entries Column -->
@@ -14,7 +14,7 @@
         <!-- Blog Post -->
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title text-center">Paiement</h2>
+                <h2 class="card-title text-center">{{ "paiement"|trans }}</h2>
                 {% if error is defined %}
                     <div class="alert alert-danger text-center" role="alert">
                         {{ error }}
@@ -23,7 +23,7 @@
 
 
                 {% if success == true %}
-                    <p>Merci pour votre commande</p>
+                    <p>{{ "Merci pour votre commande"|trans }}</p>
 
                 {% else %}
 
@@ -33,13 +33,13 @@
                             <div class="form-row inline">
                                 <div class="col">
                                     <label for="name">
-                                        Name
+                                        {{ "Nom"|trans }}
                                     </label>
                                     <input id="name" name="name" placeholder="Jane Doe" required>
                                 </div>
                                 <div class="col">
                                     <label for="email">
-                                        Email Address
+                                        {{ "Adresse email"|trans }}
                                     </label>
                                     <input id="email" name="email" type="email" placeholder="jane.doe@example.com"
                                            required>
@@ -48,7 +48,7 @@
 
                             <div class="form-row">
                                 <label for="card-element">
-                                    Credit or debit card
+                                    {{ "Carte de crédit"|trans }}
                                 </label>
                                 <div id="card-element">
                                     <!-- A Stripe Element will be inserted here. -->
@@ -58,7 +58,7 @@
                                 <div id="card-errors" role="alert"></div>
                             </div>
 
-                            <button>Submit Payment</button>
+                            <button>{{ "Payer"|trans }}</button>
                         </form>
                     </div>
 
@@ -72,7 +72,7 @@
 
 {% block widgetpurchase %}
     <!-- COMMANDE EN COURS -->
-{#    {{ include("OCLouvreBundle:Louvre:widgetPurchase.html.twig") }}#}
+    {{ include("@OCLouvre/Louvre/widgetPurchase.html.twig") }}
 {% endblock %}
 
 

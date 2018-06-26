@@ -47,15 +47,17 @@
 							$em->persist($booking);
 							$em->flush();
 							
-							/*$this->get('oc_louvre.bookingmailer')->MailOrderConfirmation($booking);*/
-							/*$bookingprovider->getQrCode($booking->getBtoken())*/
+							/*return $this->render('@OCLouvre/Louvre/mail/orderconfirmation.html.twig', array(
+								'success' => $this->successpayment,
+								'booking' => $booking,
+								'summaries' => $bookingprice
+							));*/
+							
+							//$message = $this->get('oc_louvre.bookingmailer')->MailOrderConfirmation($booking);
 							
 							//Contenu Email
 							$message = new \Swift_Message();
 							$img_logo = $message->embed(\Swift_Image::fromPath('https://www.nacom.fr/openclassroom/proj4/web/lib/img/logo-louvre.jpg'));
-							$img_qr = $message->embed(\Swift_Image::fromPath($bookingprovider->getQrCode($booking->getBtoken())));
-							dump($img_qr);
-							die();
 							$message->setSubject('MUSÉE DU LOUVRE PARIS - CONFIRMATION DE COMMANDE')
 								->setFrom('optest@nacom.fr')
 								->setTo($clientmail)
@@ -64,24 +66,20 @@
 								->setBody($this->renderView('@OCLouvre/Louvre/mail/orderconfirmation.html.twig',
 									array(
 										'booking' => $booking,
-										'logo' => $img_logo,
-										'qr' => $img_qr))
+										'logo' => $img_logo))
 								);
-							
-							//$this->get('mailer')->send($message);
 							
 							if ($this->get('mailer')->send($message)) {
 								dump('email envoyé !');
 								$this->successpayment = true;
 								return $this->render('@OCLouvre/Louvre/payment.html.twig', array(
+									'success' => $this->successpayment,
 									'booking' => $booking,
-									'summaries' => $bookingprice,
-									'success' => $this->successpayment
+									'summaries' => $bookingprice
 								));
 							} else {
 								dump('email non envoyé');
 							}
-							
 							
 						}
 						$error = 'L\'adresse email spécifiée n\'est pas correcte';

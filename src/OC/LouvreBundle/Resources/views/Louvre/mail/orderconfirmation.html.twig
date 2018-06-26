@@ -7,39 +7,57 @@
     <meta name="Billeterie du Louvre" content="">
     <meta name="Guillaume Pruvost" content="">
 
-    <title>MUSÉE DU LOUVRE PARIS - CONFIRMATION COMMANDE</title>
+    <title>{{ "MUSÉE DU LOUVRE PARIS - CONFIRMATION COMMANDE"|trans }}</title>
 </head>
 
 <body>
-
 <div class="container-billeterie">
-    <img src="{{ logo }}" alt="Logo Louvre Paris"/>
-    <h1 class="my-4 text-center">CONFIRMATION DE VOTRE COMMANDE</h1>
-    <p>Merci pour votre commande</p>
-    <p>Numéro de commande : {{ booking.btoken }}</p>
-    <p>Date de réservation : {{ booking.bookingdate|date('d-m-Y') }}</p>
-    <p>Nombre de tickets : {{ booking.ticketnumber }}</p>
-    <p>Prix total : {{ booking.totalprice }}</p>
-    {#<img src="{{ qr }}" style="width:100px;">#}
-    <img src="{{ qr }}" alt="qrcode"/>
-    <div>
-        <h3>Détail de la commande :</h3>
-        <table>
-            {% for ticket in booking.tickets %}
 
-            <tr>
-                <td class="">{{ ticket.name }} {{ ticket.firstname }},</td>
-                <td>date de naissance : {{ ticket.dateofbirth|date('d-m-Y') }}</td>
-            </tr>
-            <tr>
-                <td>1 billet {{ ticket.typeticket }} - {{ ticket.price }} € TTC</td>
-            </tr>
+    {# Content #}
+    <div class="row row-form-posts">
 
-            {% endfor %}
-        </table>
+        <div class="col-md-12">
+            <!-- RECAPITULATIF -->
+            <div class="card">
+                <div class="card-body">
+                    img src="{{ logo }}" alt="Logo Louvre Paris"/>
+                    <h2 class="card-title text-center">{{ "CONFIRMATION DE VOTRE COMMANDE"|trans }}</h2>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>{{ "Merci pour votre commande"|trans }}</p>
+                            <p>{{ "Numéro de commande"|trans }} : {{ booking.btoken }}</p>
+                            <p>{{ "Date de réservation"|trans }} : {{ booking.bookingdate|date('d-m-Y') }}</p>
+                            <p>{{ "Nombre de tickets"|trans }} : {{ booking.ticketnumber }}</p>
+                            <p>{{ "Prix total"|trans }} : {{ booking.totalprice }}</p>
+
+                            <div>
+                                <h3>{{ "Détail de la commande"|trans }} :</h3>
+
+                                <table>
+                                    {% for ticket in booking.tickets %}
+
+                                        <tr>
+                                            <td class="">{{ ticket.name }} {{ ticket.firstname }},</td>
+                                            <td>{{ "Date de naissance"|trans }}
+                                                : {{ ticket.dateofbirth|date('d-m-Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1 billet {{ ticket.typeticket|trans }} - {{ ticket.price }} € TTC</td>
+                                        </tr>
+
+                                    {% endfor %}
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -9,31 +9,34 @@
 namespace OC\LouvreBundle\Service;
 
 use Endroid\QrCode\QrCode;
-use OC\LouvreBundle\Entity\Booking;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 class BookingMail extends Controller
 {
-
-    public function mailOrderConfirmation(Booking $booking)
+	
+	private $successpayment = false;
+	
+	public function mailOrderConfirmation($booking)
     {
-        //Generate QrCode
-        $qrCode = new QrCode($booking->getBtoken());
-        $resultQrCode = $qrCode->writeDataUri();
+    	
+    	//Generate QrCode
+        /*$qrCode = new QrCode($booking->getBtoken());
+        $resultQrCode = $qrCode->writeDataUri();*/
 
         //Email
-        $message = (new \Swift_Message('MUSÉE DU LOUVRE PARIS - CONFIRMATION DE COMMANDE'))
-            ->setFrom('villamarine.berck@gmail.com')
-            ->setTo('ceciletguillaume@gmail.com')
-            ->setBody($this->renderView('@OCLouvre/Louvre/mail/orderconfirmation.html.twig',
-                array(
-                    'booking' => $booking,
-                    'qr' => $resultQrCode
-                )),
-                'text/html');
-
-        $this->get('mailer')->send($message);
+	    dump($booking);
+	    $message = new \Swift_Message();
+	    $message->setSubject('MUSÉE DU LOUVRE PARIS - CONFIRMATION DE COMMANDE')
+		    ->setFrom('optest@nacom.fr')
+		    ->setTo($booking->getClientmail())
+		    ->setCharset('utf-8')
+		    ->setContentType('text/html')
+		    ->setBody($this->renderView('@OCLouvre/Louvre/mail/orderconfirmation.html.twig',
+			    array(
+				    'booking' => $booking))
+		    );
+	    return $message;
     }
 
 }

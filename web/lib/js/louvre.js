@@ -74,7 +74,7 @@ $(document).ready(function () {
     function comboAdd() {
         var valTicket = document.getElementById('booking_ticketnumber').value;
 
-        if (valTicket >= '11') {
+        if (valTicket >= 11) {
             console.log('futur message : veuillez contacter le musée');
             addMessage($collectionHolder);
         } else {
