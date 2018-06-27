@@ -47,12 +47,6 @@
 							$em->persist($booking);
 							$em->flush();
 							
-							/*return $this->render('@OCLouvre/Louvre/mail/orderconfirmation.html.twig', array(
-								'success' => $this->successpayment,
-								'booking' => $booking,
-								'summaries' => $bookingprice
-							));*/
-							
 							//$message = $this->get('oc_louvre.bookingmailer')->MailOrderConfirmation($booking);
 							
 							//Contenu Email
@@ -81,6 +75,9 @@
 								dump('email non envoyé');
 							}
 							
+							//$this->get('mailer')->send($message);
+							
+							
 						}
 						$error = 'L\'adresse email spécifiée n\'est pas correcte';
 						return $this->render('@OCLouvre/Louvre/payment.html.twig', array(
@@ -99,6 +96,7 @@
 						'success' => $this->successpayment
 					));
 				}
+				return $this->redirectToRoute("oc_louvre_summary");
 			}
 			
 			return $this->render('@OCLouvre/Louvre/payment.html.twig', array(

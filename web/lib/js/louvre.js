@@ -93,7 +93,7 @@ $(document).ready(function () {
         $collectionHolder.append($newFormLi);
 
         //Ecoute tous les champs date de naissance et au changement execute la function exec
-        $newFormLi.find('.datepicker-dateofbirth').bind('change', function () {
+        $newFormLi.find('.datepicker-dateofbirth').bind('blur', function () {
             exec();
         });
     }
@@ -127,22 +127,36 @@ $(document).ready(function () {
 function exec() {
     var $bookingCurrentOrder = $('#booking-current-order').data('create-url');
 
-    var $titi = $('.datepicker-dateofbirth');
+    var $dateOfBirth = $('.datepicker-dateofbirth');
+    
     var p = {};
-    p.tab = [];
-
-    $titi.each(function () {
-        p.tab.push(this.value);
+    p.tabDate = [];
+    p.tabReduce = [];
+    $dateOfBirth.each(function () {
+        if (this.value !== "") {
+            p.tabDate.push(this.value);
+        }
+        else {
+            p.tabDate.push([]);
+        }
 
     });
 
     $.ajax({
-            type : "POST",
-            url : $bookingCurrentOrder,
-            data : p,
-            dataType : 'json',
+            type: "POST",
+            url: $bookingCurrentOrder,
+            data: p,
+            dataType: 'json',
             success: function (data) {
-                console.log(data);
+                var a, details = data.details;
+
+                for (var id in details) {
+                    a = details[id];
+                    /*console.dir(a);*/
+
+                    $('#tab-order-qt-' + id).html(a.quantity);
+                    $('#tab-order-price-' + id).html(a.price);
+                }
             }
         }
     )

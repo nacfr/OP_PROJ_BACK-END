@@ -13,23 +13,55 @@
 	use Symfony\Component\HttpFoundation\JsonResponse;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\Response;
+	use Psr\Log\LoggerInterface;
 	
 	class CurrentOrderController extends Controller
 	{
+		
 		public function getorderAction(Request $request){
 			
-			/*$datas = json_decode($request->get('data'), true);
 			
-			foreach ($datas as $data) {
-				dump($data);
-				return new JsonResponse($data);
-			}*/
+			$dates = $request->get("tabDate");
+			
+			$logger = $this->get('logger');
+			$logger->info(print_r($request->get("tabDate"), true));
+			
+			$result = [];
+			$result = $this->get('oc_louvre.bookingprovider')->getTest($dates);
+			
+			return new JsonResponse($result);
+		}
+		
+		
+		/*public function getorderAction(Request $request){
+			
+			
+			$logger = $this->get('logger');
+			$logger->info(print_r($request->get("tab"), true));
+			
+			
+			$dates = $request->get("youpi");
 			$tab = array();
+			$nom = $request->get("guillaume");
+			
+			
+			if( ! is_array($dates))
+			{
+				$dates = array($dates);
+			}
+			
+			
+			$logger->info($nom);
+			foreach( $dates as $date)
+			{
+				$logger->info($date);
+				$tab['date']=$date;
+			}
 			$tab['toto']=345;
 			$tab['titi']='khgv';
 			
 			return new JsonResponse($tab);
-		}
+		}*/
 		
 		
 		/*public function titiAction(){

@@ -5,14 +5,18 @@
             <div class="col-lg-12">
 
                 <table class="table tab-order">
-                    {% for summary in summaries.details %}
+                    {% for id, summary in summaries.details %}
 
-                            <tr>
-                                    <td id="tab-order-qt-free" class="tab-order-left">{{ summary.quantity }}</td>
-                                    <td id="tab-order-multiplicator" class="tab-order-left">x</td>
-                                    <td id="tab-order-title-free" class="tab-order-left">  {{ "tarif"|trans }} {{ summary.id|trans }}</td>
-                                    <td id="tab-order-price-free" class="tab-order-right">{{ summary.price }} €</td>
-                            </tr>
+                        <tr>
+                            <td id="tab-order-qt-{{ id }}"
+                                class="tab-order-left">{{ summary.quantity }}</td>
+                            <td id="tab-order-multiplicator-{{ id }}" class="tab-order-left">x</td>
+                            <td id="tab-order-title-{{ id }}"
+                                class="tab-order-left">  {{ "tarif"|trans }} {{ id|trans }}</td>
+                            <td id="tab-order-price-{{ id }}"
+                                class="tab-order-right">{{ summary.price }} €
+                            </td>
+                        </tr>
 
                     {% endfor %}
                 </table>

@@ -30,10 +30,10 @@
         <div class="form-group col-md-12">
             {{ form_label(form.reduceprice) }}
             {{ form_errors(form.reduceprice) }}
-            {{ form_widget(form.reduceprice) }}
+            {{ form_widget(form.reduceprice, {'attr' : {'class':'check-input-reduceprice'}}) }}
             {{ form_label(form.handicap) }}
             {{ form_errors(form.handicap) }}
-            {{ form_widget(form.handicap) }}
+            {{ form_widget(form.handicap, {'attr' : {'class':'check-input-reduceprice'}}) }}
         </div>
     </div>
 </div>

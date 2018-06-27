@@ -91,6 +91,33 @@
                 <div class="col-lg-12">
                     <div id="booking-current-order" class="col-sm-12"
                          data-create-url="{{ path('oc_louvre_currentorder') }}">
+                        <table class="table tab-order">
+                            {% for id, summary in summaries.details %}
+
+                                <tr>
+                                    <td id="tab-order-qt-{{ id }}"
+                                        class="tab-order-left">{{ summary.quantity }}</td>
+                                    <td id="tab-order-multiplicator-{{ id }}" class="tab-order-left">x</td>
+                                    <td id="tab-order-title-{{ id }}"
+                                        class="tab-order-left">  {{ "tarif"|trans }} {{ id|trans }}</td>
+                                    <td id="tab-order-price-{{ id }}"
+                                        class="tab-order-right">{{ summary.price }} €
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                        </table>
+
+                        <table class="table tab-order-total">
+                            <tr class="tab-order-total-ttc">
+                                <td class="tab-order-left">
+                                    <div id="tab-order-total-title-ttc"></div>
+                                </td>
+                                <td class="tab-order-right">
+                                    <div id="tab-order-total-price-ttc"></div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

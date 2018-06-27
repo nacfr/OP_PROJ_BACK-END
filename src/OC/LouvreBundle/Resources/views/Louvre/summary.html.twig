@@ -18,15 +18,16 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <table class="table tab-summary-ticket">
-                            {% for summary in summaries.details %}
+
+                            {% for id, summary in summaries.details %}
                                 {% if summary.quantity > 0 %}
                                     <tr>
                                         {% if summary.quantity == 1 %}
                                             <td class="tab-summary-ticket">{{ summary.quantity }} {{ "ticket tarif"|trans }}
-                                                {{ summary.id|trans }} {{ bookingtype|trans }} - {{ "Musée du Louvre Paris"|trans }}
+                                                {{ id|trans }} {{ bookingtype|trans }} - {{ "Musée du Louvre Paris"|trans }}
                                             </td>
                                         {% else %}
-                                            <td class="tab-summary-ticket">{{ summary.quantity }} {{ "tickets tarif"|trans }} {{ summary.id|trans }} {{ bookingtype|trans }} - {{ "Musée du Louvre Paris"|trans }}
+                                            <td class="tab-summary-ticket">{{ summary.quantity }} {{ "tickets tarif"|trans }} {{ id|trans }} {{ bookingtype|trans }} - {{ "Musée du Louvre Paris"|trans }}
                                             </td>
                                         {% endif %}
                                         <td class="tab-summary-ticket">{{ summary.price }} ttc</td>

@@ -21,6 +21,12 @@
                     </div>
                 {% endif %}
 
+                {% for message in app.flashes('infostripe') %}
+                    <div class="alert alert-secondary text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
 
                 {% if success == true %}
                     <p>{{ "Merci pour votre commande"|trans }}</p>

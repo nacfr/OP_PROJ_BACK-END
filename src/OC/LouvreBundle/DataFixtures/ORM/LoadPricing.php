@@ -21,11 +21,11 @@ class LoadPricing implements FixtureInterface
         $date = new \DateTime();
 
         $listtab = [
-            ['title' => 'Gratuit', 'minage' => '0', 'maxage' => '3', 'priceht' => '0', 'tva' => '0.2', 'registrationprincing' => $date],
-            ['title' => 'Enfant', 'minage' => '4', 'maxage' => '11', 'priceht' => '6.67', 'tva' => '0.2', 'registrationprincing' => $date],
-            ['title' => 'Normal', 'minage' => '12', 'maxage' => '59', 'priceht' => '13.33', 'tva' => '0.2', 'registrationprincing' => $date],
-            ['title' => 'Sénior', 'minage' => '60', 'maxage' => '150', 'priceht' => '10.00', 'tva' => '0.2', 'registrationprincing' => $date],
-            ['title' => 'Réduit', 'minage' => 'null', 'maxage' => 'null', 'priceht' => '8.33', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'gratuit', 'minage' => '0', 'maxage' => '3', 'priceht' => '0', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'enfant', 'minage' => '4', 'maxage' => '11', 'priceht' => '6.67', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'normal', 'minage' => '12', 'maxage' => '59', 'priceht' => '13.33', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'senior', 'minage' => '60', 'maxage' => '150', 'priceht' => '10.00', 'tva' => '0.2', 'registrationprincing' => $date],
+            ['title' => 'reduit', 'minage' => 'null', 'maxage' => 'null', 'priceht' => '8.33', 'tva' => '0.2', 'registrationprincing' => $date],
 
         ];
 
