@@ -159,16 +159,6 @@
 					$priceReduce = 0;
 				}
 				
-				$tab = array(
-					'details' => array(
-						'gratuit' => array('quantity' => 0, 'price' => 0),
-						'enfant' => array('quantity' => 0, 'price' => 0),
-						'normal' => array('quantity' => 0, 'price' => 0),
-						'senior' => array('quantity' => 0, 'price' => 0),
-						'reduit' => array('quantity' => 0, 'price' => 0),
-					)
-				);
-				
 				if (is_null(self::$_TABPRICE)) {
 					self::$_TABPRICE = [
 						'details' => [
