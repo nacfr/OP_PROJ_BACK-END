@@ -1,32 +1,4 @@
 $(document).ready(function () {
-    /* -----------------------------------------
-    Datepickers
-    ----------------------------------------- */
-
-    /*  $(".datepicker[name='booking[bookingdate]']").datepicker({
-          closeText: 'Fermer',
-          prevText: 'Précédent',
-          nextText: 'Suivant',
-          currentText: 'Aujourd\'hui',
-          monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-          monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-          dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-          dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-          dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-          weekHeader: 'Sem.',
-          firstDay: 1,
-          dateFormat: 'dd/mm/yy',
-          minDate: new Date(),
-          beforeShowDay: function (date) {
-              var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-              return [dates.indexOf(string) == -1]
-          },
-          onSelect: function (dateText, dateObj) {
-              var minDate = new Date(dateObj.selectedYear, dateObj.selectedMonth, dateObj.selectedDay);
-              minDate.setDate(minDate.getDate() + 1);
-              $(".datepicker[name='booking[bookingdate]']").datepicker('option', 'minDate', minDate);
-          }
-      });*/
 
     /* -----------------------------------------
     Disable ticket type if time of day is above 14h
@@ -113,13 +85,7 @@ $(document).ready(function () {
     MAJ ORDER
     ----------------------------------------- */
 
-    //var $dayOfBirth = $('.datepicker-dateofbirth');
     var $tickets = $('.add-ticketnumber-form-widget');
-
-    /*$dayOfBirth.blur(function () {
-        console.log($dayOfBirth.val());
-    });*/
-
     $tickets.change(function () {
         exec();
 
@@ -134,7 +100,7 @@ function exec() {
     var $dateOfBirth = $('.datepicker-dateofbirth');
     var $checkReduce = $('.check-input-reduceprice:checked');
 
-    console.log($checkReduce.attr('value'));
+    //console.log($checkReduce.attr('value'));
     var p = {};
     p.tabDate = [];
     p.tabReduce = [];
@@ -155,16 +121,20 @@ function exec() {
             dataType: 'json',
             success: function (data) {
                 var a, details = data.details;
+                var b = data.total;
 
                 for (var id in details) {
                     a = details[id];
                     /*console.dir(a);*/
-
                     $('#computer-tab-order-qt-' + id).html(a.quantity);
-                    $('#computer-tab-order-price-' + id).html(a.price);
+                    $('#computer-tab-order-price-' + id).html(a.price+" €");
                     $('#smartphone-tab-order-qt-' + id).html(a.quantity);
-                    $('#smartphone-tab-order-price-' + id).html(a.price);
+                    $('#smartphone-tab-order-price-' + id).html(a.price+" €");
+                    $('#computer-tab-order-total').html(b+" €");
+                    $('#smartphone-tab-order-total').html(b+" €");
                 }
+
+
             }
         }
     )

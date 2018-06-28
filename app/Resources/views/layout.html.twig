@@ -72,15 +72,11 @@
 
                                 {% endfor %}
                             </table>
-
                             <table class="table tab-order-total">
                                 <tr class="tab-order-total-ttc">
-                                    <td class="tab-order-left">
-                                        <div id="smartphone-tab-order-total-title-ttc"></div>
-                                    </td>
-                                    <td class="tab-order-right">
-                                        <div id="smartphone-tab-order-total-price-ttc"></div>
-                                    </td>
+                                    <td class="tab-order-left">{{ "TOTAL"|trans }} TTC</td>
+                                    <td id="smartphone-tab-order-total"
+                                        class="tab-order-right">{{ summaries.total }} €</td>
                                 </tr>
                             </table>
                         </div>

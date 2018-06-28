@@ -8,12 +8,12 @@
                     {% for id, summary in summaries.details %}
 
                         <tr>
-                            <td id="tab-order-qt-{{ id }}"
+                            <td id="computer-tab-order-qt-{{ id }}"
                                 class="tab-order-left">{{ summary.quantity }}</td>
-                            <td id="tab-order-multiplicator-{{ id }}" class="tab-order-left">x</td>
-                            <td id="tab-order-title-{{ id }}"
-                                class="tab-order-left">  {{ "tarif"|trans }} {{ id|trans }}</td>
-                            <td id="tab-order-price-{{ id }}"
+                            <td id="computer-tab-order-multiplicator-{{ id }}" class="tab-order-left">x</td>
+                            <td id="computer-tab-order-title-{{ id }}"
+                                class="computer-tab-order-left">  {{ "tarif"|trans }} {{ id|trans }}</td>
+                            <td id="computer-tab-order-price-{{ id }}"
                                 class="tab-order-right">{{ summary.price }} €
                             </td>
                         </tr>
@@ -23,8 +23,9 @@
 
                 <table class="table tab-order-total">
                     <tr class="tab-order-total-ttc">
-                        <td id="tab-order-total-title-ttc" class="tab-order-left">{{ "TOTAL"|trans }} TTC</td>
-                        <td id="tab-order-total-price-ttc" class="tab-order-right">{{ summaries.total }} €</td>
+                        <td class="tab-order-left">{{ "TOTAL"|trans }} TTC</td>
+                        <td id="computer-tab-order-total"
+                            class="tab-order-right">{{ summaries.total }} €</td>
                     </tr>
                 </table>
 

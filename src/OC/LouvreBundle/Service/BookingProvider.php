@@ -177,6 +177,38 @@
 			}
 		}
 		
+		/**
+		 * Renvoi un tableau détaillé pour pour l'actualisation jquery dans la page d'accueil booking
+		 *
+		 * @param $data
+		 * @return array
+		 */
+		public function getPendingOrder($data)
+		{
+			$tab = array(
+				'details' => array(
+					'gratuit' => array('quantity' => 0, 'price' => 0),
+					'enfant' => array('quantity' => 0, 'price' => 0),
+					'normal' => array('quantity' => 0, 'price' => 0),
+					'senior' => array('quantity' => 0, 'price' => 0),
+					'reduit' => array('quantity' => 0, 'price' => 0)),
+				'total' => 0,
+			);
+			
+			if (empty($data)) {
+				return $tab;
+			}
+			
+			foreach ($data as $info) {
+				$out = $this->getTicketPrice($info, false);
+				$tab['details'][$out['type']]['quantity']++;
+				$tab['details'][$out['type']]['price'] += $out['price'];
+				$tab['total'] += $out['price'];
+			}
+			
+			return $tab;
+		}
+		
 		public function getOrderSummary($idclient)
 		{
 			$order = $this->entityManager->getRepository('OCLouvreBundle:Booking')->find($idclient);
@@ -286,63 +318,7 @@
 			return $qrCode->writeString();
 		}
 		
-		/*public function getTest2($data)
-		{
-			if (count($data) == 0) {
-				$tab = ['details' => [
-					['id' => 'gratuit', 'quantity' => 0, 'price' => 0],
-					['id' => 'enfant', 'quantity' => 0, 'price' => 0],
-					['id' => 'normal', 'quantity' => 0, 'price' => 0],
-					['id' => 'senior', 'quantity' => 0, 'price' => 0],
-					['id' => 'reduit', 'quantity' => 0, 'price' => 0],
-					['id' => 'oxialive', 'quantity' => 0, 'price' => 0],
-				]
-				];
-				return $tab;
-			}
-			$tab = ['details' => [
-				['id' => 'gratuit', 'quantity' => 0, 'price' => 10],
-				['id' => 'enfant', 'quantity' => 1, 'price' => 12],
-				['id' => 'normal', 'quantity' => 2, 'price' => 13],
-				['id' => 'senior', 'quantity' => 3, 'price' => 14],
-				['id' => 'reduit', 'quantity' => 4, 'price' => 15],
-				['id' => 'oxialive', 'quantity' => 342352, 'price' => 'Erreur trop cher']
-			]
-			];
-			
-			return $tab;
-		}*/
 		
 		
-		public function getTest($data)
-		{
-			$tab = array(
-				'details' => array(
-					'gratuit' => array('quantity' => 0, 'price' => 0),
-					'enfant' => array('quantity' => 0, 'price' => 0),
-					'normal' => array('quantity' => 0, 'price' => 0),
-					'senior' => array('quantity' => 0, 'price' => 0),
-					'reduit' => array('quantity' => 0, 'price' => 0),
-				)
-			);
-			
-			if (empty($data)) {
-				return $tab;
-			}
-			
-			foreach ($data as $info) {
-				// Appel de fonction qui calcul le prix en fonction de la date retour 1 tableau
-				//$out = array( 'type' => 'reduit', 'price' => 16 ); //prix unitaire
-				
-				$out = $this->getTicketPrice($info, false);
-				$tab['details'][$out['type']]['quantity']++;
-				$tab['details'][$out['type']]['price'] += $out['price'];
-				//$out = $this->getTicketPrice('1985-11-16', false);
-				
-				
-			}
-			
-			return $tab;
-		}
 		
 	}

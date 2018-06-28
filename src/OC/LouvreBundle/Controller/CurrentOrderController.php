@@ -27,7 +27,7 @@
 			$logger->info(print_r($request->get("tabDate"), true));
 			
 			$result = [];
-			$result = $this->get('oc_louvre.bookingprovider')->getTest($dates);
+			$result = $this->get('oc_louvre.bookingprovider')->getPendingOrder($dates);
 			
 			return new JsonResponse($result);
 		}
