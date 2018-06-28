@@ -195,7 +195,7 @@
 				'total' => 0,
 			);
 			
-			if (empty($data)) {
+			if (empty($data = [])) {
 				return $tab;
 			}
 			
