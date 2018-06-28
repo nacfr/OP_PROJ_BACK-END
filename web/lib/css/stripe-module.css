@@ -1,5 +1,6 @@
 input,
 .StripeElement {
+  width: 100%;
   height: 40px;
   padding: 10px 12px;
 
@@ -31,24 +32,6 @@ label{
   font-size: 14px;
   display: block;
   margin-bottom: 8px;
-}
-
-form{
-  padding: 30px;
-  height: 120px;
-  display: block;
-}
-
-.wrapper {
-  width: 670px;
-  margin: 0 auto;
-  height: 100%;
-}
-
-.form-row {
-  width: 70%;
-  float: left;
-  display: inline-block;
 }
 
 button {

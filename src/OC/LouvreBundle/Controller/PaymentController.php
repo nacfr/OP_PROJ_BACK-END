@@ -60,6 +60,7 @@
 								->setBody($this->renderView('@OCLouvre/Louvre/mail/orderconfirmation.html.twig',
 									array(
 										'booking' => $booking,
+										
 										'logo' => $img_logo))
 								);
 							

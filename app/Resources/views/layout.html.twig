@@ -42,6 +42,75 @@
             </button>
         </div>
 
+        {# Modals #}
+        <!-- Commande -->
+        <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="purchaseModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="purchaseModalLabel">COMMANDE EN COURS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <table class="table tab-order">
+                                {% for id, summary in summaries.details %}
+
+                                    <tr>
+                                        <td id="smartphone-tab-order-qt-{{ id }}"
+                                            class="tab-order-left">{{ summary.quantity }}</td>
+                                        <td id="smartphone-tab-order-multiplicator-{{ id }}" class="tab-order-left">x</td>
+                                        <td id="smartphone-tab-order-title-{{ id }}"
+                                            class="tab-order-left">  {{ "tarif"|trans }} {{ id|trans }}</td>
+                                        <td id="smartphone-tab-order-price-{{ id }}"
+                                            class="tab-order-right">{{ summary.price }} €
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                            </table>
+
+                            <table class="table tab-order-total">
+                                <tr class="tab-order-total-ttc">
+                                    <td class="tab-order-left">
+                                        <div id="smartphone-tab-order-total-title-ttc"></div>
+                                    </td>
+                                    <td class="tab-order-right">
+                                        <div id="smartphone-tab-order-total-price-ttc"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Commande -->
+        <!-- Tarifs -->
+        <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="priceModalLabel">TARIFICATION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            {{ render(controller("OCLouvreBundle:Widget:widgetPrice")) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Tarifs -->
+        {# Fin Modals #}
+
 
         {% block body %}
         {% endblock %}
@@ -90,6 +159,7 @@
 
 <!-- JavaScript -->
 <script src="{{ asset('lib/js/jquery.js') }}"></script>
+<script src="{{ asset('lib/js/bootstrap.min.js') }}"></script>
 {% block scripts %}
 {% endblock %}
 

@@ -330,7 +330,6 @@
 				return $tab;
 			}
 			
-			
 			foreach ($data as $info) {
 				// Appel de fonction qui calcul le prix en fonction de la date retour 1 tableau
 				//$out = array( 'type' => 'reduit', 'price' => 16 ); //prix unitaire

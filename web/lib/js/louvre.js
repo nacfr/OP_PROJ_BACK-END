@@ -96,6 +96,10 @@ $(document).ready(function () {
         $newFormLi.find('.datepicker-dateofbirth').bind('blur', function () {
             exec();
         });
+        $newFormLi.find('.check-input-reduceprice').bind('change', function () {
+            exec();
+        });
+
     }
 
     function addMessage($collectionHolder) {
@@ -128,7 +132,9 @@ function exec() {
     var $bookingCurrentOrder = $('#booking-current-order').data('create-url');
 
     var $dateOfBirth = $('.datepicker-dateofbirth');
-    
+    var $checkReduce = $('.check-input-reduceprice:checked');
+
+    console.log($checkReduce.attr('value'));
     var p = {};
     p.tabDate = [];
     p.tabReduce = [];
@@ -154,8 +160,10 @@ function exec() {
                     a = details[id];
                     /*console.dir(a);*/
 
-                    $('#tab-order-qt-' + id).html(a.quantity);
-                    $('#tab-order-price-' + id).html(a.price);
+                    $('#computer-tab-order-qt-' + id).html(a.quantity);
+                    $('#computer-tab-order-price-' + id).html(a.price);
+                    $('#smartphone-tab-order-qt-' + id).html(a.quantity);
+                    $('#smartphone-tab-order-price-' + id).html(a.price);
                 }
             }
         }
