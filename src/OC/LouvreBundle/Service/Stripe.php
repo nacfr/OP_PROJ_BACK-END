@@ -20,7 +20,7 @@
 		public function getChecking(Booking $booking, BookingProvider $bookingprovider)
 		{
 			try {
-				\Stripe\Stripe::setApiKey("CLE_SECRETE");
+				\Stripe\Stripe::setApiKey("");
 				
 				$totalprice = $bookingprovider->getTabPrice($booking)['total'];
 				$source = $_POST['stripeSource'];
