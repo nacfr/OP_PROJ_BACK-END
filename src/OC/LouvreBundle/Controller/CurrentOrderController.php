@@ -21,13 +21,13 @@
 		public function getorderAction(Request $request){
 			
 			
-			$dates = $request->get("tabDate");
+			$data = $request->get("tab");
 			
 			$logger = $this->get('logger');
-			$logger->info(print_r($request->get("tabDate"), true));
+			$logger->info(print_r($request->get("tab")[0], true));
 			
 			$result = [];
-			$result = $this->get('oc_louvre.bookingprovider')->getPendingOrder($dates);
+			$result = $this->get('oc_louvre.bookingprovider')->getPendingOrder($data);
 			
 			return new JsonResponse($result);
 		}

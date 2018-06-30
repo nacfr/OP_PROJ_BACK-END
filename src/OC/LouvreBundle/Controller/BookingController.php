@@ -31,7 +31,6 @@
 			$bookingprovider = $this->get('oc_louvre.bookingprovider');
 			$summaries = $bookingprovider->getPendingOrder(array());
 			
-			
 			if ($form->isSubmitted() && $form->isValid()) {
 				
 				if (count($errors) > 0) {
@@ -71,6 +70,7 @@
 				} else {
 					$errorcontroller = 'Le plafond du nombre de tickets disponible a été atteind. Veuillez choisir une autre journée.';
 					return $this->render('@OCLouvre/Louvre/booking.html.twig', array(
+						'summaries' => $summaries,
 						'form' => $form->createView(),
 						'errorcontroller' => $errorcontroller
 					));

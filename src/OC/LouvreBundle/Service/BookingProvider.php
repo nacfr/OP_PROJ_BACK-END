@@ -29,6 +29,9 @@
 		private static $_PRICINGSENIOR;
 		private static $_PRICINGREDUCE;
 		
+		//Tableau detail des prix
+		private static $_TAB;
+		
 		public function __construct(EntityManager $entityManager)
 		{
 			$this->entityManager = $entityManager;
@@ -49,7 +52,7 @@
 				$totaltickets += $date->getTickets()->count();
 			}
 			
-			if ($totaltickets >= 8) {
+			if ($totaltickets >= 1000) {
 				return false;
 			} else {
 				return true;
@@ -66,10 +69,8 @@
 		 */
 		public function getTicketPrice($dateofbirth, $reduceprice)
 		{
-			$reduce = $reduceprice;
 			$ages = $this->calcAge($dateofbirth);
-			
-			if ($reduce == true) {
+			if ($reduceprice == true) {
 				$type = self::$_PRICINGREDUCE->getTitle();
 				$price = round(self::$_PRICINGREDUCE->getPriceht() + (self::$_PRICINGREDUCE->getPriceht() * self::$_PRICINGREDUCE->getTva()));
 			} elseif ($ages >= self::$_PRICINGGRATUIT->getMinage() && $ages <= self::$_PRICINGGRATUIT->getMaxage()) {
@@ -100,11 +101,12 @@
 			return $total;
 		}
 		
+		
 		/**
-		 *
 		 * Renvoi un tableau détaillé contenant chaque tarif avec la quantité, la somme des tickets
 		 * et la somme total des tickets
 		 *
+		 * @param $data
 		 * @return array
 		 */
 		public function getPendingOrder($data)
@@ -120,16 +122,24 @@
 			);
 			
 			if (is_array($data)) {
-				if (empty($data)) {
-					return $tab;
-				}
 				foreach ($data as $info) {
-					$out = $this->getTicketPrice($info, false);
+					if (empty($info[0])) {
+						return $tab;
+					}
+					$date = $info[0];
+					$reduce = $info[1];
+					$out = $this->getTicketPrice($date, $reduce);
 					$tab['details'][$out['type']]['quantity']++;
 					$tab['details'][$out['type']]['price'] += $out['price'];
 					$tab['total'] += $out['price'];
 				}
-				return $tab;
+				if (is_null(self::$_TAB)) {
+					self::$_TAB = $tab;
+					return self::$_TAB;
+				} else {
+					return self::$_TAB;
+				}
+				
 			}
 			
 			if (is_object($data)) {
@@ -142,42 +152,14 @@
 					$tab['details'][$out['type']]['price'] += $out['price'];
 					$tab['total'] += $out['price'];
 				}
-				return $tab;
+				if (is_null(self::$_TAB)) {
+					self::$_TAB = $tab;
+					return self::$_TAB;
+				} else {
+					return self::$_TAB;
+				}
 			}
 			
-		}
-		
-		
-		/**
-		 * Renvoi un tableau détaillé pour pour l'actualisation jquery dans la page d'accueil booking
-		 *
-		 * @param $data
-		 * @return array
-		 */
-		public function getPendingOrder2($data)
-		{
-			$tab = array(
-				'details' => array(
-					'gratuit' => array('quantity' => 0, 'price' => 0),
-					'enfant' => array('quantity' => 0, 'price' => 0),
-					'normal' => array('quantity' => 0, 'price' => 0),
-					'senior' => array('quantity' => 0, 'price' => 0),
-					'reduit' => array('quantity' => 0, 'price' => 0)),
-				'total' => 0,
-			);
-			
-			if (empty($data)) {
-				return $tab;
-			}
-			
-			foreach ($data as $info) {
-				$out = $this->getTicketPrice($info, false);
-				$tab['details'][$out['type']]['quantity']++;
-				$tab['details'][$out['type']]['price'] += $out['price'];
-				$tab['total'] += $out['price'];
-			}
-			
-			return $tab;
 		}
 		
 		public function getOrderSummary($idclient)

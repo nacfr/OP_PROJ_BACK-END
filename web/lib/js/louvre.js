@@ -47,7 +47,6 @@ $(document).ready(function () {
         var valTicket = document.getElementById('booking_ticketnumber').value;
 
         if (valTicket >= 11) {
-            console.log('futur message : veuillez contacter le musée');
             addMessage($collectionHolder);
         } else {
             for (var iadd = 1; iadd <= valTicket; iadd++) {
@@ -88,7 +87,6 @@ $(document).ready(function () {
     var $tickets = $('.add-ticketnumber-form-widget');
     $tickets.change(function () {
         exec();
-
     });
 
 });
@@ -96,23 +94,33 @@ $(document).ready(function () {
 
 function exec() {
     var $bookingCurrentOrder = $('#booking-current-order').data('create-url');
+    var nbTicket = $('div.tags').find('div.form-posts').length;
 
-    var $dateOfBirth = $('.datepicker-dateofbirth');
-    var $checkReduce = $('.check-input-reduceprice:checked');
-
-    //console.log($checkReduce.attr('value'));
     var p = {};
-    p.tabDate = [];
-    p.tabReduce = [];
-    $dateOfBirth.each(function () {
-        if (this.value !== "") {
-            p.tabDate.push(this.value);
-        }
-        else {
-            p.tabDate.push([]);
+    p.tab = [];
+    for (var i = 0; i <= nbTicket-1; i++) {
+        p.tab[i] = [];
+        var dateOfBirth = $('#booking_tickets_' + [i+1] + '_dateofbirth');
+        var checkReduce = $('#booking_tickets_' + [i+1] + '_reduceprice');
+
+        console.log(dateOfBirth.val());
+        console.log(checkReduce.is(':checked'));
+
+        //p.tab[i][0] = dateOfBirth.val();
+        //p.tab[i][1] = checkReduce.is(':checked');
+        if (dateOfBirth.val() !== ""){
+            p.tab[i][0] = dateOfBirth.val();
+        }else{
+            p.tab[i][0] = "";
         }
 
-    });
+        if (checkReduce.is(':checked')){
+            p.tab[i][1] = 1;
+        }else{
+            p.tab[i][1] = 0;
+        }
+    }
+    console.log(p);
 
     $.ajax({
             type: "POST",
@@ -125,13 +133,13 @@ function exec() {
 
                 for (var id in details) {
                     a = details[id];
-                    /*console.dir(a);*/
+                    //console.dir(a);
                     $('#computer-tab-order-qt-' + id).html(a.quantity);
-                    $('#computer-tab-order-price-' + id).html(a.price+" €");
+                    $('#computer-tab-order-price-' + id).html(a.price + " €");
                     $('#smartphone-tab-order-qt-' + id).html(a.quantity);
-                    $('#smartphone-tab-order-price-' + id).html(a.price+" €");
-                    $('#computer-tab-order-total').html(b+" €");
-                    $('#smartphone-tab-order-total').html(b+" €");
+                    $('#smartphone-tab-order-price-' + id).html(a.price + " €");
+                    $('#computer-tab-order-total').html(b + " €");
+                    $('#smartphone-tab-order-total').html(b + " €");
                 }
 
 
@@ -167,5 +175,3 @@ function exec() {
         }
     )
 }*/
-
-
