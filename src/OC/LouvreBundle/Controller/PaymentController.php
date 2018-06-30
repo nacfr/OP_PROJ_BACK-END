@@ -27,7 +27,7 @@
 			
 			$stripe = $this->get('oc_louvre.stripe');
 			$bookingprovider = $this->get('oc_louvre.bookingprovider');
-			$bookingprice = $bookingprovider->getTabPrice($booking);
+			$bookingprice = $bookingprovider->getPendingOrder($booking);
 			
 			if ($request->isMethod('POST')) {
 				$clientname = strip_tags($_POST['name']);
@@ -42,12 +42,10 @@
 							//Hydrate clientname, clientmail and etat
 							$booking->setClientname($clientname);
 							$booking->setClientmail($clientmail);
-							//$booking->setEtat(1);
+							$booking->setEtat(1);
 							
 							$em->persist($booking);
 							$em->flush();
-							
-							//$message = $this->get('oc_louvre.bookingmailer')->MailOrderConfirmation($booking);
 							
 							//Contenu Email
 							$message = new \Swift_Message();

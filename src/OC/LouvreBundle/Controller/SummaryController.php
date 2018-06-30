@@ -26,7 +26,7 @@
             }
 
 		    $bookingprovider = $this->get('oc_louvre.bookingprovider');
-			$bookingprice = $bookingprovider->getTabPrice($booking);
+			$bookingprice = $bookingprovider->getPendingOrder($booking);
 			$bookingtype = $bookingprovider->getBookingType($booking);
 
 			return $this->render('@OCLouvre/Louvre/summary.html.twig', array(

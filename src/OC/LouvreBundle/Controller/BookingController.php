@@ -29,7 +29,7 @@
 			$validator = $this->get('validator');
 			$errors = $validator->validate($booking);
 			$bookingprovider = $this->get('oc_louvre.bookingprovider');
-			$summaries = $bookingprovider->getPendingOrder();
+			$summaries = $bookingprovider->getPendingOrder(array());
 			
 			
 			if ($form->isSubmitted() && $form->isValid()) {

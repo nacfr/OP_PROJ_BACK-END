@@ -83,6 +83,13 @@ body {
     border: 0;
 }
 
+.btn-booking-modif{
+    margin: 0px 10px 0px 10px;
+}
+.btn-booking-valid{
+    margin: 0px 10px 0px 10px;
+}
+
 /* ---- FIN FORMULAIRE ---- */
 /* ---- WIDGETS ---- */
 .bloc-boutons-widget{

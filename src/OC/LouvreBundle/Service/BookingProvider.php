@@ -22,19 +22,12 @@
 	{
 		private $entityManager;
 		
-		//tableau du nombre de ticket par commande
-		private static $_NBTICKETS;
-		
 		//Tableau des tarifs par type
 		private static $_PRICINGGRATUIT;
 		private static $_PRICINGENFANT;
 		private static $_PRICINGNORMAL;
 		private static $_PRICINGSENIOR;
 		private static $_PRICINGREDUCE;
-		
-		//tableau détaillé de la commande
-		private static $_TABPRICE;
-		
 		
 		public function __construct(EntityManager $entityManager)
 		{
@@ -103,14 +96,7 @@
 		 */
 		public function getTotalTicket($booking)
 		{
-			$this->getNbCatPricing($booking);
-			
-			$total =
-				round(self::$_NBTICKETS['enfant'] * (self::$_PRICINGENFANT->getPriceht() * (1 + self::$_PRICINGENFANT->getTva()))) +
-				round(self::$_NBTICKETS['normal'] * (self::$_PRICINGNORMAL->getPriceht() * (1 + self::$_PRICINGNORMAL->getTva()))) +
-				round(self::$_NBTICKETS['senior'] * (self::$_PRICINGSENIOR->getPriceht() * (1 + self::$_PRICINGSENIOR->getTva()))) +
-				round(self::$_NBTICKETS['reduce'] * (self::$_PRICINGREDUCE->getPriceht() * (1 + self::$_PRICINGREDUCE->getTva())));
-			
+			$total = $this->getPendingOrder($booking)['total'];
 			return $total;
 		}
 		
@@ -119,68 +105,6 @@
 		 * Renvoi un tableau détaillé contenant chaque tarif avec la quantité, la somme des tickets
 		 * et la somme total des tickets
 		 *
-		 * @return array
-		 */
-		public function getTabPrice($booking)
-		{
-			if (is_null($booking)) {
-			
-			} else {
-				$this->getNbCatPricing($booking);
-				
-				//Caculation tickets price
-				$priceGratuit = 0;
-				
-				//Princing for child ticket
-				if (self::$_NBTICKETS['enfant'] > 0) {
-					$priceEnfant = round(self::$_NBTICKETS['enfant'] * (self::$_PRICINGENFANT->getPriceht() * (1 + self::$_PRICINGENFANT->getTva())));
-				} else {
-					$priceEnfant = 0;
-				}
-				
-				//Pricing for normal tickets
-				if (self::$_NBTICKETS['normal'] > 0) {
-					$priceNormal = round(self::$_NBTICKETS['normal'] * (self::$_PRICINGNORMAL->getPriceht() * (1 + self::$_PRICINGNORMAL->getTva())));
-				} else {
-					$priceNormal = 0;
-				}
-				
-				//Pricing for senior ticket
-				if (self::$_NBTICKETS['senior'] > 0) {
-					$priceSenior = round(self::$_NBTICKETS['senior'] * (self::$_PRICINGSENIOR->getPriceht() * (1 + self::$_PRICINGSENIOR->getTva())));
-				} else {
-					$priceSenior = 0;
-				}
-				
-				//Pricing for reduce ticket
-				if (self::$_NBTICKETS['reduce'] > 0) {
-					$priceReduce = round(self::$_NBTICKETS['reduce'] * (self::$_PRICINGREDUCE->getPriceht() * (1 + self::$_PRICINGREDUCE->getTva())));
-				} else {
-					$priceReduce = 0;
-				}
-				
-				if (is_null(self::$_TABPRICE)) {
-					self::$_TABPRICE = [
-						'details' => [
-							'gratuit'=> ['quantity' => self::$_NBTICKETS['gratuit'], 'price' => $priceGratuit],
-							'enfant' => ['quantity' => self::$_NBTICKETS['enfant'], 'price' => $priceEnfant],
-							'normal' => ['quantity' => self::$_NBTICKETS['normal'], 'price' => $priceNormal],
-							'senior' => ['quantity' => self::$_NBTICKETS['senior'], 'price' => $priceSenior],
-							'reduit' => ['quantity' => self::$_NBTICKETS['reduce'], 'price' => $priceReduce]
-						],
-						'total' => $this->getTotalTicket($booking)
-					];
-					return self::$_TABPRICE;
-				} else {
-					return self::$_TABPRICE;
-				}
-			}
-		}
-		
-		/**
-		 * Renvoi un tableau détaillé pour pour l'actualisation jquery dans la page d'accueil booking
-		 *
-		 * @param $data
 		 * @return array
 		 */
 		public function getPendingOrder($data)
@@ -195,7 +119,54 @@
 				'total' => 0,
 			);
 			
-			if (empty($data = [])) {
+			if (is_array($data)) {
+				if (empty($data)) {
+					return $tab;
+				}
+				foreach ($data as $info) {
+					$out = $this->getTicketPrice($info, false);
+					$tab['details'][$out['type']]['quantity']++;
+					$tab['details'][$out['type']]['price'] += $out['price'];
+					$tab['total'] += $out['price'];
+				}
+				return $tab;
+			}
+			
+			if (is_object($data)) {
+				$tickets = $data->getTickets();
+				foreach ($tickets as $ticket) {
+					$dateofbirth = $ticket->getDateofbirth();
+					$reduce = $ticket->getReduceprice();
+					$out = $this->getTicketPrice($dateofbirth, $reduce);
+					$tab['details'][$out['type']]['quantity']++;
+					$tab['details'][$out['type']]['price'] += $out['price'];
+					$tab['total'] += $out['price'];
+				}
+				return $tab;
+			}
+			
+		}
+		
+		
+		/**
+		 * Renvoi un tableau détaillé pour pour l'actualisation jquery dans la page d'accueil booking
+		 *
+		 * @param $data
+		 * @return array
+		 */
+		public function getPendingOrder2($data)
+		{
+			$tab = array(
+				'details' => array(
+					'gratuit' => array('quantity' => 0, 'price' => 0),
+					'enfant' => array('quantity' => 0, 'price' => 0),
+					'normal' => array('quantity' => 0, 'price' => 0),
+					'senior' => array('quantity' => 0, 'price' => 0),
+					'reduit' => array('quantity' => 0, 'price' => 0)),
+				'total' => 0,
+			);
+			
+			if (empty($data)) {
 				return $tab;
 			}
 			
@@ -241,9 +212,9 @@
 		 */
 		private function calcAge($dateofbirth)
 		{
-			if($dateofbirth instanceof \DateTime){
+			if ($dateofbirth instanceof \DateTime) {
 				$date = date_format($dateofbirth, 'd-m-Y');
-			}else{
+			} else {
 				$date = $dateofbirth;
 			}
 			
@@ -271,45 +242,6 @@
 			self::$_PRICINGREDUCE = $pricing[4];
 		}
 		
-		/**
-		 * Calcul le nombre de type de ticket et hydrate $nbtickets
-		 *
-		 * @param $booking
-		 * @return array
-		 */
-		private function getNbCatPricing($booking)
-		{
-			
-			$nbGratuit = 0;
-			$nbEnfant = 0;
-			$nbNormal = 0;
-			$nbSenior = 0;
-			$nbReduce = 0;
-			
-			$tickets = $booking->getTickets();
-			foreach ($tickets as $ticket) {
-				$reduce = $ticket->getReduceprice();
-				$ages = $this->calcAge($ticket->getDateofbirth());
-				if ($reduce == true) {
-					$nbReduce++;
-				} elseif ($ages >= self::$_PRICINGGRATUIT->getMinage() && $ages <= self::$_PRICINGGRATUIT->getMaxage()) {
-					$nbGratuit++;
-				} elseif ($ages >= self::$_PRICINGENFANT->getMinage() && $ages <= self::$_PRICINGENFANT->getMaxage()) {
-					$nbEnfant++;
-				} elseif ($ages >= self::$_PRICINGNORMAL->getMinage() && $ages <= self::$_PRICINGNORMAL->getMaxage()) {
-					$nbNormal++;
-				} elseif ($ages >= self::$_PRICINGSENIOR->getMinage() && $ages <= self::$_PRICINGSENIOR->getMaxage()) {
-					$nbSenior++;
-				}
-			}
-			
-			if (is_null(self::$_NBTICKETS)) {
-				self::$_NBTICKETS = ['reduce' => $nbReduce, 'gratuit' => $nbGratuit, 'enfant' => $nbEnfant, 'normal' => $nbNormal, 'senior' => $nbSenior];
-			} else {
-				return self::$_NBTICKETS;
-			}
-		}
-		
 		public function getQrCode($token)
 		{
 			$qrCode = new QrCode($token);
@@ -317,8 +249,6 @@
 			//return $qrCode->writeDataUri();
 			return $qrCode->writeString();
 		}
-		
-		
 		
 		
 	}

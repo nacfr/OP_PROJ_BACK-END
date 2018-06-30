@@ -20,9 +20,9 @@
 		public function getChecking(Booking $booking, BookingProvider $bookingprovider)
 		{
 			try {
-				\Stripe\Stripe::setApiKey("");
+				\Stripe\Stripe::setApiKey("sk_test_k9lZ0W70Zjtt9loUGdVbhlTr");
 				
-				$totalprice = $bookingprovider->getTabPrice($booking)['total'];
+				$totalprice = $bookingprovider->getPendingOrder($booking)['total'];
 				$source = $_POST['stripeSource'];
 				$clientname = strip_tags($_POST['name']);
 				$clientmail = strip_tags($_POST['email']);
