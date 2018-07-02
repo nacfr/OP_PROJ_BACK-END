@@ -14,7 +14,6 @@ body {
     font-family: Karla, Roboto, Open Sans, Segoe UI, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
     text-rendering: optimizeLegibility;
     font-feature-settings: "pnum";
     font-variant-numeric: proportional-nums;
