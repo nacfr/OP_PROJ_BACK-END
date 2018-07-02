@@ -109,8 +109,7 @@
 		 * @param $data
 		 * @return array
 		 */
-		public function getPendingOrder($data)
-		{
+		public function getPendingOrder($data){
 			$tab = array(
 				'details' => array(
 					'gratuit' => array('quantity' => 0, 'price' => 0),
@@ -159,7 +158,6 @@
 					return self::$_TAB;
 				}
 			}
-			
 		}
 		
 		public function getOrderSummary($idclient)

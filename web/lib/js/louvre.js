@@ -98,29 +98,29 @@ function exec() {
 
     var p = {};
     p.tab = [];
-    for (var i = 0; i <= nbTicket-1; i++) {
+    for (var i = 0; i <= nbTicket - 1; i++) {
         p.tab[i] = [];
-        var dateOfBirth = $('#booking_tickets_' + [i+1] + '_dateofbirth');
-        var checkReduce = $('#booking_tickets_' + [i+1] + '_reduceprice');
+        var dateOfBirth = $('#booking_tickets_' + [i + 1] + '_dateofbirth');
+        var checkReduce = $('#booking_tickets_' + [i + 1] + '_reduceprice');
 
         console.log(dateOfBirth.val());
         console.log(checkReduce.is(':checked'));
 
         //p.tab[i][0] = dateOfBirth.val();
         //p.tab[i][1] = checkReduce.is(':checked');
-        if (dateOfBirth.val() !== ""){
+        if (dateOfBirth.val() !== "") {
             p.tab[i][0] = dateOfBirth.val();
-        }else{
+        } else {
             p.tab[i][0] = "";
         }
 
-        if (checkReduce.is(':checked')){
+        if (checkReduce.is(':checked')) {
             p.tab[i][1] = 1;
-        }else{
+        } else {
             p.tab[i][1] = 0;
         }
     }
-    console.log(p);
+    //console.log(p);
 
     $.ajax({
             type: "POST",
@@ -147,31 +147,3 @@ function exec() {
         }
     )
 }
-
-/*function exec() {
-    var $bookingCurrentOrder = $('#booking-current-order').data('create-url');
-
-    var $titi = $('.datepicker-dateofbirth');
-    var p = {};
-    p.tab = [];
-
-    $titi.each(function () {
-        p.tab.push(this.value);
-
-    });
-
-    $.ajax({
-            type: "POST",
-            url: $bookingCurrentOrder,
-            data: p,
-            success: function (data) {
-                var doc = eval('(' + data + ')');
-                if (doc) {
-                    alert(doc.toto); //affiche 345
-                    alert(doc.titi); //affiche khgv
-
-                }
-            }
-        }
-    )
-}*/

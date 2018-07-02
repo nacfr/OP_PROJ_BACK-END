@@ -47,6 +47,7 @@ card.addEventListener('change', function(event) {
 
 // Handle form submission.
 var form = document.getElementById('payment-form');
+var btnValider =
 
 
 

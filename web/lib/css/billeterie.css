@@ -11,7 +11,7 @@ body {
     background: white url("../img/louvre-background.jpg") no-repeat left top;
     background-size: 100%;
     font-size: 13px;
-    font-family: Karla, Roboto, Open Sans, Segoe UI, sans-serif;;
+    font-family: Karla, Roboto, Open Sans, Segoe UI, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
@@ -30,8 +30,6 @@ body {
 
 /* ---- FORMULAIRE ---- */
 .row-form-posts {
-    height: 100%;
-    padding-bottom: 20%;
     background-color: white;
 }
 
@@ -88,6 +86,11 @@ body {
 }
 .btn-booking-valid{
     margin: 0px 10px 0px 10px;
+}
+
+.form-payment{
+    padding: 20px;
+    border: 1px solid #B73B1D;
 }
 
 /* ---- FIN FORMULAIRE ---- */

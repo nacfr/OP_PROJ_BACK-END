@@ -10,54 +10,123 @@
     <title>{{ "MUSÉE DU LOUVRE PARIS - CONFIRMATION COMMANDE"|trans }}</title>
 </head>
 
-<body>
-<div class="container-billeterie">
 
-    {# Content #}
-    <div class="row row-form-posts">
+<body style="background-image: url('{{ background }}'); background-size: 100%; font-size: 13px; font-family: Karla, Roboto, Open Sans, Segoe UI, sans-serif; text-rendering: optimizeLegibility; font-variant-numeric: proportional-nums; margin: 0; padding-top: 55px;">
 
-        <div class="col-md-12">
-            <!-- RECAPITULATIF -->
-            <div class="card">
-                <div class="card-body">
-                    <img src="{{ logo }}" alt="Logo Louvre Paris"/>
-                    <h2 class="card-title text-center">{{ "CONFIRMATION DE VOTRE COMMANDE"|trans }}</h2>
+{#
+<body style="background: white url('{{ asset('lib/img/louvre-background.jpg') }}') no-repeat left top; background-size: 100%; font-size: 13px; font-family: Karla, Roboto, Open Sans, Segoe UI, sans-serif; text-rendering: optimizeLegibility; font-variant-numeric: proportional-nums; margin: 0; padding-top: 55px;">
+#}
+<!--header-->
+<header style="position: fixed; top: 0; z-index: 1030; right: 0; left: 0; text-align: center; height: 55px; background-color: #343A41;">
+    <img src="{{ logo }}" alt="Logo Louvre Paris"/>#}
+{#<img src="{{ asset('lib/img/logo-louvre.jpg') }}" alt="Logo Louvre Paris"/>#}
+</header>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <p>{{ "Merci pour votre commande"|trans }}</p>
-                            <p>{{ "Numéro de commande"|trans }} : {{ booking.btoken }}</p>
-                            <p>{{ "Date de réservation"|trans }} : {{ booking.bookingdate|date('d-m-Y') }}</p>
-                            <p>{{ "Nombre de tickets"|trans }} : {{ booking.ticketnumber }}</p>
-                            <p>{{ "Prix total"|trans }} : {{ booking.totalprice }}</p>
+<!--containt-->
+<div style="max-width: 800px; margin-right: auto; margin-left: auto;">
+<div style="padding-bottom: 20%; background-color: white;">
+    <!--titre-->
+    <div style="max-width: 100%">
+        <h1 style=" text-align: center; margin: 0;padding-bottom: 1.5rem; padding-top: 1.5rem; font-size: 2.5rem; line-height: 1.2;">
+            {{ "BILLETERIE MUSÉE DU LOUVRE"|trans }}</h1>
+    </div>
 
-                            <div>
-                                <h3>{{ "Détail de la commande"|trans }} :</h3>
 
-                                <table>
-                                    {% for ticket in booking.tickets %}
+    <div style="padding-right: 15px; padding-left: 15px;">
+        <div style="padding-right: 15px; padding-left: 15px; border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 0.25rem;">
+            <div style="text-align: center;">
+                <h2>{{ "CONFIRMATION DE COMMANDE"|trans }}</h2>
+                <p>{{ "Le musée du Louvre Paris vous remercie pour votre commande"|trans }}</p>
+                <p>{{ "Merci de vous munir de ce mail lors de votre visite"|trans }}</p>
 
-                                        <tr>
-                                            <td class="">{{ ticket.name }} {{ ticket.firstname }},</td>
-                                            <td>{{ "Date de naissance"|trans }}
-                                                : {{ ticket.dateofbirth|date('d-m-Y') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1 billet {{ ticket.typeticket|trans }} - {{ ticket.price }} € TTC</td>
-                                        </tr>
+                <table style="margin-top: 25px; width: 100%; margin-bottom: 1rem; border-collapse: collapse; display: table;">
+                    <tr>
+                        <td style="text-align: left;  vertical-align: top; display: table-cell;">
+                            {{ "Date de réservation"|trans }} : {{ booking.bookingdate|date('d-m-Y') }}
+                        </td>
+                        <td style="text-align: right; vertical-align: top; display: table-cell;">
+                            {{ "Numéro de commande"|trans }} : {{ booking.btoken }}
+                        </td>
+                    </tr>
+                    <tr style="display: table-row; vertical-align: inherit; border-color: inherit;">
+                        <td style="text-align: left; vertical-align: top; display: table-cell;">
+                            {{ "Nombre de tickets"|trans }} : {{ booking.ticketnumber }}
+                        </td>
+                        <td style="text-align: right; vertical-align: top; display: table-cell;">
+                            {{ "Prix total"|trans }} : {{ booking.totalprice }} € T.T.C
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <h4>{{ "Détail de la commande"|trans }} :</h4>
+            <div style="margin-top: 15px;">
+                <table style="margin-top: 15px; width: 100%; margin-bottom: 1rem; border-collapse: collapse; display: table;">
+                    {% for ticket in booking.tickets %}
+                        <tr>
 
-                                    {% endfor %}
+                            <td>
+                                <table style="border: 1px solid #B73B1D; border-radius: 0.25rem; margin-top: 5px; margin-bottom: 5px; width: 100%; display: table;">
+                                    <tr>
+                                        <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; font-size: 15px;">
+                                            Un billet {{ ticket.typeticket|trans }} - {{ ticket.price }} € T.T.C
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">
+                                            Nom : {{ ticket.name }}</td>
+                                        <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">
+                                            Prénom : {{ ticket.firstname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">{{ "Date de naissance"|trans }}
+                                            : {{ ticket.dateofbirth|date('d-m-Y') }}</td>
+                                        <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">{{ "Pays"|trans }}
+                                            : {{ ticket.country }}</td>
+                                    </tr>
+                                    <tr>
+                                        {% if ticket.reduceprice == false %}
+                                            <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">{{ "Tarif réduit"|trans }}
+                                                : {{ "Non"|trans }}</td>
+                                        {% else %}
+                                            <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">{{ "Tarif réduit"|trans }}
+                                                : {{ "Oui"|trans }}</td>
+                                        {% endif %}
+
+                                        {% if ticket.handicap == false %}
+                                            <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">{{ "Personne à mobilité réduite"|trans }}
+                                                : {{ "Non"|trans }}</td>
+                                        {% else %}
+                                            <td style="text-align: left; padding: 0.75rem; vertical-align: top; display: table-cell; width:50%;">{{ "Personne à mobilité réduite"|trans }}
+                                                : {{ "Oui"|trans }}</td>
+                                        {% endif %}
+                                    </tr>
                                 </table>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
     </div>
 </div>
+</div>
 
+<!--footer-->
+<footer style="display: block; background-color: #333333;">
+<div style="display: flex; max-width: 800px; margin-right: auto; margin-left: auto; padding-right: 0; padding-left: 0; color: white; text-align: center">
+    <div style="text-align: center; margin-right: auto; margin-left: auto;">
+        <h2>Musée du Louvre</h2>
+        <p>Rue de Rivoli<br>75001 Paris<br>Tél. : 01 40 20 50 50</p>
+        <p>Ouverture:
+            <br>Lundi : 9 h - 18 h
+            <br>Mardi : Fermé
+            <br>Mercredi : 9 h - 21h45
+            <br>Jeudi : 9 h - 18 h
+            <br>Vendredi : 9 h - 21h45
+            <br>Samedi et Dimanche : 9 h - 18 h
+        </p>
+    </div>
+</div>
+</footer>
 </body>
 </html>

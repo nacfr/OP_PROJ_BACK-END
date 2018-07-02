@@ -34,6 +34,7 @@
                                     </tr>
                                 {% endif %}
                             {% endfor %}
+
                         </table>
                         <table class="table tab-summary-total">
                             <tr>
@@ -42,7 +43,7 @@
                             <tr>
                                 <td>
                                     <a class="btn btn-dark btn-booking-modif"
-                                       href="{{ path('oc_louvre_homepage') }}">Modifier</a>
+                                       href="{{ path('oc_louvre_homepage') }}">Annuler</a>
                                     <a class="btn btn-success btn-booking-valid"
                                        href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}">Payer</a>
                                 </td>
