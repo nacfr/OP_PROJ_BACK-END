@@ -109,7 +109,8 @@
 		 * @param $data
 		 * @return array
 		 */
-		public function getPendingOrder($data){
+		public function getPendingOrder($data=null){
+
 			$tab = array(
 				'details' => array(
 					'gratuit' => array('quantity' => 0, 'price' => 0),
@@ -119,8 +120,25 @@
 					'reduit' => array('quantity' => 0, 'price' => 0)),
 				'total' => 0,
 			);
-			
-			if (is_array($data)) {
+            if (is_object($data)) {
+                $tickets = $data->getTickets();
+                foreach ($tickets as $ticket) {
+                    $dateofbirth = $ticket->getDateofbirth();
+                    $reduce = $ticket->getReduceprice();
+                    $out = $this->getTicketPrice($dateofbirth, $reduce);
+                    $tab['details'][$out['type']]['quantity']++;
+                    $tab['details'][$out['type']]['price'] += $out['price'];
+                    $tab['total'] += $out['price'];
+                }
+                if (is_null(self::$_TAB)) {
+                    self::$_TAB = $tab;
+                    return self::$_TAB;
+                } else {
+                    return self::$_TAB;
+                }
+            }
+
+			if (!is_null($data) & is_array($data)) {
 				foreach ($data as $info) {
 					if (empty($info[0])) {
 						return $tab;
@@ -138,26 +156,11 @@
 				} else {
 					return self::$_TAB;
 				}
-				
 			}
-			
-			if (is_object($data)) {
-				$tickets = $data->getTickets();
-				foreach ($tickets as $ticket) {
-					$dateofbirth = $ticket->getDateofbirth();
-					$reduce = $ticket->getReduceprice();
-					$out = $this->getTicketPrice($dateofbirth, $reduce);
-					$tab['details'][$out['type']]['quantity']++;
-					$tab['details'][$out['type']]['price'] += $out['price'];
-					$tab['total'] += $out['price'];
-				}
-				if (is_null(self::$_TAB)) {
-					self::$_TAB = $tab;
-					return self::$_TAB;
-				} else {
-					return self::$_TAB;
-				}
-			}
+			else{
+			    return $tab;
+            }
+
 		}
 		
 		public function getOrderSummary($idclient)

@@ -29,7 +29,7 @@
 			$validator = $this->get('validator');
 			$errors = $validator->validate($booking);
 			$bookingprovider = $this->get('oc_louvre.bookingprovider');
-			$summaries = $bookingprovider->getPendingOrder(array());
+			$summaries = $bookingprovider->getPendingOrder();
 			
 			if ($form->isSubmitted() && $form->isValid()) {
 				
@@ -56,7 +56,7 @@
 						$ticket->setTypeticket($price['type']);
 						$ticket->setPrice($price['price']);
 					}
-					
+
 					//Hydrate le prix total
 					$booking->setTotalprice($bookingprovider->getTotalTicket($booking));
 					

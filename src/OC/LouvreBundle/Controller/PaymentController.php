@@ -25,16 +25,6 @@
 				return $this->redirectToRoute("oc_louvre_homepage");
 			}
 
-           /* $bookingprovider = $this->get('oc_louvre.bookingprovider');
-            $bookingprice = $bookingprovider->getPendingOrder($booking);
-            $bookingtype = $bookingprovider->getBookingType($booking);
-
-            return $this->render('@OCLouvre/Louvre/mail/orderconfirmation.html.twig', array(
-                'booking' => $booking,
-                'bookingtype' => $bookingtype,
-                'summaries' => $bookingprice
-            ));*/
-
             $stripe = $this->get('oc_louvre.stripe');
             $bookingprovider = $this->get('oc_louvre.bookingprovider');
             $bookingprice = $bookingprovider->getPendingOrder($booking);
