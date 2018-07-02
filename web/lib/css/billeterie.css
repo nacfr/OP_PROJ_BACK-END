@@ -4,7 +4,6 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-blog-home/blob/master/LICENSE)
  */
 
-
 /* ---- FORMAT WEB < width : 996 px ---- */
 body {
     padding-top: 56px;
@@ -19,12 +18,41 @@ body {
     font-variant-numeric: proportional-nums;
 }
 
+/* ---- NAVBAR ---- */
+.navbar {
+    padding: 0;
+}
+
 .container-billeterie {
     max-width: 996px;
     padding-right: 15px;
     padding-left: 15px;
+    margin-top: 0;
     margin-right: auto;
     margin-left: auto;
+}
+
+.dropdown-menu {
+    min-width: 8rem;
+}
+
+
+.dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.255em;
+    margin-bottom: 2px;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.6em solid;
+    border-right: 0.6em solid transparent;
+    border-bottom: 0;
+    border-left: 0.6em solid transparent;
+}
+
+a#navbarLanguage {
+    color: white;
 }
 
 /* ---- FORMULAIRE ---- */
@@ -56,13 +84,12 @@ body {
     color: black;
 }
 
-
-.tab-summary-ticket td{
+.tab-summary-ticket td {
     border: 0;
     line-height: 0.8;
 }
 
-.tab-summary-ticket-right{
+.tab-summary-ticket-right {
     text-align: left;
 }
 
@@ -80,21 +107,27 @@ body {
     border: 0;
 }
 
-.btn-booking-modif{
-    margin: 0px 10px 0px 10px;
-}
-.btn-booking-valid{
+.btn-booking-annuler {
     margin: 0px 10px 0px 10px;
 }
 
-.form-payment{
-    padding: 20px;
+.btn-booking-valid {
+    margin: 0px 10px 0px 10px;
+}
+
+.form-payment {
+    padding: 50px;
     border: 1px solid #B73B1D;
 }
 
-/* ---- FIN FORMULAIRE ---- */
+.btn-form-payment button{
+    margin: 10px;
+    width: 80.69px;
+}
+
+    /* ---- FIN FORMULAIRE ---- */
 /* ---- WIDGETS ---- */
-.bloc-boutons-widget{
+.bloc-boutons-widget {
     display: none;
 }
 
@@ -128,7 +161,7 @@ body {
     text-align: right;
 }
 
-.tab-order-total, .tab-order{
+.tab-order-total, .tab-order {
     margin-bottom: 0 !important;
 }
 
@@ -235,13 +268,11 @@ body {
     width: 100%;
 }
 
-
 /* ---- FORMAT MOBILE/TABLETTE > WIDTH 72px ---- */
 @media (max-width: 772px) {
     body {
         padding-top: 54px;
     }
-
 
     /* ---- FORMULAIRE ---- */
     .form-posts {
@@ -251,11 +282,12 @@ body {
 
     /* ---- FIN FORMULAIRE ---- */
     /* ---- WIDGETS ---- */
-    .bloc-boutons-widget{
+    .bloc-boutons-widget {
         display: block;
         margin-bottom: 2rem;
     }
-    .bloc-widget{
+
+    .bloc-widget {
         display: none;
     }
 
@@ -302,4 +334,3 @@ body {
         width: 100%;
     }
 }
-

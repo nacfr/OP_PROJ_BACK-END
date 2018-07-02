@@ -42,10 +42,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a class="btn btn-dark btn-booking-modif"
-                                       href="{{ path('oc_louvre_homepage') }}">Annuler</a>
+                                    <a class="btn btn-danger btn-booking-annuler"
+                                       href="{{ path('oc_louvre_homepage') }}" style="width: 100px">Annuler</a>
                                     <a class="btn btn-success btn-booking-valid"
-                                       href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}">Payer</a>
+                                       href="{{ path('oc_louvre_payment', { 'btoken': booking.btoken } ) }}" style="width: 100px">Payer</a>
                                 </td>
                             </tr>
                         </table>
