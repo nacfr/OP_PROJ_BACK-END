@@ -11,7 +11,7 @@
 	use OC\LouvreBundle\Entity\Booking;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
-	use Symfony\Component\HttpFoundation\Response;
+	
 	
 	class PaymentController extends Controller
 	{
@@ -28,12 +28,13 @@
             $stripe = $this->get('oc_louvre.stripe');
             $bookingprovider = $this->get('oc_louvre.bookingprovider');
             $bookingprice = $bookingprovider->getPendingOrder($booking);
-
+            
             if ($request->isMethod('POST')) {
                 $clientname = strip_tags($_POST['name']);
                 $clientmail = strip_tags($_POST['email']);
-
-                if ($stripe->getChecking($booking, $bookingprovider)) {
+                
+                $returnStripe = $stripe->getChecking($booking, $bookingprovider);
+                if ($returnStripe === true) {
                     if ($this->verifName($clientname)) {
                         if ($this->verifEmail($clientmail)) {
 
@@ -42,7 +43,7 @@
                             //Hydrate clientname, clientmail and etat
                             $booking->setClientname($clientname);
                             $booking->setClientmail($clientmail);
-                            $booking->setEtat(1);
+                            //$booking->setEtat(1);
 
                             $em->persist($booking);
                             $em->flush();
@@ -72,18 +73,15 @@
                                 ));
                             }
                             else {
-                                $error = 'Une erreur est survenue lors de l\'envoi de l\'email veuillez contacter au 01 40 20 50 50' ;
+	                            dump('email non envoyé');
+                                /*$error = 'Une erreur est survenue lors de l\'envoi de l\'email veuillez contacter au 01 40 20 50 50' ;
                                 return $this->render('@OCLouvre/Louvre/payment.html.twig', array(
                                     'booking' => $booking,
                                     'summaries' => $bookingprice,
                                     'error' => $error,
                                     'success' => $this->successpayment
-                                ));
+                                ));*/
                             }
-
-                            //$this->get('mailer')->send($message);
-
-
                         }
                         $error = 'L\'adresse email spécifiée n\'est pas correcte';
                         return $this->render('@OCLouvre/Louvre/payment.html.twig', array(
@@ -102,7 +100,8 @@
                         'success' => $this->successpayment
                     ));
                 }
-                return $this->redirectToRoute("oc_louvre_summary");
+                
+	            $this->addFlash('infostripe', $returnStripe);
             }
 
             return $this->render('@OCLouvre/Louvre/payment.html.twig', array(

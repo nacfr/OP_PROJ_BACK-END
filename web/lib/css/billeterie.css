@@ -19,8 +19,10 @@ body {
 }
 
 /* ---- NAVBAR ---- */
-.navbar {
-    padding: 0;
+.header-bar {
+    max-width: 996px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .container-billeterie {
@@ -32,10 +34,18 @@ body {
     margin-left: auto;
 }
 
+.billeterie-logo{
+    text-align: center;
+}
+
+.billeterie-language{
+    margin-top: 16px;
+
+}
+
 .dropdown-menu {
     min-width: 8rem;
 }
-
 
 .dropdown-toggle::after {
     display: inline-block;
@@ -53,6 +63,7 @@ body {
 
 a#navbarLanguage {
     color: white;
+    text-decoration:none;
 }
 
 /* ---- FORMULAIRE ---- */
@@ -120,15 +131,41 @@ a#navbarLanguage {
     border: 1px solid #B73B1D;
 }
 
-.btn-form-payment button{
+.btn-form-payment button {
     margin: 10px;
     width: 80.69px;
 }
 
-    /* ---- FIN FORMULAIRE ---- */
+/* ---- FIN FORMULAIRE ---- */
+
 /* ---- WIDGETS ---- */
+.btn-booking-purchase {
+    width: 150px;
+    margin: 1rem;
+    color: white;
+    background-color: #B73B1D;
+    border: 0;
+}
+
+.btn-booking-price {
+    width: 150px;
+    margin: 1rem;
+    color: white;
+    background-color: #222222;
+    border: 0;
+}
+
 .bloc-boutons-widget {
     display: none;
+}
+
+.close {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: white;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 1;
 }
 
 .widget-order {
@@ -230,8 +267,13 @@ a#navbarLanguage {
     color: white;
 }
 
+.footer-icon i {
+    padding: 0 3px 0 3px;
+}
+
 .footer-pay {
     text-align: center;
+    color: white;
     background-color: #585858;
     padding: 20px 0px 20px 0px;
 }
@@ -244,10 +286,6 @@ a#navbarLanguage {
 .footer-infos-bloc-newsletter {
     padding-bottom: 30px;
     text-align: left;
-}
-
-.footer-pay img, .footer-infos-bloc-social img {
-    max-height: 18px;
 }
 
 .footer-infos-bloc-adresse {

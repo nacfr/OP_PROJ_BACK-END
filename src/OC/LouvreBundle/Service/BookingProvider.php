@@ -10,13 +10,11 @@
 	
 	
 	use Doctrine\ORM\EntityManager;
-	use Endroid\QrCode\QrCode;
 	use OC\LouvreBundle\Controller\BookingController;
 	use OC\LouvreBundle\Entity\Booking;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\Response;
-	use Psr\Log\LoggerInterface;
 	
 	class BookingProvider extends Controller
 	{
@@ -36,7 +34,6 @@
 		{
 			$this->entityManager = $entityManager;
 			$this->getPricing();
-			
 		}
 		
 		/**
@@ -217,21 +214,10 @@
 		private function getPricing()
 		{
 			$pricing = $this->entityManager->getRepository('OCLouvreBundle:Pricing')->findAll();
-			
 			self::$_PRICINGGRATUIT = $pricing[0];
 			self::$_PRICINGENFANT = $pricing[1];
 			self::$_PRICINGNORMAL = $pricing[2];
 			self::$_PRICINGSENIOR = $pricing[3];
 			self::$_PRICINGREDUCE = $pricing[4];
 		}
-		
-		public function getQrCode($token)
-		{
-			$qrCode = new QrCode($token);
-			
-			//return $qrCode->writeDataUri();
-			return $qrCode->writeString();
-		}
-		
-		
 	}

@@ -1,6 +1,7 @@
 "Billetterie Louvre Paris": "Louvre Paris Tickets"
 "BILLETERIE": "BOOKING"
 "COMMANDE EN COURS": "CURRENT ORDER"
+"COMMANDE": "ORDER"
 "Gratuit": "Free"
 "Enfant": "Child"
 "Normal": "Normal"
@@ -72,4 +73,3 @@
 "Date de réservation": "Date of Booking"
 "Nombre de tickets": "Number of tickets"
 "Prix total": "Total price"
-"Date de naissance": "Date of birth"

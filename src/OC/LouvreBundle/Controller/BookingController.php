@@ -10,11 +10,8 @@
 	
 	use OC\LouvreBundle\Entity\Booking;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-	use Symfony\Component\HttpFoundation\JsonResponse;
 	use Symfony\Component\HttpFoundation\Request;
-	use Symfony\Component\HttpFoundation\Response;
 	use OC\LouvreBundle\Form\BookingType;
-	use Symfony\Component\HttpFoundation\Session\Session;
 	
 	
 	class BookingController extends Controller
@@ -56,7 +53,7 @@
 						$ticket->setTypeticket($price['type']);
 						$ticket->setPrice($price['price']);
 					}
-
+					
 					//Hydrate le prix total
 					$booking->setTotalprice($bookingprovider->getTotalTicket($booking));
 					

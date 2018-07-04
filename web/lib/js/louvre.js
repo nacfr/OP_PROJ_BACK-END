@@ -103,9 +103,6 @@ function exec() {
         var dateOfBirth = $('#booking_tickets_' + [i + 1] + '_dateofbirth');
         var checkReduce = $('#booking_tickets_' + [i + 1] + '_reduceprice');
 
-        console.log(dateOfBirth.val());
-        console.log(checkReduce.is(':checked'));
-
         //p.tab[i][0] = dateOfBirth.val();
         //p.tab[i][1] = checkReduce.is(':checked');
         if (dateOfBirth.val() !== "") {
@@ -120,7 +117,6 @@ function exec() {
             p.tab[i][1] = 0;
         }
     }
-    //console.log(p);
 
     $.ajax({
             type: "POST",
@@ -133,7 +129,6 @@ function exec() {
 
                 for (var id in details) {
                     a = details[id];
-                    //console.dir(a);
                     $('#computer-tab-order-qt-' + id).html(a.quantity);
                     $('#computer-tab-order-price-' + id).html(a.price + " €");
                     $('#smartphone-tab-order-qt-' + id).html(a.quantity);

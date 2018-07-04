@@ -15,7 +15,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('lib/css/bootstrap.css') }}"/>
     <link rel="stylesheet" href="{{ asset('lib/css/billeterie.css') }}"/>
-    <link rel="stylesheet" href="{{  asset('lib/flags/flags.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/flags/flags.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block stylesheets %}
     {% endblock %}
@@ -37,11 +37,21 @@
             <h1 class="my-4 text-center">{{ "BILLETERIE"|trans }}</h1>
         </div>
         <div class="col-md-12 text-center bloc-boutons-widget">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseModal">
-                {{ "COMMANDE EN COURS"|trans }}
+            <button type="button" class="btn btn btn-booking-purchase" data-toggle="modal" data-target="#purchaseModal">
+                <div>
+                    <i class="fa fa-cart-arrow-down" style="font-size:50px"></i>
+                </div>
+                <div>
+                    {{ "COMMANDE"|trans }}
+                </div>
             </button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#priceModal">
-                {{ "TARIFICATION"|trans }}
+            <button type="button" class="btn btn btn-booking-price" data-toggle="modal" data-target="#priceModal">
+                <div>
+                    <i class="fa fa-euro" style="font-size:50px"></i>
+                </div>
+                <div>
+                    {{ "TARIFICATION"|trans }}
+                </div>
             </button>
         </div>
 
@@ -51,20 +61,21 @@
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header widget-order-title">
                         <h5 class="modal-title" id="purchaseModalLabel">COMMANDE EN COURS</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body widget-order-content">
                         <div class="col-lg-12">
                             <table class="table tab-order">
                                 {% for id, summary in summaries.details %}
                                     <tr>
                                         <td id="smartphone-tab-order-qt-{{ id }}"
                                             class="tab-order-left">{{ summary.quantity }}</td>
-                                        <td id="smartphone-tab-order-multiplicator-{{ id }}" class="tab-order-left">x</td>
+                                        <td id="smartphone-tab-order-multiplicator-{{ id }}" class="tab-order-left">x
+                                        </td>
                                         <td id="smartphone-tab-order-title-{{ id }}"
                                             class="tab-order-left">  {{ "tarif"|trans }} {{ id|trans }}</td>
                                         <td id="smartphone-tab-order-price-{{ id }}"
@@ -78,7 +89,8 @@
                                 <tr class="tab-order-total-ttc">
                                     <td class="tab-order-left">{{ "TOTAL"|trans }} TTC</td>
                                     <td id="smartphone-tab-order-total"
-                                        class="tab-order-right">{{ summaries.total }} €</td>
+                                        class="tab-order-right">{{ summaries.total }} €
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -92,13 +104,13 @@
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header widget-prices-title">
                         <h5 class="modal-title" id="priceModalLabel">TARIFICATION</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body widget-prices-content">
                         <div class="col-lg-12">
                             {{ render(controller("OCLouvreBundle:Widget:widgetPrice")) }}
                         </div>
@@ -157,6 +169,7 @@
 
 <!-- JavaScript -->
 <script src="{{ asset('lib/js/jquery.js') }}"></script>
+<script src="{{ asset('lib/js/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('lib/js/bootstrap.min.js') }}"></script>
 {% block scripts %}
 {% endblock %}

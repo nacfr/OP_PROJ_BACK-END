@@ -10,8 +10,7 @@
 	
 	use OC\LouvreBundle\Entity\Booking;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-	use Symfony\Component\HttpFoundation\Response;
-	use Symfony\Component\HttpFoundation\Session\Session;
+	
 	
 	class Stripe extends Controller
 	{
@@ -48,8 +47,7 @@
 				$body = $e->getJsonBody();
 				$err = $body['error'];
 				$message = $this->getErrorMessage($err['code']);
-				dump($message);
-				$this->addFlash('infostripe', $message);
+				return $message;
 			}
 		}
 		
@@ -113,6 +111,10 @@
 				
 				case "invalid_number":
 					return "Le numéro de la carte est invalide.";
+					break;
+				
+				case "processing_error":
+					return "Une erreur s'est produite lors du traitement de la carte. Vérifiez que les détails de la carte sont corrects ou utilisez une carte différente.";
 					break;
 			}
 		}
