@@ -23,23 +23,23 @@ class BookingController extends Controller
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
-        $validator = $this->get('validator');
-        $errors = $validator->validate($booking);
         $bookingprovider = $this->get('oc_louvre.bookingprovider');
         $summaries = $bookingprovider->getPendingOrder();
+        $validator = $this->get('validator');
+        $errors = $validator->validate($booking);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             if (count($errors) > 0) {
                 return $this->render('@OCLouvre/Louvre/booking.html.twig', array(
                         'form' => $form->createView(),
+                        'summaries' => $summaries,
                         'errors' => $errors
                     )
                 );
             }
 
             $availableday = $this->getDispoTicketByDate($booking->getBookingdate());
-            dump($availableday);
             if ($availableday) {
                 $em = $this->getDoctrine()->getManager();
 
@@ -78,20 +78,20 @@ class BookingController extends Controller
     }
 
     /**
+     * Check ticket availability on the selected date
+     *
      * @param $date
      * @return bool
      */
     private function getDispoTicketByDate($date)
     {
-
-        //$dates = $this->entityManager->getRepository('OCLouvreBundle:Booking')->findBy(['bookingdate' => $date]);
         $dates = $this->getDoctrine()->getManager()->getRepository('OCLouvreBundle:Booking')->findBy(['bookingdate' => $date]);
         $totaltickets = 0;
         foreach ($dates as $date) {
             $totaltickets += $date->getTickets()->count();
         }
 
-        if ($totaltickets >= 2) {
+        if ($totaltickets >= 1000) {
             return false;
         } else {
             return true;

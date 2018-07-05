@@ -13,7 +13,7 @@ $(document).ready(function () {
     $bookingDate.change(function () {
         var $selectBookingDate = $bookingDate.val();
 
-        if (($selectBookingDate == $dateOfDay) && ($timeOfDay >= 15)) {
+        if (($selectBookingDate == $dateOfDay) && ($timeOfDay >= 14)) {
             $radioDay.attr('disabled', true).prop('checked', false);
         } else {
             $radioDay.attr('disabled', false);

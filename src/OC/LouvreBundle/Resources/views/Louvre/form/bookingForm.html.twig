@@ -3,36 +3,30 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         {{ form_label(form.name) }}
-        {{ form_errors(form.name) }}
         {{ form_widget(form.name) }}
     </div>
     <div class="form-group col-md-6">
         {{ form_label(form.firstname) }}
-        {{ form_errors(form.firstname) }}
         {{ form_widget(form.firstname) }}
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-6">
         {{ form_label(form.dateofbirth) }}
-        {{ form_errors(form.dateofbirth) }}
         {{ form_widget(form.dateofbirth) }}
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-6">
         {{ form_label(form.country) }}
-        {{ form_errors(form.country) }}
         {{ form_widget(form.country) }}
     </div>
     <div class="form-group col-md-6">
         <p>Informations complémentaires</p>
         <div class="form-group col-md-12">
             {{ form_label(form.reduceprice) }}
-            {{ form_errors(form.reduceprice) }}
             {{ form_widget(form.reduceprice, {'attr' : {'class':'check-input-reduceprice'}}) }}
             {{ form_label(form.handicap) }}
-            {{ form_errors(form.handicap) }}
             {{ form_widget(form.handicap, {'attr' : {'class':'check-input-handicap'}}) }}
         </div>
     </div>

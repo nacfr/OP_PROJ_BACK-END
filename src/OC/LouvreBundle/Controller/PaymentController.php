@@ -48,7 +48,7 @@ class PaymentController extends Controller
                         $em->persist($booking);
                         $em->flush();
 
-                        //Contenu Email
+                        //Email Content
                         $message = new \Swift_Message();
                         $img_logo = $message->embed(\Swift_Image::fromPath('https://www.nacom.fr/openclassroom/proj4/web/lib/img/logo-louvre.jpg'));
                         $img_background = $message->embed(\Swift_Image::fromPath('https://www.nacom.fr/openclassroom/proj4/web/lib/img/louvre-background.jpg'));

@@ -30,7 +30,7 @@ class Booking
 
     /**
      * @ORM\OneToMany(targetEntity="OC\LouvreBundle\Entity\Ticket", mappedBy="booking", cascade={"persist"})
-     *
+     * @Assert\Valid
      */
     private $tickets;
 	
@@ -46,6 +46,7 @@ class Booking
      *
      * @ORM\Column(name="bookingdate", type="date")
      *
+     * @Assert\NotBlank(message="booking.booking.date.not_blank")
      * @AcmeAssert\Holiday
      *
      */
@@ -55,6 +56,8 @@ class Booking
      * @var string
      *
      * @ORM\Column(name="tickettype", type="string", length=255)
+     *
+     * @Assert\Choice({"day", "halfday"})
      */
     private $tickettype;
 
@@ -62,7 +65,9 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="ticketnumber", type="integer")
-     * @Assert\LessThan(value = 11)
+     *
+     * @Assert\LessThan(value = 11, message="booking.booking.ticketnumber.less_than")
+     * @Assert\NotBlank(message="booking.booking.ticketnumber.not_blank")
      *
      */
     private $ticketnumber;
@@ -114,6 +119,8 @@ class Booking
     }
 	
 	/**
+     * Check the ticket type is half day if the selected date is the one of the day and it is after 14h
+     *
 	 * @Assert\Callback
 	 */
 	public function getTimeOfDay(ExecutionContextInterface $context){

@@ -26,6 +26,7 @@ class TicketType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'label' => 'Nom',
+                'required' => true,
                 'attr' => [
                     'empty_value' => 'Votre nom',
                     'autocomplete' => 'off'
@@ -33,6 +34,7 @@ class TicketType extends AbstractType
             ))
             ->add('firstname', TextType::class, array(
                 'label' => 'Prénom',
+                'required' => true,
                 'attr' => [
                     'autocomplete' => 'off'
                 ]
@@ -41,6 +43,7 @@ class TicketType extends AbstractType
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
+                'required' => true,
                 'attr' => [
                     'data-date-language' => 'fr',
                     'data-date-format' => 'dd-mm-yyyy',
@@ -54,6 +57,7 @@ class TicketType extends AbstractType
             ))
             ->add('country', CountryType::class, array(
                 'label' => 'Pays',
+                'required' => true,
                 'attr' => [
                     'autocomplete' => 'off'
                 ],

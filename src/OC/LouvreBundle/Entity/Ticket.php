@@ -35,6 +35,12 @@ class Ticket
      *
      * @ORM\Column(name="name", type="string", length=255)
      *
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 20,
+     *      minMessage = "ticket.name.min_length",
+     *      maxMessage = "ticket.name.max_length"
+     * )
      */
     private $name;
 
@@ -42,6 +48,13 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     *
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 20,
+     *      minMessage = "ticket.firstname.min_length",
+     *      maxMessage = "ticket.firstname.max_length"
+     * )
      */
     private $firstname;
 
@@ -49,6 +62,8 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="dateofbirth", type="date")
+     *
+     * @Assert\NotBlank(message="ticket.dateofbirth.not_blank")
      */
     private $dateofbirth;
 
@@ -56,6 +71,8 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="ticket.country.not_blank")
      */
     private $country;
 
