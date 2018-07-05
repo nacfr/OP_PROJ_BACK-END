@@ -15,8 +15,15 @@
 	class Stripe extends Controller
 	{
 		public static $_STRIPEERROR;
-		
-		public function getChecking(Booking $booking, BookingProvider $bookingprovider)
+
+        /**
+         * Validation of the payment form by the stripe API
+         *
+         * @param Booking $booking
+         * @param BookingProvider $bookingprovider
+         * @return bool|string
+         */
+        public function getChecking(Booking $booking, BookingProvider $bookingprovider)
 		{
 			try {
 				\Stripe\Stripe::setApiKey("sk_test_k9lZ0W70Zjtt9loUGdVbhlTr");
@@ -52,6 +59,8 @@
 		}
 		
 		/**
+         * Returns the error code to the controller
+         *
 		 * @param $code_error
 		 */
 		public function getErrorMessage($code_error)
@@ -118,5 +127,4 @@
 					break;
 			}
 		}
-		
 	}

@@ -13,11 +13,6 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title text-center">{{ "Réserver un billet"|trans }}</h2>
-                {% if errorcontroller is defined %}
-                    <div class="alert alert-danger text-center" role="alert">
-                        {{ errorcontroller|trans }}
-                    </div>
-                {% endif %}
                 {% if errors is defined %}
                     {% for error in errors %}
                         <div class="alert alert-danger text-center" role="alert">
@@ -26,7 +21,7 @@
                     {% endfor %}
                 {% endif %}
 
-                {% for message in app.flashes('info') %}
+                {% for message in app.flashes('error') %}
                     <div class="alert alert-secondary text-center">
                         {{ message }}
                     </div>

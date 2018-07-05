@@ -39,7 +39,6 @@
 				}
 				
 				$availableday = $bookingprovider->getDispoTicketByDate($booking->getBookingdate());
-				
 				if ($availableday) {
 					$em = $this->getDoctrine()->getManager();
 					
@@ -65,12 +64,9 @@
 					
 					return $this->redirectToRoute('oc_louvre_summary', array('btoken' => $booking->getBtoken()));
 				} else {
-					$errorcontroller = 'Le plafond du nombre de tickets disponible a été atteind. Veuillez choisir une autre journée.';
-					return $this->render('@OCLouvre/Louvre/booking.html.twig', array(
-						'summaries' => $summaries,
-						'form' => $form->createView(),
-						'errorcontroller' => $errorcontroller
-					));
+					$error = 'Le plafond du nombre de tickets disponible a été atteind. Veuillez choisir une autre journée.';
+                    $this->addFlash('info', $error);
+                    return $this->redirectToRoute("oc_louvre_homepage");
 				}
 			}
 			return $this->render('@OCLouvre/Louvre/booking.html.twig', array(
