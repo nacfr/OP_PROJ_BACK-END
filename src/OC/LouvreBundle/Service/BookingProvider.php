@@ -35,28 +35,7 @@
 			$this->entityManager = $entityManager;
 			$this->getPricing();
 		}
-		
-		/**
-		 * @param $date
-		 * @return bool
-		 */
-		public function getDispoTicketByDate($date)
-		{
-			
-			$dates = $this->entityManager->getRepository('OCLouvreBundle:Booking')->findBy(['bookingdate' => $date]);
-			$totaltickets = 0;
-			foreach ($dates as $date) {
-				$totaltickets += $date->getTickets()->count();
-			}
-			
-			if ($totaltickets >= 1000) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-		
-		
+
 		/**
 		 * Calcul le prix en fonction de l'age
 		 *
